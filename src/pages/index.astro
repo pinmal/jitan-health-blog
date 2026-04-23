@@ -1,0 +1,399 @@
+---
+import { getCollection } from 'astro:content';
+import { generateSiteSchema } from '../utils/schema';
+import KondateGachaCTA from '../components/KondateGachaCTA.astro';
+
+const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
+const sorted = allArticles.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const recent = sorted.slice(0, 5);
+const featured = allArticles.find(a => a.data.isFeatured) ?? sorted[0];
+
+const siteSchema = generateSiteSchema();
+
+const categories = [
+  { id: 'comparison', label: '比較記事', icon: '📊' },
+  { id: 'review', label: 'レビュー', icon: '⭐' },
+  { id: 'health-column', label: '健康コラム', icon: '🏥' },
+  { id: 'howto', label: '仕組み化', icon: '⚙️' },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>時短 × 健康 — 忙しい大人のための合理的食生活</title>
+    <meta name="description" content="体や心の調子が落ちているとき、献立を決めること・調理の段取りを組むことは難しくなります。精神保健指定医の長友恭平が、状態に合った自己管理の一つとして宅配食・栄養補助食品の活用法を解説します。" />
+    <link rel="canonical" href="https://jitan-kenko.pages.dev/" />
+    <script type="application/ld+json" set:html={siteSchema} />
+  </head>
+  <body>
+
+    <header class="site-header">
+      <div class="container">
+        <a href="/" class="brand">
+          <span class="brand-name">時短 × 健康</span>
+          <span class="brand-sub">自分の状態にあった自己管理を</span>
+        </a>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- Hero -->
+      <section class="hero">
+        <div class="container">
+          <h2 class="hero-heading">「健康的に食べたいけど、毎日の献立を考えるのが面倒」</h2>
+          <p class="hero-sub">宅配食・栄養補助食品・こんだて提案で仕組み化すると、<strong>意思決定の負荷が下がります。</strong></p>
+          <div class="hero-body">
+            <p>体や心の調子が落ちているとき、献立を決めること・調理の段取りを組むことは、思いのほか難しくなります。食欲がないわけではなくても、「何を作るか考える」「材料を買いに行く」「手順どおりに調理する」——この一連のプロセスが、意欲や判断力の低下した状態では相当なエネルギーを必要とするためです。</p>
+            <p>そういった状態でも、食事が安定していなければ健康は維持できず、日常生活や仕事・社会活動に戻ることもままならなくなります。</p>
+            <p>「楽をするため」ではなく、<strong>今の自分の状態に合った自己管理の一つとして</strong>——宅配食・栄養補助食品・献立の仕組み化を活用してください。</p>
+          </div>
+          <KondateGachaCTA context="weekly-plan" />
+        </div>
+      </section>
+
+      <!-- Recent Articles -->
+      {recent.length > 0 && (
+        <section class="section-articles">
+          <div class="container">
+            <h2 class="section-heading"><span>最新記事</span></h2>
+            <div class="article-grid">
+              {recent.map(article => (
+                <a href={`/articles/${article.slug}/`} class="article-card">
+                  <h3 class="article-title">{article.data.title}</h3>
+                  <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
+                    {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
+                  </time>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- Featured Article -->
+      {featured && (
+        <section class="section-featured">
+          <div class="container">
+            <h2 class="section-heading"><span>一番人気の記事</span></h2>
+            <a href={`/articles/${featured.slug}/`} class="featured-card">
+              <div class="featured-body">
+                <h3 class="featured-title">{featured.data.title}</h3>
+                <time class="article-date" datetime={featured.data.publishedAt.toISOString()}>
+                  {featured.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
+                </time>
+              </div>
+              <span class="featured-arrow">→</span>
+            </a>
+          </div>
+        </section>
+      )}
+
+      <!-- Categories (compact) -->
+      <section class="section-categories">
+        <div class="container">
+          <h2 class="section-heading-sm">カテゴリから探す</h2>
+          <div class="category-list">
+            {categories.map(cat => (
+              <a href={`/${cat.id}/`} class="category-chip">
+                <span class="chip-icon">{cat.icon}</span>
+                <span class="chip-label">{cat.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <p class="footer-name">時短 × 健康</p>
+          <p class="footer-copy">&copy; 2026 長友恭平</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="/privacy">プライバシーポリシー</a>
+          <a href="/disclaimer">免責事項</a>
+          <a href="/about">このブログについて</a>
+        </nav>
+        <p class="footer-affiliate">当サイトはA8.net等のアフィリエイトプログラムに参加しています。</p>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<style>
+/* ══════════════════════════════════════
+   Design System — 時短×健康ブログ
+   Concept: Warm Clinical
+   Primary: Deep Navy  Accent: Terracotta
+══════════════════════════════════════ */
+:root {
+  --c-primary:      #1b3f6e;
+  --c-primary-dk:   #0f2545;
+  --c-primary-md:   #2d6090;
+  --c-accent:       #c4703b;
+  --c-accent-lt:    #fdf0e6;
+  --c-bg:           #f7f5f1;
+  --c-bg-white:     #ffffff;
+  --c-bg-alt:       #eeeae3;
+  --c-text:         #212b38;
+  --c-text-md:      #536070;
+  --c-text-lt:      #8fa0b0;
+  --c-border:       #e0dbd2;
+  --c-shadow-sm:    0 2px 10px rgba(27,63,110,.07);
+  --c-shadow-md:    0 4px 24px rgba(27,63,110,.11);
+  --r:              10px;
+  --r-sm:           6px;
+  --max-w:          1080px;
+  --max-w-text:     720px;
+}
+
+/* ── Reset ─────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN',
+               'Noto Sans JP', 'Yu Gothic Medium', sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── Layout ────────────────────── */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+
+/* ── Header ────────────────────── */
+.site-header {
+  background: var(--c-primary-dk);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.3);
+}
+.brand { display: flex; flex-direction: column; gap: 0.1rem; }
+.brand-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.brand-sub { font-size: 0.7rem; color: #93c5fd; font-weight: 400; }
+
+/* ── Hero ──────────────────────── */
+.hero {
+  background: var(--c-bg-white);
+  border-bottom: 1px solid var(--c-border);
+  padding: 2.75rem 0 2.25rem;
+}
+.hero-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.5;
+  margin-bottom: 0.65rem;
+  max-width: var(--max-w-text);
+}
+.hero-sub {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+.hero-sub strong { color: var(--c-primary); }
+.hero-body {
+  max-width: var(--max-w-text);
+  font-size: 0.93rem;
+  line-height: 1.9;
+  color: var(--c-text-md);
+  margin-bottom: 1.75rem;
+}
+.hero-body p { margin-bottom: 0.85rem; }
+.hero-body p:last-child { margin-bottom: 0; }
+.hero-body strong { color: var(--c-text); }
+
+/* ── Section commons ───────────── */
+.section-articles { background: var(--c-bg-white); padding: 2.75rem 0; border-bottom: 1px solid var(--c-border); }
+.section-featured  { background: var(--c-bg); padding: 2rem 0; border-bottom: 1px solid var(--c-border); }
+.section-categories { background: var(--c-bg-white); padding: 1.25rem 0; }
+
+.section-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.section-heading::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 1.1em;
+  background: var(--c-accent);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Article Grid ──────────────── */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+}
+.article-card {
+  background: var(--c-bg-white);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  transition: box-shadow .2s, transform .2s;
+}
+.article-card:hover {
+  box-shadow: var(--c-shadow-md);
+  transform: translateY(-3px);
+}
+.article-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: #dbeafe;
+  color: var(--c-primary);
+  padding: 0.18rem 0.55rem;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+.article-title {
+  font-size: 0.93rem;
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.5;
+}
+.article-desc {
+  font-size: 0.78rem;
+  color: var(--c-text-md);
+  line-height: 1.65;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.article-date { font-size: 0.7rem; color: var(--c-text-lt); margin-top: auto; }
+
+/* ── Featured Card ─────────────── */
+.featured-card {
+  background: var(--c-bg-white);
+  border: 1px solid var(--c-border);
+  border-left: 4px solid var(--c-accent);
+  border-radius: var(--r);
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: box-shadow .2s, transform .2s;
+}
+.featured-card:hover {
+  box-shadow: var(--c-shadow-md);
+  transform: translateY(-2px);
+}
+.featured-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.featured-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.5;
+}
+.featured-desc {
+  font-size: 0.83rem;
+  color: var(--c-text-md);
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.featured-arrow {
+  font-size: 1.4rem;
+  color: var(--c-accent);
+  flex-shrink: 0;
+  font-weight: 700;
+}
+
+/* ── Category Chips (compact) ──── */
+.section-heading-sm {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--c-text-md);
+  margin-bottom: 0.65rem;
+  letter-spacing: 0.02em;
+}
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  padding: 0.28rem 0.75rem;
+  font-size: 0.78rem;
+  color: var(--c-text-md);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.category-chip:hover {
+  background: var(--c-accent-lt);
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+.chip-icon { font-size: 0.85rem; line-height: 1; }
+.chip-label { font-weight: 600; }
+
+/* ── Footer ────────────────────── */
+.site-footer {
+  background: var(--c-primary-dk);
+  color: #94a3b8;
+  padding: 2rem 0;
+  font-size: 0.78rem;
+}
+.footer-inner { display: flex; flex-direction: column; gap: 0.7rem; }
+.footer-name  { color: #e2e8f0; font-weight: 700; font-size: 0.88rem; }
+.footer-copy  { color: #64748b; font-size: 0.72rem; margin-top: 0.1rem; }
+.footer-nav   { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.footer-nav a { color: #94a3b8; transition: color .15s; }
+.footer-nav a:hover { color: #e2e8f0; }
+.footer-affiliate { font-size: 0.68rem; color: #475569; }
+
+/* ── Responsive ────────────────── */
+@media (max-width: 900px) {
+  .article-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  .hero-heading { font-size: 1.2rem; }
+  .article-grid { grid-template-columns: 1fr; }
+  .brand-name { font-size: 1.05rem; }
+  .featured-card { flex-direction: column; align-items: flex-start; }
+  .featured-arrow { display: none; }
+}
+</style>

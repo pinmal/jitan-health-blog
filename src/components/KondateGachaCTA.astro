@@ -1,0 +1,100 @@
+---
+// こんだてガチャへの送客バナー（双方向連携）
+// ストア公開後に true に変更する
+const KONDATE_GACHA_LIVE = false;
+
+interface Props {
+  context?: 'leftover' | 'weekly-plan' | 'quick-meal' | 'general';
+  ingredient?: string;
+}
+const { context = 'general', ingredient } = Astro.props;
+
+const messages: Record<string, { title: string; desc: string }> = {
+  leftover: {
+    title: '余り食材をガチャで活用しよう',
+    desc: ingredient
+      ? `「${ingredient}」が余っていませんか？こんだてガチャで即レシピ検索！`
+      : '今ある食材をアプリに入力するだけ。食材ロスゼロを目指せます。',
+  },
+  'weekly-plan': {
+    title: '今週の献立をガチャで決める',
+    desc: '迷いゼロで1週間の献立が完成。意思決定コストを削減しましょう。',
+  },
+  'quick-meal': {
+    title: '5分で夕食を決める — こんだてガチャ',
+    desc: '冷蔵庫の中身をサッと入力するだけ。手軽に時短レシピを発見。',
+  },
+  general: {
+    title: 'こんだてガチャ — 余り食材レシピ検索',
+    desc: '食材を入力するだけでレシピをランダム提案。時短 × ロスゼロを実現。',
+  },
+};
+
+const msg = messages[context];
+const deeplink = ingredient
+  ? `https://kondate-gacha.pages.dev/?ingredient=${encodeURIComponent(ingredient)}`
+  : 'https://kondate-gacha.pages.dev/';
+---
+
+{KONDATE_GACHA_LIVE && (
+<aside class="kondate-cta" aria-label="こんだてガチャのご案内">
+  <div class="kondate-inner">
+    <div class="kondate-icon-wrap">
+      <img src="/images/kondate-gacha-icon.png" alt="こんだてガチャ" class="kondate-icon" width="44" height="44" />
+      <span class="kondate-app-name">こんだてガチャ</span>
+    </div>
+    <div class="kondate-body">
+      <p class="kondate-title">{msg.title}</p>
+      <p class="kondate-desc">{msg.desc}</p>
+    </div>
+    <a
+      href={deeplink}
+      class="kondate-btn"
+      target="_blank"
+      rel="noopener"
+      aria-label="こんだてガチャを開く（新しいタブ）"
+    >
+      無料で使う →
+    </a>
+  </div>
+</aside>
+)}
+
+<style>
+.kondate-cta {
+  background: linear-gradient(135deg, #fef3c7 0%, #ecfccb 100%);
+  border: 2px solid #fbbf24;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 2rem 0;
+}
+.kondate-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.kondate-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; flex-shrink: 0; }
+.kondate-icon { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; }
+.kondate-app-name { font-size: 0.6rem; font-weight: 700; color: #78350f; white-space: nowrap; }
+.kondate-body { flex: 1; min-width: 0; }
+.kondate-title { font-weight: 700; font-size: 0.95rem; margin: 0 0 0.2rem; color: #78350f; }
+.kondate-desc { font-size: 0.83rem; margin: 0; color: #92400e; line-height: 1.5; }
+.kondate-btn {
+  flex-shrink: 0;
+  display: inline-block;
+  background: #f59e0b;
+  color: #fff !important;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(245,158,11,.3);
+}
+.kondate-btn:hover { background: #d97706; }
+@media (max-width: 600px) {
+  .kondate-inner { flex-wrap: wrap; }
+  .kondate-btn { width: 100%; text-align: center; margin-top: 0.5rem; }
+}
+</style>

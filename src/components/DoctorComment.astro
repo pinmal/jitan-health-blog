@@ -1,0 +1,127 @@
+---
+// 医師の体験・考えをアーティクル内に自然に組み込む引用ブロック
+interface Props {
+  type?: 'experience' | 'patient' | 'opinion' | 'caution';
+  label?: string;
+  blockId?: string;
+}
+
+const { type = 'experience', label, blockId } = Astro.props;
+
+const colors: Record<string, { border: string; bg: string }> = {
+  experience: { border: '#2d6090', bg: '#f4f8fd' },
+  patient:    { border: '#6d4c9e', bg: '#f8f5fd' },
+  opinion:    { border: '#0e7490', bg: '#f0fafc' },
+  caution:    { border: '#b45309', bg: '#fffbeb' },
+};
+
+const c      = colors[type] ?? colors.experience;
+const dataId = blockId ?? type;
+---
+
+<aside
+  class="note-block"
+  style={`--border: ${c.border}; --bg: ${c.bg}`}
+  data-dc-block={dataId}
+  data-dc-type={type}
+  data-dc-label={label ?? ''}
+>
+  {label && <p class="note-label">{label}</p>}
+  <div class="note-body" data-dc-content>
+    <slot />
+  </div>
+  {/* 編集ボタン（inline-editor.jsが活性化したときのみ表示） */}
+  <button class="note-edit-btn" data-dc-edit aria-label="このブロックを編集" hidden>
+    ✏️ 編集
+  </button>
+</aside>
+
+<style>
+.note-block {
+  border-left: 3px solid var(--border);
+  background: var(--bg);
+  border-radius: 0 var(--r, 8px) var(--r, 8px) 0;
+  padding: 0.85rem 1.1rem 0.85rem 1rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+.note-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--border);
+  margin: 0 0 0.45rem;
+  letter-spacing: 0.03em;
+}
+.note-body {
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: #2c3e50;
+}
+.note-body :global(p) { margin: 0 0 0.65rem; }
+.note-body :global(p:last-child) { margin-bottom: 0; }
+
+/* 編集ボタン */
+.note-edit-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.12);
+  color: #536070;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+.note-edit-btn:hover { background: rgba(0,0,0,.1); }
+
+/* 編集モード時 */
+.note-block.dc-editing .note-body { padding: 0; }
+.dc-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 0.75rem 1rem;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  border: none;
+  border-top: 2px dashed var(--border);
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  background: #fffff8;
+  box-sizing: border-box;
+}
+.dc-save-bar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+.dc-save-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.dc-cancel-btn {
+  background: #e2e8f0;
+  color: #475569;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+.dc-saved-badge {
+  font-size: 0.72rem;
+  color: #16a34a;
+  align-self: center;
+  display: none;
+}
+</style>

@@ -1,0 +1,168 @@
+---
+// 商品比較マトリックス自動生成（products.yamlから生成）
+export interface CompProduct {
+  id: string;
+  brand: string;
+  pricePerMeal: number;
+  calories: number;
+  protein: number;
+  fat: number;
+  carb: number;
+  cookTime: number;
+  rating: number;
+  targetAudience: string;
+  features: string[];
+  affiliate: {
+    platform: string;
+    url: string;
+    trialPrice?: string | null;
+  };
+}
+
+interface Props {
+  products: CompProduct[];
+  title?: string;
+}
+const { products, title = "サービス比較表" } = Astro.props;
+---
+
+<div class="comparison-wrapper">
+  <h2 class="comparison-title">{title}</h2>
+  <p class="comparison-note">
+    ※ 価格・内容は変更される場合があります。最新情報は各サービスにてご確認ください。
+  </p>
+
+  <div class="table-scroll">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>サービス名</th>
+          <th>1食あたり</th>
+          <th>カロリー</th>
+          <th>PFC<small>（P/F/C）</small></th>
+          <th>調理時間</th>
+          <th>こんな人に</th>
+          <th>申込み</th>
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((p) => (
+          <tr>
+            <td class="td-name">
+              <strong>{p.brand}</strong>
+              <span class="stars" aria-label={`評価${p.rating}`}>
+                {"★".repeat(Math.round(p.rating))}{"☆".repeat(5 - Math.round(p.rating))}
+              </span>
+            </td>
+            <td class="td-price">
+              <strong>¥{p.pricePerMeal.toLocaleString()}</strong>
+              {p.affiliate.trialPrice && (
+                <span class="trial-badge">{p.affiliate.trialPrice}</span>
+              )}
+            </td>
+            <td class="td-cal">{p.calories}kcal</td>
+            <td class="td-pfc">
+              <span class="pfc-p">P:{p.protein}g</span>
+              <span class="pfc-f">F:{p.fat}g</span>
+              <span class="pfc-c">C:{p.carb}g</span>
+            </td>
+            <td class="td-time">{p.cookTime}分</td>
+            <td class="td-audience">
+              {p.targetAudience}
+              <div class="feature-tags">
+                {p.features.slice(0, 2).map(f => (
+                  <span class="feature-tag">{f}</span>
+                ))}
+              </div>
+            </td>
+            <td class="td-cta">
+              {p.affiliate.url
+                ? (
+                  <a
+                    href={p.affiliate.url}
+                    class="cta-btn"
+                    target="_blank"
+                    rel="nofollow noopener noreferrer"
+                  >
+                    詳細を見る
+                  </a>
+                ) : (
+                  <span class="cta-btn cta-disabled">準備中</span>
+                )
+              }
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="affiliate-note">
+    ※ 上記「詳細を見る」にはアフィリエイトリンクが含まれます。
+    <a href="/privacy">プライバシーポリシー</a>
+  </p>
+</div>
+
+<style>
+.comparison-wrapper { margin: 2rem 0; }
+.comparison-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+.comparison-note { font-size: 0.78rem; color: #64748b; margin-bottom: 0.75rem; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.comparison-table { width: 100%; border-collapse: collapse; min-width: 680px; font-size: 0.875rem; }
+.comparison-table thead th {
+  background: #1e40af;
+  color: #fff;
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.comparison-table tbody td {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+.comparison-table tbody tr:last-child td { border-bottom: none; }
+.comparison-table tbody tr:nth-child(even) td { background: #f8fafc; }
+.td-name strong { display: block; font-size: 0.95rem; margin-bottom: 0.2rem; }
+.stars { color: #f59e0b; font-size: 0.75rem; }
+.td-price strong { color: #dc2626; font-size: 1.05rem; }
+.trial-badge {
+  display: inline-block;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+}
+.pfc-p { color: #2563eb; font-size: 0.8rem; }
+.pfc-f { color: #d97706; font-size: 0.8rem; margin: 0 0.2rem; }
+.pfc-c { color: #16a34a; font-size: 0.8rem; }
+.feature-tags { margin-top: 0.4rem; }
+.feature-tag {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 0.68rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  margin: 0.1rem 0.1rem 0 0;
+}
+.cta-btn {
+  display: inline-block;
+  background: #f97316;
+  color: #fff !important;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.cta-btn:hover { background: #ea580c; }
+.cta-disabled { background: #94a3b8; cursor: default; }
+.affiliate-note { font-size: 0.72rem; color: #94a3b8; margin-top: 0.5rem; }
+.affiliate-note a { color: #64748b; }
+</style>

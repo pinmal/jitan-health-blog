@@ -1,0 +1,99 @@
+---
+// 全記事末尾に表示する医療監修カード（E-E-A-T強化）
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+
+<aside class="reviewer-card" aria-label="医療監修者情報">
+  <div class="reviewer-inner">
+    <div class="reviewer-photo">
+      <img
+        src="/images/nagatomo-portrait.jpg"
+        alt="長友恭平医師"
+        width="80"
+        height="80"
+        loading="lazy"
+        onerror="this.style.display='none'"
+      />
+    </div>
+    <div class="reviewer-info">
+      <p class="reviewer-label">医師監修</p>
+      <h3 class="reviewer-name">長友 恭平（ながとも きょうへい）</h3>
+      <ul class="reviewer-credentials">
+        <li>よつば加納クリニック 院長（宮崎県宮崎市清武町加納）</li>
+        <li>精神保健指定医 / 産業医</li>
+        <li>心療内科・精神科専門（EBM重視）</li>
+        {!compact && <li>宮崎大学医学部卒（2012年）</li>}
+      </ul>
+      {!compact && (
+        <p class="reviewer-policy">
+          本記事は日本の保険適応・各学会ガイドラインに準拠し、薬機法・医療広告ガイドラインに
+          配慮して作成しています。個別の医療相談はかかりつけ医にご相談ください。
+        </p>
+      )}
+    </div>
+  </div>
+</aside>
+
+<style>
+.reviewer-card {
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 2.5rem;
+  background: #f8fafc;
+}
+.reviewer-inner {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+.reviewer-photo img {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 3px solid #3b82f6;
+  flex-shrink: 0;
+}
+.reviewer-label {
+  font-size: 0.7rem;
+  color: #3b82f6;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.25rem;
+  background: #dbeafe;
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 3px;
+}
+.reviewer-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: #1e293b;
+}
+.reviewer-credentials {
+  font-size: 0.85rem;
+  color: #475569;
+  padding-left: 1.2rem;
+  margin: 0 0 0.75rem;
+  line-height: 1.7;
+}
+.reviewer-policy {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.7;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.5rem;
+}
+@media (max-width: 480px) {
+  .reviewer-inner { flex-direction: column; align-items: center; text-align: center; }
+  .reviewer-credentials { text-align: left; }
+}
+</style>

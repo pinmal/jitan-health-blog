@@ -1,0 +1,56 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  sub?: string;
+  platform?: string;
+}
+const { href, label, sub, platform = 'A8.net' } = Astro.props;
+---
+
+<div class="aff-wrap">
+  <a href={href} class="aff-btn" target="_blank" rel="noopener noreferrer nofollow">
+    <span class="aff-label">{label}</span>
+    {sub && <span class="aff-sub">{sub}</span>}
+  </a>
+  <p class="aff-disc">※ 本リンクはアフィリエイト広告を含みます（{platform}）</p>
+</div>
+
+<style>
+.aff-wrap {
+  margin: 1.25rem 0;
+}
+.aff-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  background: #1b3f6e;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.95rem 1.5rem;
+  text-decoration: none;
+  transition: background .15s, transform .15s;
+  text-align: center;
+}
+.aff-btn:hover {
+  background: #2d6090;
+  transform: translateY(-1px);
+}
+.aff-label {
+  font-size: 0.97rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.aff-sub {
+  font-size: 0.78rem;
+  color: #93c5fd;
+  font-weight: 400;
+}
+.aff-disc {
+  font-size: 0.68rem;
+  color: #8fa0b0;
+  margin: 0.4rem 0 0;
+  text-align: right;
+}
+</style>
