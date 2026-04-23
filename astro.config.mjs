@@ -3,8 +3,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // 独自ドメイン取得後に変更: 'https://jitan-kenko.com'
-  site: 'https://jitan-kenko.pages.dev',
+  site: 'https://jitan-kenko.blog',
   integrations: [mdx(), sitemap()],
   output: 'static',
 });
