@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: CI Check
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,12 +26,3 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: jitan-kenko
-          directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
