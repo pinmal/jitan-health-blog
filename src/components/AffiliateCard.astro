@@ -26,92 +26,76 @@ const {
 } = Astro.props;
 ---
 
-<div class="aff-card">
-  {/* 画像エリア */}
-  <div class="aff-img-wrap" style={`--accent: ${accentColor}`}>
-    {imageSrc
-      ? <img src={imageSrc} alt={imageAlt ?? brand} loading="lazy" class="aff-img" />
-      : <div class="aff-img-placeholder">
-          <span class="aff-brand-initial">{brand.charAt(0)}</span>
-          <span class="aff-brand-name-bg">{brand}</span>
-        </div>
-    }
-    {badge && <span class="aff-badge">{badge}</span>}
-  </div>
-
-  {/* 本文エリア */}
-  <div class="aff-body">
-    <p class="aff-brand">{brand}</p>
-    <p class="aff-catch">{catchcopy}</p>
-
-    {price && <p class="aff-price">{price}</p>}
-
-    {features.length > 0 && (
-      <ul class="aff-features">
-        {features.map(f => <li>{f}</li>)}
-      </ul>
-    )}
-
-    <a href={href} class="aff-btn" target="_blank" rel="noopener noreferrer nofollow" style={`--accent: ${accentColor}`}>
-      公式サイトをみる →
+<div class="aff-wrap">
+  {/* バナー：説明ブロックの上・独立配置 */}
+  {imageSrc && (
+    <a href={href} class="aff-banner-link" target="_blank" rel="noopener noreferrer nofollow">
+      <img src={imageSrc} alt={imageAlt ?? brand} loading="lazy" class="aff-banner-img" />
     </a>
-    <p class="aff-disc">※ アフィリエイト広告（{platform}）</p>
+  )}
+
+  {/* 説明ブロック */}
+  <div class="aff-card" style={`--accent: ${accentColor}`}>
+    {badge && <span class="aff-badge">{badge}</span>}
+    <div class="aff-body">
+      <p class="aff-brand">{brand}</p>
+      <p class="aff-catch">{catchcopy}</p>
+
+      {price && <p class="aff-price">{price}</p>}
+
+      {features.length > 0 && (
+        <ul class="aff-features">
+          {features.map(f => <li>{f}</li>)}
+        </ul>
+      )}
+
+      <a href={href} class="aff-btn" target="_blank" rel="noopener noreferrer nofollow" style={`--accent: ${accentColor}`}>
+        公式サイトをみる →
+      </a>
+      <p class="aff-disc">※ アフィリエイト広告（{platform}）</p>
+    </div>
   </div>
 </div>
 
 <style>
+.aff-wrap {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── バナー（上部・独立） ── */
+.aff-banner-link {
+  display: block;
+  text-decoration: none;
+  line-height: 0;
+}
+.aff-banner-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── 説明ブロック（カード） ── */
 .aff-card {
   border: 1px solid #e0dbd2;
   border-radius: 10px;
   overflow: hidden;
-  margin: 1.5rem 0;
   background: #fff;
   box-shadow: 0 2px 10px rgba(27,63,110,.07);
   display: flex;
   flex-direction: column;
-}
-
-/* ── 画像エリア ── */
-.aff-img-wrap {
+  width: 100%;
   position: relative;
-  background: var(--accent);
-  height: 140px;
-  overflow: hidden;
-}
-.aff-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.aff-img-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 70%, #fff) 100%);
-}
-.aff-brand-initial {
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: rgba(255,255,255,.25);
-  line-height: 1;
-}
-.aff-brand-name-bg {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.05em;
 }
 
 /* バッジ */
 .aff-badge {
   position: absolute;
   top: 0.6rem;
-  left: 0.6rem;
+  right: 0.6rem;
   background: #c4703b;
   color: #fff;
   font-size: 0.7rem;
