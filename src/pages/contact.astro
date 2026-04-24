@@ -1,5 +1,4 @@
 ---
-import ReviewerCard from '../components/ReviewerCard.astro';
 ---
 
 <!doctype html>
@@ -7,9 +6,9 @@ import ReviewerCard from '../components/ReviewerCard.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>このブログについて | 時短 × 健康</title>
-    <meta name="description" content="時短 × 健康ブログの監修者情報・免責事項・運営方針についてご説明します。" />
-    <link rel="canonical" href="https://jitan-kenko.pages.dev/about/" />
+    <title>お問い合わせ | 時短 × 健康</title>
+    <meta name="description" content="記事の誤り・改善提案・サービスに関するお問い合わせはこちらからどうぞ。" />
+    <link rel="canonical" href="https://jitan-kenko.blog/contact/" />
   </head>
   <body>
 
@@ -25,29 +24,26 @@ import ReviewerCard from '../components/ReviewerCard.astro';
     <main>
       <div class="container page-wrap">
 
-        <h1 class="page-title">このブログについて</h1>
+        <h1 class="page-title">お問い合わせ</h1>
 
         <section class="section">
-          <h2 class="section-h2">監修者</h2>
-          <ReviewerCard />
+          <div class="notice">
+            <p>記事内容の誤り・改善提案・サービスに関するご質問などお気軽にどうぞ。</p>
+            <p class="caution">※ 個別の症状・診断・治療に関するご相談はお受けできません。医療に関するご相談はかかりつけ医にご相談ください。</p>
+          </div>
         </section>
 
         <section class="section">
-          <h2 class="section-h2">記事の方針</h2>
-          <p>本ブログの記事は、精神保健指定医・長友恭平の臨床経験に基づく見解を含みます。個別の症状・診断については、かかりつけ医にご相談ください。</p>
-          <p>記事内の患者エピソードは、個人を特定できないよう複数の事例を組み合わせ・デフォルメしたものです。特定の患者さんの情報ではありません。</p>
-          <p>本ブログは日本の保険適応・各学会ガイドラインに準拠し、薬機法・医療広告ガイドラインに配慮して作成しています。</p>
-        </section>
-
-        <section class="section">
-          <h2 class="section-h2">アフィリエイト・広告について</h2>
-          <p>当サイトはA8.net・もしもアフィリエイト等のアフィリエイトプログラムに参加しています。記事内の商品リンクから購入されると、サイト運営者に報酬が発生することがあります。</p>
-          <p>詳細は<a href="/disclaimer">免責事項</a>をご確認ください。</p>
-        </section>
-
-        <section class="section">
-          <h2 class="section-h2">お問い合わせ</h2>
-          <p>記事の内容に関するご意見・ご質問は、各記事のコメント欄またはフッターのリンクからご連絡ください。</p>
+          <div class="form-wrap">
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSflX6bfUhbKTOiB-N_3w6ll9RntGxUbj1gz-slkkMOE-GpOOA/viewform?embedded=true"
+              width="100%"
+              height="780"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+            >読み込んでいます…</iframe>
+          </div>
         </section>
 
       </div>
@@ -55,7 +51,7 @@ import ReviewerCard from '../components/ReviewerCard.astro';
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>&copy; 2025 長友恭平</p>
+        <p>&copy; 2026 長友恭平</p>
         <nav class="footer-nav">
           <a href="/privacy">プライバシーポリシー</a>
           <a href="/disclaimer">免責事項</a>
@@ -99,22 +95,38 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: 0.75rem;
   border-bottom: 2px solid #c4703b;
 }
-.section { margin-bottom: 2.5rem; }
-.section-h2 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #1b3f6e;
-  margin-bottom: 1rem;
-  padding-left: 0.75rem;
-  border-left: 3px solid #c4703b;
+.section { margin-bottom: 2rem; }
+
+.notice {
+  background: #fff;
+  border: 1px solid #e0dbd2;
+  border-left: 4px solid #c4703b;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
 }
-.section p {
+.notice p {
   font-size: 0.92rem;
   color: #536070;
   line-height: 1.9;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
-.section p:last-child { margin-bottom: 0; }
+.notice p:last-child { margin-bottom: 0; }
+.caution {
+  font-size: 0.83rem !important;
+  color: #8fa0b0 !important;
+}
+
+.form-wrap {
+  background: #fff;
+  border: 1px solid #e0dbd2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.form-wrap iframe {
+  display: block;
+  width: 100%;
+  border: none;
+}
 
 .site-footer {
   background: #0f2545;
