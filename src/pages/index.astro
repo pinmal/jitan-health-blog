@@ -5,7 +5,7 @@ import KondateGachaCTA from '../components/KondateGachaCTA.astro';
 
 const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
 const sorted = allArticles.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
-const recent = sorted.slice(0, 5);
+const recent = sorted;
 const featured = allArticles.find(a => a.data.isFeatured) ?? sorted[0];
 
 const siteSchema = generateSiteSchema();
