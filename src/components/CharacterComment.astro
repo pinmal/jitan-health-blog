@@ -1,18 +1,32 @@
 ---
-// 架空キャラクター（宮本ユウカ）の発言ブロック
-// 読者の心の声・疑問・体験談を代弁する
+// 架空キャラクターの発言ブロック
+// character="yuka" | "naoko" | "kenji" で自動色分け
+// または name + accent で個別指定
 interface Props {
   name?: string;
   note?: string;
+  character?: 'yuka' | 'naoko' | 'kenji';
+  accent?: string;
 }
 
-const { name = 'ユウカ', note = '' } = Astro.props;
+const PRESETS: Record<string, { name: string; accent: string; bg: string; textColor: string }> = {
+  yuka:  { name: 'ユウカ',  accent: '#c4703b', bg: '#fdf6f1', textColor: '#3d2b1f' },
+  naoko: { name: 'ナオコ',  accent: '#2d8b72', bg: '#f1fdf8', textColor: '#1a3d30' },
+  kenji: { name: 'ケンジ',  accent: '#3b5f8b', bg: '#f1f5fd', textColor: '#1a2a3d' },
+};
+
+const preset = Astro.props.character ? PRESETS[Astro.props.character] : PRESETS.yuka;
+const resolvedName    = Astro.props.name   ?? preset.name;
+const resolvedAccent  = Astro.props.accent ?? preset.accent;
+const resolvedBg      = preset.bg;
+const resolvedText    = preset.textColor;
+const { note = '' } = Astro.props;
 ---
 
-<aside class="character-block">
+<aside class="character-block" style={`--ch-accent:${resolvedAccent};--ch-bg:${resolvedBg};--ch-text:${resolvedText}`}>
   <div class="character-header">
     <span class="character-avatar">💬</span>
-    <span class="character-name">{name}</span>
+    <span class="character-name">{resolvedName}</span>
     {note && <span class="character-note">{note}</span>}
   </div>
   <div class="character-body">
@@ -22,8 +36,8 @@ const { name = 'ユウカ', note = '' } = Astro.props;
 
 <style>
 .character-block {
-  border-left: 3px solid #c4703b;
-  background: #fdf6f1;
+  border-left: 3px solid var(--ch-accent);
+  background: var(--ch-bg);
   border-radius: 0 8px 8px 0;
   padding: 0.85rem 1.1rem 0.85rem 1rem;
   margin: 1.5rem 0;
@@ -40,7 +54,7 @@ const { name = 'ユウカ', note = '' } = Astro.props;
 .character-name {
   font-size: 0.72rem;
   font-weight: 700;
-  color: #c4703b;
+  color: var(--ch-accent);
   letter-spacing: 0.03em;
 }
 .character-note {
@@ -51,7 +65,7 @@ const { name = 'ユウカ', note = '' } = Astro.props;
 .character-body {
   font-size: 0.92rem;
   line-height: 1.85;
-  color: #3d2b1f;
+  color: var(--ch-text);
 }
 .character-body :global(p) { margin: 0 0 0.65rem; }
 .character-body :global(p:last-child) { margin-bottom: 0; }

@@ -33,10 +33,44 @@ import ReviewerCard from '../components/ReviewerCard.astro';
         </section>
 
         <section class="section">
+          <h2 class="section-h2">登場キャラクターについて</h2>
+          <div class="char-list">
+            <div class="char-card char--yuka">
+              <div class="char-header">
+                <span class="char-icon">💬</span>
+                <span class="char-name">宮本ユウカ</span>
+                <span class="char-tag">架空のキャラクター</span>
+              </div>
+              <p>34歳・IT系企業のプロジェクトマネージャー・東京・一人暮らし。帰宅は平均21〜23時。料理は苦手で続かないが、食事への罪悪感はある。「わかってるけどできない」を体現する、このブログの主役的存在。</p>
+              <p class="char-note">※ ユウカは架空のキャラクターです。体験談部分はフィクションですが、紹介する商品・価格・サービス内容は実際の情報をもとにしています。</p>
+            </div>
+            <div class="char-card char--naoko">
+              <div class="char-header">
+                <span class="char-icon">💬</span>
+                <span class="char-name">田中ナオコ</span>
+                <span class="char-tag">架空のキャラクター</span>
+              </div>
+              <p>38歳・IT系コンサルタント・ユウカの職場の先輩。健康意識が高く、新しいサービスを「試してから話す」タイプ。GREEN SPOONやシェフの無添つくりおきを愛用中。「無理して続けるものじゃないから」が口グセ。</p>
+              <p class="char-note">※ ナオコも架空のキャラクターです。</p>
+            </div>
+            <div class="char-card char--kenji">
+              <div class="char-header">
+                <span class="char-icon">💬</span>
+                <span class="char-name">井上ケンジ</span>
+                <span class="char-tag">架空のキャラクター</span>
+              </div>
+              <p>41歳・メーカー勤務・共働き2児の父。「続けられるかどうかで選ぶ」合理主義者。ヨシケイとOisixを使い分け、子供が食べてくれるかどうかが最大の判断軸。「コスト計算すると〇〇なんですよね」が口グセ。</p>
+              <p class="char-note">※ ケンジも架空のキャラクターです。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
           <h2 class="section-h2">記事の方針</h2>
           <p>本ブログの記事は、精神保健指定医・長友恭平の臨床経験に基づく見解を含みます。個別の症状・診断については、かかりつけ医にご相談ください。</p>
-          <p>記事内の患者エピソードは、個人を特定できないよう複数の事例を組み合わせ・デフォルメしたものです。特定の患者さんの情報ではありません。</p>
+          <p>記事内のキャラクターは架空の人物です。体験談はフィクションですが、紹介する商品・価格・サービス内容は実際の情報をもとにしています。特定の患者さんの情報ではありません。</p>
           <p>本ブログは日本の保険適応・各学会ガイドラインに準拠し、薬機法・医療広告ガイドラインに配慮して作成しています。</p>
+          <p>監修者の詳細なプロフィールは<a href="https://drnagatomo2026.com" target="_blank" rel="noopener noreferrer" class="ext-link">公式サイト（drnagatomo2026.com）</a>をご覧ください。</p>
         </section>
 
         <section class="section">
@@ -115,6 +149,56 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 0.75rem;
 }
 .section p:last-child { margin-bottom: 0; }
+
+/* ── キャラクターリスト ── */
+.char-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.char-card {
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  border-left: 3px solid #ccc;
+}
+.char--yuka  { background: #fdf6f1; border-left-color: #c4703b; }
+.char--naoko { background: #f1fdf8; border-left-color: #2d8b72; }
+.char--kenji { background: #f1f5fd; border-left-color: #3b5f8b; }
+
+.char-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.char-icon { font-size: 0.9rem; }
+.char-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #212b38;
+}
+.char-tag {
+  font-size: 0.65rem;
+  color: #8fa0b0;
+  border: 1px solid #d0dce8;
+  border-radius: 3px;
+  padding: 0.1rem 0.4rem;
+}
+.char-card p {
+  font-size: 0.88rem;
+  color: #536070;
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+}
+.char-card p:last-child { margin-bottom: 0; }
+.char-note {
+  font-size: 0.75rem !important;
+  color: #94a3b8 !important;
+  font-style: italic;
+}
+
+.ext-link { color: #1b3f6e; text-decoration: underline; }
+.ext-link:hover { color: #c4703b; }
 
 .site-footer {
   background: #0f2545;

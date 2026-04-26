@@ -1,6 +1,9 @@
 ---
+// アフィリエイトカード：A8.net / Amazon / 楽天（もしも経由）の3ASP対応
+// href のみ → 単一ボタン（後方互換）
+// amazonUrl / rakutenUrl を追加すると並列ボタン表示
 interface Props {
-  href: string;
+  href?: string;          // A8.net リンク
   brand: string;
   catchcopy: string;
   imageSrc?: string;
@@ -8,8 +11,10 @@ interface Props {
   price?: string;
   features?: string[];
   badge?: string;
-  platform?: string;
+  platform?: string;      // 後方互換用（単一ボタン時の表示名）
   accentColor?: string;
+  amazonUrl?: string;     // Amazon アソシエイト直接リンク
+  rakutenUrl?: string;    // 楽天 もしもアフィリ経由リンク
 }
 
 const {
@@ -23,18 +28,30 @@ const {
   badge,
   platform = 'A8.net',
   accentColor = '#1b3f6e',
+  amazonUrl,
+  rakutenUrl,
 } = Astro.props;
+
+// 並列ボタンモードかどうか
+const isMulti = !!(amazonUrl || rakutenUrl);
+
+// 表示するプラットフォーム名を列挙（開示文用）
+const platforms: string[] = [];
+if (href) platforms.push(isMulti ? 'A8.net' : platform);
+if (amazonUrl) platforms.push('Amazonアソシエイト');
+if (rakutenUrl) platforms.push('もしもアフィリエイト');
+const discText = platforms.join(' / ');
 ---
 
 <div class="aff-wrap">
-  {/* バナー：説明ブロックの上・独立配置 */}
+  {/* バナー（上部・独立） */}
   {imageSrc && (
-    <a href={href} class="aff-banner-link" target="_blank" rel="noopener noreferrer nofollow">
+    <a href={href ?? amazonUrl ?? rakutenUrl ?? '#'} class="aff-banner-link" target="_blank" rel="sponsored noopener noreferrer">
       <img src={imageSrc} alt={imageAlt ?? brand} loading="lazy" class="aff-banner-img" />
     </a>
   )}
 
-  {/* 説明ブロック */}
+  {/* 説明カード */}
   <div class="aff-card" style={`--accent: ${accentColor}`}>
     {badge && <span class="aff-badge">{badge}</span>}
     <div class="aff-body">
@@ -49,10 +66,34 @@ const {
         </ul>
       )}
 
-      <a href={href} class="aff-btn" target="_blank" rel="noopener noreferrer nofollow" style={`--accent: ${accentColor}`}>
-        公式サイトをみる →
-      </a>
-      <p class="aff-disc">※ アフィリエイト広告（{platform}）</p>
+      {/* ── ボタン ── */}
+      {isMulti ? (
+        <div class="aff-btn-row">
+          {href && (
+            <a href={href} class="aff-btn aff-btn--a8" target="_blank" rel="sponsored noopener noreferrer" style={`--accent: ${accentColor}`}>
+              公式サイトで見る
+            </a>
+          )}
+          {amazonUrl && (
+            <a href={amazonUrl} class="aff-btn aff-btn--amazon" target="_blank" rel="sponsored noopener noreferrer">
+              Amazonで見る
+            </a>
+          )}
+          {rakutenUrl && (
+            <a href={rakutenUrl} class="aff-btn aff-btn--rakuten" target="_blank" rel="sponsored noopener noreferrer">
+              楽天で見る
+            </a>
+          )}
+        </div>
+      ) : (
+        href && (
+          <a href={href} class="aff-btn aff-btn--single" target="_blank" rel="sponsored noopener noreferrer" style={`--accent: ${accentColor}`}>
+            公式サイトをみる →
+          </a>
+        )
+      )}
+
+      <p class="aff-disc">※ アフィリエイト広告（{discText}）</p>
     </div>
   </div>
 </div>
@@ -66,7 +107,7 @@ const {
   gap: 0.5rem;
 }
 
-/* ── バナー（上部・独立） ── */
+/* ── バナー ── */
 .aff-banner-link {
   display: block;
   text-decoration: none;
@@ -78,7 +119,7 @@ const {
   display: block;
 }
 
-/* ── 説明ブロック（カード） ── */
+/* ── カード ── */
 .aff-card {
   border: 1px solid #e0dbd2;
   border-radius: 10px;
@@ -154,7 +195,9 @@ const {
   color: #16a34a;
   font-size: 0.75rem;
 }
-.aff-btn {
+
+/* ── 単一ボタン（後方互換） ── */
+.aff-btn--single {
   display: block;
   background: var(--accent);
   color: #fff;
@@ -167,10 +210,52 @@ const {
   margin-top: 0.35rem;
   transition: opacity .15s, transform .15s;
 }
+.aff-btn--single:hover {
+  opacity: .88;
+  transform: translateY(-1px);
+}
+
+/* ── 並列ボタン行 ── */
+.aff-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+.aff-btn {
+  flex: 1;
+  min-width: 130px;
+  text-align: center;
+  padding: 0.65rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  transition: opacity .15s, transform .15s;
+  white-space: nowrap;
+}
 .aff-btn:hover {
   opacity: .88;
   transform: translateY(-1px);
 }
+
+/* A8 ボタン: accentColor を使用 */
+.aff-btn--a8 {
+  background: var(--accent);
+}
+
+/* Amazon ボタン */
+.aff-btn--amazon {
+  background: linear-gradient(135deg, #ff9900, #e47911);
+}
+
+/* 楽天ボタン */
+.aff-btn--rakuten {
+  background: linear-gradient(135deg, #bf0000, #9a0000);
+}
+
+/* 開示文 */
 .aff-disc {
   font-size: 0.65rem;
   color: #8fa0b0;

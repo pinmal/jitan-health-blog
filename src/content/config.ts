@@ -21,6 +21,7 @@ const articles = defineCollection({
     humanReviewed: z.boolean().default(false),
     noindex: z.boolean().default(false),
     isFeatured: z.boolean().default(false),
+    character: z.enum(['yuka', 'naoko', 'kenji']).optional(),
   }),
 });
 
