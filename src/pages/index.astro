@@ -4,7 +4,7 @@ import { generateSiteSchema } from '../utils/schema';
 import KondateGachaCTA from '../components/KondateGachaCTA.astro';
 
 const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
-const sorted = allArticles.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const sorted = allArticles.sort((a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf());
 const recent = sorted;
 const featured = allArticles.find(a => a.data.isFeatured) ?? sorted[0];
 
@@ -59,7 +59,7 @@ const categories = [
       {recent.length > 0 && (
         <section class="section-articles">
           <div class="container">
-            <h2 class="section-heading"><span>最新記事</span></h2>
+            <h2 class="section-heading"><span>ユウカの記録（時系列）</span></h2>
             <div class="article-grid">
               {recent.map(article => (
                 <a href={`/articles/${article.slug}/`} class="article-card">
