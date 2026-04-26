@@ -1,5 +1,5 @@
 ---
-// アフィリエイトカード：A8.net / Amazon / 楽天（もしも経由）の3ASP対応
+// アフィリエイトカード：A8.net / Amazon / 楽天（直接アフィリ）の3ASP対応
 // href のみ → 単一ボタン（後方互換）
 // amazonUrl / rakutenUrl を追加すると並列ボタン表示
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
   platform?: string;      // 後方互換用（単一ボタン時の表示名）
   accentColor?: string;
   amazonUrl?: string;     // Amazon アソシエイト直接リンク
-  rakutenUrl?: string;    // 楽天 もしもアフィリ経由リンク
+  rakutenUrl?: string;    // 楽天アフィリエイト直接リンク
 }
 
 const {
@@ -39,7 +39,7 @@ const isMulti = !!(amazonUrl || rakutenUrl);
 const platforms: string[] = [];
 if (href) platforms.push(isMulti ? 'A8.net' : platform);
 if (amazonUrl) platforms.push('Amazonアソシエイト');
-if (rakutenUrl) platforms.push('もしもアフィリエイト');
+if (rakutenUrl) platforms.push('楽天アフィリエイト');
 const discText = platforms.join(' / ');
 ---
 
