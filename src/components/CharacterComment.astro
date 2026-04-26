@@ -6,14 +6,14 @@ interface Props {
   note?: string;
 }
 
-const { name = 'ユウカ', note = '34歳・IT系・一人暮らし（架空のキャラクターです）' } = Astro.props;
+const { name = 'ユウカ', note = '' } = Astro.props;
 ---
 
 <aside class="character-block">
   <div class="character-header">
     <span class="character-avatar">💬</span>
     <span class="character-name">{name}</span>
-    <span class="character-note">{note}</span>
+    {note && <span class="character-note">{note}</span>}
   </div>
   <div class="character-body">
     <slot />
