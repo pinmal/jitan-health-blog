@@ -121,8 +121,8 @@ const siteSchema = generateSiteSchema();
       </div>
     </footer>
 
-    <!-- ===== 医師用インライン編集ツールバー ===== -->
-    <div id="editor-toolbar" aria-label="編集ツールバー">
+    <!-- ===== 医師用インライン編集ツールバー（通常は完全非表示・URLパラメータ ?edit=1 で表示） ===== -->
+    <div id="editor-toolbar" aria-label="編集ツールバー" hidden>
       <button id="edit-toggle" aria-pressed="false">✏️ 編集モード</button>
       <button id="review-btn" hidden>📋 Claude確認依頼</button>
       <span id="edit-status"></span>
@@ -183,6 +183,12 @@ const siteSchema = generateSiteSchema();
   const promptTA  = document.getElementById('review-prompt-text');
   const copyBtn   = document.getElementById('copy-prompt-btn');
   const closeBtn  = document.getElementById('close-modal-btn');
+
+  // URLパラメータ ?edit=1 がある場合のみツールバーを表示（医師専用）
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('edit') === '1') {
+    toolbar.hidden = false;
+  }
 
   // 保存済み編集があれば確認依頼ボタンを表示
   if (Object.keys(loadEdits()).length > 0) reviewBtn.hidden = false;
@@ -538,7 +544,7 @@ img { max-width: 100%; height: auto; }
 .footer-inner nav a:hover { color: #e2e8f0; }
 .affiliate-disclaimer { margin-top: 0.25rem; font-size: 0.68rem; color: #475569; }
 
-/* ===== 編集ツールバー（医師専用・一般ユーザーには最小表示） ===== */
+/* ===== 編集ツールバー（医師専用・URLパラメータ ?edit=1 でのみ表示） ===== */
 #editor-toolbar {
   position: fixed;
   bottom: 1.25rem;
@@ -555,16 +561,8 @@ img { max-width: 100%; height: auto; }
   font-size: 0.82rem;
   flex-wrap: wrap;
   max-width: calc(100vw - 2rem);
-  /* 通常は縮小表示、ホバーで展開 */
-  opacity: 0.25;
-  transform: scale(0.85);
-  transform-origin: bottom right;
-  transition: opacity .25s, transform .25s;
 }
-#editor-toolbar:hover {
-  opacity: 1;
-  transform: scale(1);
-}
+#editor-toolbar[hidden] { display: none !important; }
 #edit-toggle {
   background: #3b82f6;
   color: white;

@@ -85,7 +85,7 @@ export const products: Product[] = [
     officialUrl: 'https://muscle-deli.com/',
     affiliate: {
       platform: 'a8',
-      url: '',
+      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8KZZQQ+4CPY+62MDD',  // 提携済み
       trialPrice: null,
     },
   },
@@ -107,7 +107,7 @@ export const products: Product[] = [
     officialUrl: 'https://www.oisix.com/',
     affiliate: {
       platform: 'a8',
-      url: '',
+      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8GTYIA+3RK+4MQ88X',  // 提携済み (Kit Oisix)
       trialPrice: 'お試し50%OFF',
     },
   },
@@ -128,7 +128,7 @@ export const products: Product[] = [
     officialUrl: 'https://yoshikei-dvlp.co.jp/',
     affiliate: {
       platform: 'a8',
-      url: '',
+      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8MSAK2+1QM6+I7FOH',  // 提携済み
       trialPrice: '初回半額',
     },
   },
@@ -150,7 +150,7 @@ export const products: Product[] = [
     officialUrl: 'https://www.myprotein.com/jp/',
     affiliate: {
       platform: 'a8',
-      url: '',
+      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8NDQ5U+45DI+60H7M',  // 提携済み
       trialPrice: '初回コードでOFF',
     },
   },
