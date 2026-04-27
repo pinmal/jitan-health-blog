@@ -1,0 +1,107 @@
+---
+// 関連記事リンクカード（記事末尾に配置）
+interface Article {
+  href: string;
+  title: string;
+  label?: string;  // 「比較」「レビュー」など短いラベル
+}
+
+interface Props {
+  articles: Article[];
+  heading?: string;
+}
+
+const { articles, heading = 'この記事を読んだ方へ' } = Astro.props;
+---
+
+<nav class="related-articles" aria-label="関連記事">
+  <h2 class="related-heading">{heading}</h2>
+  <ul class="related-list">
+    {articles.map((a) => (
+      <li>
+        <a href={a.href} class="related-card">
+          <span class="related-arrow">→</span>
+          <span class="related-body">
+            {a.label && <span class="related-label">{a.label}</span>}
+            <span class="related-title">{a.title}</span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+.related-articles {
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid #e0dbd2;
+}
+.related-heading {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #8fa0b0;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+}
+.related-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.related-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  background: #ffffff;
+  border: 1px solid #e0dbd2;
+  border-left: 3px solid #1b3f6e;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-left-color 0.15s, background 0.15s;
+}
+.related-card:hover {
+  border-left-color: #c4703b;
+  background: #faf9f7;
+}
+.related-arrow {
+  color: #1b3f6e;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+  transition: color 0.15s;
+}
+.related-card:hover .related-arrow {
+  color: #c4703b;
+}
+.related-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.6rem;
+}
+.related-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #1b3f6e;
+  background: #dce8f7;
+  padding: 0.1rem 0.5rem;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.related-title {
+  font-size: 0.9rem;
+  color: #1b3f6e;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.related-card:hover .related-title {
+  color: #0f2545;
+}
+</style>
