@@ -1,5 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
 import { generateArticleSchema, generateSiteSchema } from '../utils/schema';
+import RelatedArticles from '../components/RelatedArticles.astro';
 
 interface Props {
   title: string;
@@ -29,6 +31,23 @@ const slug = Astro.url.pathname.replace(/^\/articles\//, '').replace(/\/$/, '') 
 
 const articleSchema = generateArticleSchema({ title, description, url, publishedAt, updatedAt, category, categoryLabel });
 const siteSchema = generateSiteSchema();
+
+// 同カテゴリの関連記事を最大3件自動取得（公開済み・自身除外・下書き除外）
+const allArticles = await getCollection('articles');
+const relatedArticles = allArticles
+  .filter(a =>
+    a.data.humanReviewed === true &&
+    a.data.category === category &&
+    a.slug !== slug &&
+    !a.id.startsWith('_')
+  )
+  .sort((a, b) => new Date(b.data.publishedAt).valueOf() - new Date(a.data.publishedAt).valueOf())
+  .slice(0, 3)
+  .map(a => ({
+    href: `/articles/${a.slug}/`,
+    title: a.data.title,
+    label: categoryLabel,
+  }));
 ---
 
 <!doctype html>
@@ -104,6 +123,18 @@ const siteSchema = generateSiteSchema();
           </p>
 
           <slot />
+
+          {/* 関連記事（同カテゴリから自動取得） */}
+          {relatedArticles.length > 0 && (
+            <RelatedArticles articles={relatedArticles} />
+          )}
+
+          {/* ページトップリンク */}
+          <div class="back-to-top-wrap">
+            <a href="#top" class="back-to-top-link" id="back-to-top-inline">
+              ↑ この記事のトップへ戻る
+            </a>
+          </div>
         </article>
       </div>
     </main>
@@ -120,6 +151,9 @@ const siteSchema = generateSiteSchema();
         <p class="affiliate-disclaimer">当サイトはA8.net等のアフィリエイトプログラムに参加しています。</p>
       </div>
     </footer>
+
+    <!-- ===== フローティング「トップへ戻る」ボタン ===== -->
+    <button id="scroll-top-btn" aria-label="ページトップへ戻る" title="ページトップへ戻る">↑</button>
 
     <!-- ===== 医師用インライン編集ツールバー（通常は完全非表示・URLパラメータ ?edit=1 で表示） ===== -->
     <div id="editor-toolbar" aria-label="編集ツールバー" hidden>
@@ -142,6 +176,24 @@ const siteSchema = generateSiteSchema();
     </div>
   </body>
 </html>
+
+<!-- フローティング「トップへ戻る」スクロール制御 -->
+<script is:inline>
+(function () {
+  var btn = document.getElementById('scroll-top-btn');
+  if (!btn) return;
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 400) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }, { passive: true });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
 
 <!-- インライン編集システム（クライアントサイド） -->
 <script is:inline>
@@ -543,6 +595,56 @@ img { max-width: 100%; height: auto; }
 .footer-inner nav a { color: #94a3b8; transition: color .15s; }
 .footer-inner nav a:hover { color: #e2e8f0; }
 .affiliate-disclaimer { margin-top: 0.25rem; font-size: 0.68rem; color: #475569; }
+
+/* ===== 関連記事セクション下部リンク ===== */
+.back-to-top-wrap {
+  margin-top: 2rem;
+  text-align: center;
+}
+.back-to-top-link {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--c-text-lt);
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  transition: color .15s, border-color .15s;
+}
+.back-to-top-link:hover {
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+}
+
+/* ===== フローティング「トップへ戻る」ボタン ===== */
+#scroll-top-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 46px;
+  height: 46px;
+  background: var(--c-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  box-shadow: 0 3px 14px rgba(0,0,0,.25);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity .25s, transform .25s;
+  z-index: 150;
+}
+#scroll-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+#scroll-top-btn:hover {
+  background: var(--c-primary-dk);
+}
 
 /* ===== 編集ツールバー（医師専用・URLパラメータ ?edit=1 でのみ表示） ===== */
 #editor-toolbar {
