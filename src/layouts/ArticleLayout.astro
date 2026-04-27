@@ -54,7 +54,11 @@ const siteSchema = generateSiteSchema();
     <meta property="og:description" content={description} />
     <meta property="og:type" content="article" />
     <meta property="og:url" content={url} />
+    <meta property="og:image" content="https://jitan-kenko.blog/og-default.png" />
+    <meta property="og:site_name" content="時短 × 健康" />
     <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://jitan-kenko.blog/og-default.png" />
   </head>
 
   <body data-article-slug={slug} data-article-title={title}>
@@ -534,7 +538,7 @@ img { max-width: 100%; height: auto; }
 .footer-inner nav a:hover { color: #e2e8f0; }
 .affiliate-disclaimer { margin-top: 0.25rem; font-size: 0.68rem; color: #475569; }
 
-/* ===== 編集ツールバー ===== */
+/* ===== 編集ツールバー（医師専用・一般ユーザーには最小表示） ===== */
 #editor-toolbar {
   position: fixed;
   bottom: 1.25rem;
@@ -551,6 +555,15 @@ img { max-width: 100%; height: auto; }
   font-size: 0.82rem;
   flex-wrap: wrap;
   max-width: calc(100vw - 2rem);
+  /* 通常は縮小表示、ホバーで展開 */
+  opacity: 0.25;
+  transform: scale(0.85);
+  transform-origin: bottom right;
+  transition: opacity .25s, transform .25s;
+}
+#editor-toolbar:hover {
+  opacity: 1;
+  transform: scale(1);
 }
 #edit-toggle {
   background: #3b82f6;

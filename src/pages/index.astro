@@ -4,7 +4,7 @@ import { generateSiteSchema } from '../utils/schema';
 import KondateGachaCTA from '../components/KondateGachaCTA.astro';
 
 const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
-const sortedAll = allArticles.sort((a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf());
+const sortedAll = allArticles.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
 // キャラクター別に分類（character フィールドなし or yuka → ユウカ）
 const yukaArticles  = sortedAll.filter(a => !a.data.character || a.data.character === 'yuka');

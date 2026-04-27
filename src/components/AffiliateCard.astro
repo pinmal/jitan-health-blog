@@ -3,7 +3,7 @@
 // href のみ → 単一ボタン（後方互換）
 // amazonUrl / rakutenUrl を追加すると並列ボタン表示
 interface Props {
-  href?: string;          // A8.net リンク
+  href?: string;          // A8.net リンク（または公式URL）
   brand: string;
   catchcopy: string;
   imageSrc?: string;
@@ -15,6 +15,7 @@ interface Props {
   accentColor?: string;
   amazonUrl?: string;     // Amazon アソシエイト直接リンク
   rakutenUrl?: string;    // 楽天アフィリエイト直接リンク
+  isAffiliate?: boolean;  // false = 公式サイト直リンク（アフィリ未提携）の場合に開示文を変更
 }
 
 const {
@@ -30,6 +31,7 @@ const {
   accentColor = '#1b3f6e',
   amazonUrl,
   rakutenUrl,
+  isAffiliate = true,
 } = Astro.props;
 
 // 並列ボタンモードかどうか
@@ -93,7 +95,10 @@ const discText = platforms.join(' / ');
         )
       )}
 
-      <p class="aff-disc">※ アフィリエイト広告（{discText}）</p>
+      {isAffiliate
+        ? <p class="aff-disc">※ アフィリエイト広告（{discText}）</p>
+        : <p class="aff-disc">※ 公式サイトへの外部リンクです（アフィリエイト提携なし）</p>
+      }
     </div>
   </div>
 </div>
