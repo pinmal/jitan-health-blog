@@ -5,15 +5,19 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && node scripts/generate-sitemap.mjs",
-    "preview": "astro preview",
-    "validate": "node scripts/validate-yakkiho.js"
+    "preview": "npm run build && wrangler dev",
+    "validate": "node scripts/validate-yakkiho.js",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "11",
     "@astrojs/mdx": "^3.1.0",
     "@astrojs/sitemap": "^3.1.6",
     "astro": "^4.15.0"
   },
   "devDependencies": {
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "wrangler": "^4.85.0"
   }
 }
