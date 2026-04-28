@@ -85,7 +85,7 @@ export const products: Product[] = [
     officialUrl: 'https://muscle-deli.com/',
     affiliate: {
       platform: 'a8',
-      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8KZZQQ+4CPY+62MDD',  // 提携済み
+      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8L00II+4CPY+5YRHE',  // 提携済み
       trialPrice: null,
     },
   },
