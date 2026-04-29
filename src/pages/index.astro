@@ -6,20 +6,20 @@ import KondateGachaCTA from '../components/KondateGachaCTA.astro';
 const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
 const sortedAll = allArticles.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
-// キャラクター別に分類（character フィールドなし or yuka → ユウカ）
 const yukaArticles  = sortedAll.filter(a => !a.data.character || a.data.character === 'yuka');
 const naokoArticles = sortedAll.filter(a => a.data.character === 'naoko');
 const kenjiArticles = sortedAll.filter(a => a.data.character === 'kenji');
 
 const featured = allArticles.find(a => a.data.isFeatured) ?? sortedAll[0];
-
 const siteSchema = generateSiteSchema();
 
-const categories = [
-  { id: 'comparison', label: '比較記事', icon: '📊' },
-  { id: 'review', label: 'レビュー', icon: '⭐' },
-  { id: 'health-column', label: '健康コラム', icon: '🏥' },
-  { id: 'howto', label: '仕組み化', icon: '⚙️' },
+const purposes = [
+  { id: 'all',       label: 'すべて',           icon: '📋' },
+  { id: 'no-cook',   label: '夕食を作りたくない',  icon: '🍱' },
+  { id: 'nutrition', label: '栄養・疲れ改善',     icon: '🥗' },
+  { id: 'sleep',     label: '睡眠・メンタル',     icon: '😴' },
+  { id: 'diet',      label: 'ダイエット・体型',   icon: '💪' },
+  { id: 'compare',   label: 'サービス比較',       icon: '📊' },
 ];
 ---
 
@@ -27,7 +27,6 @@ const categories = [
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6YC8SXBSH"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -61,83 +60,163 @@ const categories = [
           <p class="hero-sub">宅配食・栄養補助食品・こんだて提案で仕組み化すると、<strong>意思決定の負荷が下がります。</strong></p>
           <div class="hero-body">
             <p>体や心の調子が落ちているとき、献立を決めること・調理の段取りを組むことは、思いのほか難しくなります。食欲がないわけではなくても、「何を作るか考える」「材料を買いに行く」「手順どおりに調理する」——この一連のプロセスが、意欲や判断力の低下した状態では相当なエネルギーを必要とするためです。</p>
-            <p>そういった状態でも、食事が安定していなければ健康は維持できず、日常生活や仕事・社会活動に戻ることもままならなくなります。</p>
             <p>「楽をするため」ではなく、<strong>今の自分の状態に合った自己管理の一つとして</strong>——宅配食・栄養補助食品・献立の仕組み化を活用してください。</p>
           </div>
           <KondateGachaCTA context="weekly-plan" />
         </div>
       </section>
 
-      <!-- Character Sections -->
+      <!-- 目的別フィルタ -->
+      <section class="purpose-section">
+        <div class="container">
+          <p class="purpose-label">いまの目的から探す</p>
+          <div class="purpose-bar" role="group" aria-label="目的で絞り込む">
+            {purposes.map(p => (
+              <button
+                class={`purpose-chip${p.id === 'all' ? ' active' : ''}`}
+                data-filter={p.id}
+                type="button"
+                aria-pressed={p.id === 'all' ? 'true' : 'false'}
+              >
+                <span class="purpose-icon">{p.icon}</span>
+                <span>{p.label}</span>
+              </button>
+            ))}
+          </div>
+          <p class="filter-status" id="filter-status" aria-live="polite"></p>
+        </div>
+      </section>
 
-      {/* ユウカ */}
+      <!-- ユウカ -->
       {yukaArticles.length > 0 && (
-        <section class="section-articles section-yuka">
+        <section class="section-articles section-yuka" data-char="yuka">
           <div class="container">
-            <h2 class="section-heading section-heading--yuka">
-              <span class="char-avatar char-avatar--yuka">ユ</span>
-              <span>宮本ユウカの記録</span>
-            </h2>
-            <p class="char-profile">34歳・IT企業・一人暮らし。仕事が忙しくて食事が後回しになりがち。「健康的に食べたいけど、毎日考えるのが面倒」という読者の分身。</p>
-            <div class="article-grid">
-              {yukaArticles.map(article => (
-                <a href={`/articles/${article.slug}/`} class="article-card article-card--yuka">
-                  <h3 class="article-title">{article.data.title}</h3>
-                  <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
-                    {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                  </time>
-                </a>
-              ))}
+            <div class="section-header-row">
+              <h2 class="section-heading section-heading--yuka">
+                <span class="char-avatar char-avatar--yuka">ユ</span>
+                <span>宮本ユウカの記録</span>
+                <span class="article-count-badge">{yukaArticles.length}件</span>
+              </h2>
+              <button class="section-toggle" data-target="yuka" aria-expanded="true" type="button">
+                <span class="toggle-icon">▲</span> たたむ
+              </button>
+            </div>
+            <div class="section-collapsible" id="collapse-yuka">
+              <p class="char-profile">34歳・IT企業・一人暮らし。仕事が忙しくて食事が後回しになりがち。「健康的に食べたいけど、毎日考えるのが面倒」という読者の分身。</p>
+              <div class="article-grid" id="grid-yuka">
+                {yukaArticles.map((article, i) => (
+                  <a
+                    href={`/articles/${article.slug}/`}
+                    class={`article-card article-card--yuka${i >= 6 ? ' card-extra' : ''}`}
+                    data-tags={(article.data.tags ?? []).join(',')}
+                    data-category={article.data.category}
+                  >
+                    <h3 class="article-title">{article.data.title}</h3>
+                    <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
+                      {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    </time>
+                  </a>
+                ))}
+              </div>
+              {yukaArticles.length > 6 && (
+                <button class="more-btn" data-grid="yuka" type="button">
+                  もっと見る（+{yukaArticles.length - 6}件）
+                </button>
+              )}
             </div>
           </div>
         </section>
       )}
 
-      {/* ナオコ */}
+      <!-- ナオコ -->
       {naokoArticles.length > 0 && (
-        <section class="section-articles section-naoko">
+        <section class="section-articles section-naoko" data-char="naoko">
           <div class="container">
-            <h2 class="section-heading section-heading--naoko">
-              <span class="char-avatar char-avatar--naoko">ナ</span>
-              <span>田中ナオコの記録</span>
-            </h2>
-            <p class="char-profile">38歳・ITコンサル・一人暮らし。健康意識が高めでコスパ感覚が鋭い。ユウカより少し先を行く先輩。情報収集してから決めるタイプ。</p>
-            <div class="article-grid">
-              {naokoArticles.map(article => (
-                <a href={`/articles/${article.slug}/`} class="article-card article-card--naoko">
-                  <h3 class="article-title">{article.data.title}</h3>
-                  <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
-                    {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                  </time>
-                </a>
-              ))}
+            <div class="section-header-row">
+              <h2 class="section-heading section-heading--naoko">
+                <span class="char-avatar char-avatar--naoko">ナ</span>
+                <span>田中ナオコの記録</span>
+                <span class="article-count-badge">{naokoArticles.length}件</span>
+              </h2>
+              <button class="section-toggle" data-target="naoko" aria-expanded="true" type="button">
+                <span class="toggle-icon">▲</span> たたむ
+              </button>
+            </div>
+            <div class="section-collapsible" id="collapse-naoko">
+              <p class="char-profile">38歳・ITコンサル・一人暮らし。健康意識が高めでコスパ感覚が鋭い。ユウカより少し先を行く先輩。情報収集してから決めるタイプ。</p>
+              <div class="article-grid" id="grid-naoko">
+                {naokoArticles.map((article, i) => (
+                  <a
+                    href={`/articles/${article.slug}/`}
+                    class={`article-card article-card--naoko${i >= 6 ? ' card-extra' : ''}`}
+                    data-tags={(article.data.tags ?? []).join(',')}
+                    data-category={article.data.category}
+                  >
+                    <h3 class="article-title">{article.data.title}</h3>
+                    <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
+                      {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    </time>
+                  </a>
+                ))}
+              </div>
+              {naokoArticles.length > 6 && (
+                <button class="more-btn" data-grid="naoko" type="button">
+                  もっと見る（+{naokoArticles.length - 6}件）
+                </button>
+              )}
             </div>
           </div>
         </section>
       )}
 
-      {/* ケンジ */}
+      <!-- ケンジ -->
       {kenjiArticles.length > 0 && (
-        <section class="section-articles section-kenji">
+        <section class="section-articles section-kenji" data-char="kenji">
           <div class="container">
-            <h2 class="section-heading section-heading--kenji">
-              <span class="char-avatar char-avatar--kenji">ケ</span>
-              <span>井上ケンジの記録</span>
-            </h2>
-            <p class="char-profile">41歳・大手メーカー部長・共働き4人家族。「子供が食べてくれるか」が判断基準。コスト計算が得意で、続けられる仕組みを重視する。</p>
-            <div class="article-grid">
-              {kenjiArticles.map(article => (
-                <a href={`/articles/${article.slug}/`} class="article-card article-card--kenji">
-                  <h3 class="article-title">{article.data.title}</h3>
-                  <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
-                    {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                  </time>
-                </a>
-              ))}
+            <div class="section-header-row">
+              <h2 class="section-heading section-heading--kenji">
+                <span class="char-avatar char-avatar--kenji">ケ</span>
+                <span>井上ケンジの記録</span>
+                <span class="article-count-badge">{kenjiArticles.length}件</span>
+              </h2>
+              <button class="section-toggle" data-target="kenji" aria-expanded="true" type="button">
+                <span class="toggle-icon">▲</span> たたむ
+              </button>
+            </div>
+            <div class="section-collapsible" id="collapse-kenji">
+              <p class="char-profile">41歳・大手メーカー部長・共働き4人家族。「子供が食べてくれるか」が判断基準。コスト計算が得意で、続けられる仕組みを重視する。</p>
+              <div class="article-grid" id="grid-kenji">
+                {kenjiArticles.map((article, i) => (
+                  <a
+                    href={`/articles/${article.slug}/`}
+                    class={`article-card article-card--kenji${i >= 6 ? ' card-extra' : ''}`}
+                    data-tags={(article.data.tags ?? []).join(',')}
+                    data-category={article.data.category}
+                  >
+                    <h3 class="article-title">{article.data.title}</h3>
+                    <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
+                      {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    </time>
+                  </a>
+                ))}
+              </div>
+              {kenjiArticles.length > 6 && (
+                <button class="more-btn" data-grid="kenji" type="button">
+                  もっと見る（+{kenjiArticles.length - 6}件）
+                </button>
+              )}
             </div>
           </div>
         </section>
       )}
+
+      <!-- フィルタ結果が0件の場合 -->
+      <div class="no-results" id="no-results" style="display:none">
+        <div class="container">
+          <p>該当する記事が見つかりませんでした。</p>
+          <button class="reset-filter-btn" type="button">すべての記事を表示</button>
+        </div>
+      </div>
 
       <!-- Featured Article -->
       {featured && (
@@ -157,12 +236,18 @@ const categories = [
         </section>
       )}
 
-      <!-- Categories (compact) -->
+      <!-- Categories -->
       <section class="section-categories">
         <div class="container">
           <h2 class="section-heading-sm">カテゴリから探す</h2>
           <div class="category-list">
-            {categories.map(cat => (
+            {[
+              { id: 'comparison', label: '比較記事', icon: '📊' },
+              { id: 'review',     label: 'レビュー', icon: '⭐' },
+              { id: 'health-column', label: '健康コラム', icon: '🏥' },
+              { id: 'mental-health', label: 'メンタル', icon: '🧠' },
+              { id: 'howto',     label: '仕組み化', icon: '⚙️' },
+            ].map(cat => (
               <a href={`/${cat.id}/`} class="category-chip">
                 <span class="chip-icon">{cat.icon}</span>
                 <span class="chip-label">{cat.label}</span>
@@ -194,6 +279,158 @@ const categories = [
   </body>
 </html>
 
+<script is:inline>
+(function () {
+  // ── フィルタ定義 ──────────────────────────────────────────────
+  const filterMap = {
+    'no-cook':   ['宅食', '冷凍弁当', '時短', 'ミールキット', '仕組み化', '夕食管理', '食材宅配', '宅食弁当', '宅配弁当', '作り置き'],
+    'nutrition': ['タンパク質', '栄養', '疲れ', '腸脳相関', '鉄分', '食事管理', '高タンパク', '魚'],
+    'sleep':     ['睡眠', 'ストレス食い', 'カフェイン', 'メラトニン', 'メンタルヘルス', 'コーヒー', 'ストレス'],
+    'diet':      ['ダイエット', '高タンパク', '低糖質', '筋トレ', 'フィットネス', 'ジム', 'プロテイン', '運動'],
+    'compare':   ['比較'],
+  };
+
+  function matchesFilter(filter, tagsStr, category) {
+    if (filter === 'all') return true;
+    if (filter === 'compare') return category === 'comparison' || tagsStr.includes('比較');
+    const keywords = filterMap[filter] || [];
+    return keywords.some(kw => tagsStr.includes(kw));
+  }
+
+  // ── 状態 ─────────────────────────────────────────────────────
+  let currentFilter = 'all';
+  const expandedGrids = new Set(); // 「もっと見る」押されたグリッドID
+
+  function applyFilter(filter) {
+    currentFilter = filter;
+
+    // カードの表示切り替え
+    document.querySelectorAll('.article-card').forEach(card => {
+      const tagsStr = card.dataset.tags || '';
+      const category = card.dataset.category || '';
+      const matches = matchesFilter(filter, tagsStr, category);
+
+      if (filter === 'all') {
+        // グリッドごとに展開済みか判断
+        const grid = card.closest('.article-grid');
+        const gridId = grid ? grid.id.replace('grid-', '') : '';
+        const isExtra = card.classList.contains('card-extra');
+        card.style.display = (isExtra && !expandedGrids.has(gridId)) ? 'none' : '';
+      } else {
+        card.style.display = matches ? '' : 'none';
+      }
+    });
+
+    // 「もっと見る」ボタンはall時のみ表示
+    document.querySelectorAll('.more-btn').forEach(btn => {
+      if (filter === 'all') {
+        const gridId = btn.dataset.grid;
+        btn.style.display = expandedGrids.has(gridId) ? 'none' : '';
+      } else {
+        btn.style.display = 'none';
+      }
+    });
+
+    // セクションの空チェック
+    let totalVisible = 0;
+    document.querySelectorAll('.section-articles').forEach(section => {
+      const grid = section.querySelector('.article-grid');
+      if (!grid) return;
+      // 折りたたみ中は除外
+      const collapseEl = section.querySelector('.section-collapsible');
+      if (collapseEl && collapseEl.style.display === 'none') return;
+
+      const visible = Array.from(grid.querySelectorAll('.article-card'))
+        .filter(c => c.style.display !== 'none').length;
+      section.style.display = visible > 0 ? '' : 'none';
+      totalVisible += visible;
+    });
+
+    // 0件表示
+    const noResults = document.getElementById('no-results');
+    if (noResults) noResults.style.display = totalVisible === 0 ? '' : 'none';
+
+    // ステータス文
+    const status = document.getElementById('filter-status');
+    if (status) {
+      if (filter === 'all') {
+        status.textContent = '';
+      } else {
+        const purposeBtn = document.querySelector(`.purpose-chip[data-filter="${filter}"]`);
+        const label = purposeBtn ? purposeBtn.querySelector('span:last-child').textContent : '';
+        status.textContent = totalVisible > 0
+          ? `「${label}」に関連する記事 ${totalVisible}件`
+          : `「${label}」に関連する記事は見つかりませんでした`;
+      }
+    }
+  }
+
+  // ── 目的フィルタ ─────────────────────────────────────────────
+  document.querySelectorAll('.purpose-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.purpose-chip').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      applyFilter(btn.dataset.filter);
+    });
+  });
+
+  // リセットボタン
+  document.querySelectorAll('.reset-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.purpose-chip').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      const allChip = document.querySelector('.purpose-chip[data-filter="all"]');
+      if (allChip) { allChip.classList.add('active'); allChip.setAttribute('aria-pressed', 'true'); }
+      applyFilter('all');
+    });
+  });
+
+  // ── もっと見る ───────────────────────────────────────────────
+  document.querySelectorAll('.more-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const gridId = btn.dataset.grid;
+      expandedGrids.add(gridId);
+      const grid = document.getElementById(`grid-${gridId}`);
+      if (grid) {
+        grid.querySelectorAll('.card-extra').forEach(c => c.style.display = '');
+      }
+      btn.style.display = 'none';
+    });
+  });
+
+  // ── セクション折りたたみ ─────────────────────────────────────
+  document.querySelectorAll('.section-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      const collapseEl = document.getElementById(`collapse-${target}`);
+      if (!collapseEl) return;
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+      if (isExpanded) {
+        collapseEl.style.display = 'none';
+        btn.setAttribute('aria-expanded', 'false');
+        btn.innerHTML = '<span class="toggle-icon">▼</span> 広げる';
+      } else {
+        collapseEl.style.display = '';
+        btn.setAttribute('aria-expanded', 'true');
+        btn.innerHTML = '<span class="toggle-icon">▲</span> たたむ';
+        // 再表示後にフィルタ再適用
+        applyFilter(currentFilter);
+      }
+    });
+  });
+
+  // 初期状態：card-extraを非表示
+  document.querySelectorAll('.card-extra').forEach(c => c.style.display = 'none');
+})();
+</script>
+
 <style>
 /* ══════════════════════════════════════
    Design System — 時短×健康ブログ
@@ -221,7 +458,6 @@ const categories = [
   --max-w-text:     720px;
 }
 
-/* ── Reset ─────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; scroll-behavior: smooth; }
 body {
@@ -233,8 +469,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; text-decoration: none; }
-
-/* ── Layout ────────────────────── */
 .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
 
 /* ── Header ────────────────────── */
@@ -247,13 +481,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 1px 0 rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.3);
 }
 .brand { display: flex; flex-direction: column; gap: 0.1rem; }
-.brand-name {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
+.brand-name { font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: -0.01em; line-height: 1.2; }
 .brand-sub { font-size: 0.7rem; color: #93c5fd; font-weight: 400; }
 
 /* ── Hero ──────────────────────── */
@@ -262,51 +490,106 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid var(--c-border);
   padding: 2.75rem 0 2.25rem;
 }
-.hero-heading {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--c-text);
-  line-height: 1.5;
-  margin-bottom: 0.65rem;
-  max-width: var(--max-w-text);
-}
-.hero-sub {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--c-text);
-  margin-bottom: 1.25rem;
-  line-height: 1.6;
-}
+.hero-heading { font-size: 1.35rem; font-weight: 700; color: var(--c-text); line-height: 1.5; margin-bottom: 0.65rem; max-width: var(--max-w-text); }
+.hero-sub { font-size: 1rem; font-weight: 600; color: var(--c-text); margin-bottom: 1.25rem; line-height: 1.6; }
 .hero-sub strong { color: var(--c-primary); }
-.hero-body {
-  max-width: var(--max-w-text);
-  font-size: 0.93rem;
-  line-height: 1.9;
-  color: var(--c-text-md);
-  margin-bottom: 1.75rem;
-}
+.hero-body { max-width: var(--max-w-text); font-size: 0.93rem; line-height: 1.9; color: var(--c-text-md); margin-bottom: 1.75rem; }
 .hero-body p { margin-bottom: 0.85rem; }
 .hero-body p:last-child { margin-bottom: 0; }
 .hero-body strong { color: var(--c-text); }
 
+/* ── Purpose Filter Bar ────────── */
+.purpose-section {
+  background: var(--c-bg-white);
+  border-bottom: 2px solid var(--c-border);
+  padding: 1rem 0 0.85rem;
+  position: sticky;
+  top: 56px;
+  z-index: 90;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.purpose-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--c-text-lt);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+.purpose-bar {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.purpose-bar::-webkit-scrollbar { display: none; }
+.purpose-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  background: var(--c-bg);
+  border: 1.5px solid var(--c-border);
+  border-radius: 20px;
+  padding: 0.38rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--c-text-md);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .15s, border-color .15s, color .15s, transform .1s;
+}
+.purpose-chip:hover {
+  background: var(--c-accent-lt);
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+  transform: translateY(-1px);
+}
+.purpose-chip.active {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  color: #fff;
+}
+.purpose-icon { font-size: 0.9rem; line-height: 1; }
+.filter-status {
+  font-size: 0.75rem;
+  color: var(--c-text-md);
+  margin-top: 0.45rem;
+  min-height: 1.1em;
+}
+
 /* ── Section commons ───────────── */
-.section-articles { background: var(--c-bg-white); padding: 2.75rem 0; border-bottom: 1px solid var(--c-border); }
+.section-articles {
+  background: var(--c-bg-white);
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--c-border);
+}
 .section-featured  { background: var(--c-bg); padding: 2rem 0; border-bottom: 1px solid var(--c-border); }
 .section-categories { background: var(--c-bg-white); padding: 1.25rem 0; }
 
-/* Character section tints */
 .section-yuka  { background: #fff9f6; }
 .section-naoko { background: #f4faf7; }
 .section-kenji { background: #f4f7fc; }
 
+/* Section header row */
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
 .section-heading {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--c-text);
-  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   gap: 0.65rem;
+  margin-bottom: 0;
+  flex: 1;
 }
 .section-heading::before {
   content: '';
@@ -317,15 +600,23 @@ a { color: inherit; text-decoration: none; }
   border-radius: 2px;
   flex-shrink: 0;
 }
-/* Character-specific accent bar colors */
 .section-heading--yuka::before  { background: #c4703b; }
 .section-heading--naoko::before { background: #2d8b72; }
 .section-heading--kenji::before { background: #3b5f8b; }
 
-/* Character avatar circle */
+.article-count-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: var(--c-bg-alt);
+  color: var(--c-text-md);
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* Character avatar */
 .char-avatar {
-  width: 2rem;
-  height: 2rem;
+  width: 2rem; height: 2rem;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -339,14 +630,26 @@ a { color: inherit; text-decoration: none; }
 .char-avatar--naoko { background: #2d8b72; }
 .char-avatar--kenji { background: #3b5f8b; }
 
-/* Character profile line */
-.char-profile {
-  font-size: 0.8rem;
+/* Section toggle button */
+.section-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-sm);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: var(--c-text-md);
-  line-height: 1.65;
-  margin-bottom: 1.25rem;
-  max-width: var(--max-w-text);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color .15s, color .15s, background .15s;
 }
+.section-toggle:hover { border-color: var(--c-primary); color: var(--c-primary); background: #f0f4fa; }
+.toggle-icon { font-size: 0.7rem; }
+
+.char-profile { font-size: 0.8rem; color: var(--c-text-md); line-height: 1.65; margin-bottom: 1.1rem; max-width: var(--max-w-text); }
 
 /* Per-character card accents */
 .article-card--yuka  { border-left: 3px solid #c4703b; }
@@ -369,36 +672,47 @@ a { color: inherit; text-decoration: none; }
   gap: 0.55rem;
   transition: box-shadow .2s, transform .2s;
 }
-.article-card:hover {
-  box-shadow: var(--c-shadow-md);
-  transform: translateY(-3px);
-}
-.article-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  background: #dbeafe;
-  color: var(--c-primary);
-  padding: 0.18rem 0.55rem;
-  border-radius: 20px;
-  align-self: flex-start;
-}
-.article-title {
-  font-size: 0.93rem;
-  font-weight: 700;
-  color: var(--c-text);
-  line-height: 1.5;
-}
-.article-desc {
-  font-size: 0.78rem;
-  color: var(--c-text-md);
-  line-height: 1.65;
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+.article-card:hover { box-shadow: var(--c-shadow-md); transform: translateY(-3px); }
+.article-title { font-size: 0.93rem; font-weight: 700; color: var(--c-text); line-height: 1.5; }
 .article-date { font-size: 0.7rem; color: var(--c-text-lt); margin-top: auto; }
+
+/* もっと見るボタン */
+.more-btn {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.7rem 1rem;
+  background: transparent;
+  border: 1.5px dashed var(--c-border);
+  border-radius: var(--r);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--c-text-md);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.more-btn:hover { border-color: var(--c-primary); color: var(--c-primary); background: #f0f4fa; }
+
+/* 0件メッセージ */
+.no-results {
+  padding: 3rem 0;
+  text-align: center;
+}
+.no-results p { color: var(--c-text-md); margin-bottom: 1rem; }
+.reset-filter-btn {
+  display: inline-block;
+  background: var(--c-primary);
+  color: #fff;
+  padding: 0.55rem 1.5rem;
+  border-radius: var(--r-sm);
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.reset-filter-btn:hover { opacity: 0.85; }
 
 /* ── Featured Card ─────────────── */
 .featured-card {
@@ -412,82 +726,30 @@ a { color: inherit; text-decoration: none; }
   gap: 1rem;
   transition: box-shadow .2s, transform .2s;
 }
-.featured-card:hover {
-  box-shadow: var(--c-shadow-md);
-  transform: translateY(-2px);
-}
-.featured-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.featured-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--c-text);
-  line-height: 1.5;
-}
-.featured-desc {
-  font-size: 0.83rem;
-  color: var(--c-text-md);
-  line-height: 1.7;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.featured-arrow {
-  font-size: 1.4rem;
-  color: var(--c-accent);
-  flex-shrink: 0;
-  font-weight: 700;
-}
+.featured-card:hover { box-shadow: var(--c-shadow-md); transform: translateY(-2px); }
+.featured-body { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.featured-title { font-size: 1.05rem; font-weight: 700; color: var(--c-text); line-height: 1.5; }
+.featured-arrow { font-size: 1.4rem; color: var(--c-accent); flex-shrink: 0; font-weight: 700; }
 
-/* ── Category Chips (compact) ──── */
-.section-heading-sm {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--c-text-md);
-  margin-bottom: 0.65rem;
-  letter-spacing: 0.02em;
-}
-.category-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-}
+/* ── Category Chips ────────────── */
+.section-heading-sm { font-size: 0.78rem; font-weight: 700; color: var(--c-text-md); margin-bottom: 0.65rem; letter-spacing: 0.02em; }
+.category-list { display: flex; flex-wrap: wrap; gap: 0.55rem; }
 .category-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: var(--c-bg);
-  border: 1px solid var(--c-border);
-  border-radius: 20px;
-  padding: 0.28rem 0.75rem;
-  font-size: 0.78rem;
-  color: var(--c-text-md);
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: var(--c-bg); border: 1px solid var(--c-border); border-radius: 20px;
+  padding: 0.28rem 0.75rem; font-size: 0.78rem; color: var(--c-text-md);
   transition: background .15s, border-color .15s, color .15s;
 }
-.category-chip:hover {
-  background: var(--c-accent-lt);
-  border-color: var(--c-accent);
-  color: var(--c-accent);
-}
+.category-chip:hover { background: var(--c-accent-lt); border-color: var(--c-accent); color: var(--c-accent); }
 .chip-icon { font-size: 0.85rem; line-height: 1; }
 .chip-label { font-weight: 600; }
 
 /* ── Footer ────────────────────── */
-.site-footer {
-  background: var(--c-primary-dk);
-  color: #94a3b8;
-  padding: 2rem 0;
-  font-size: 0.78rem;
-}
+.site-footer { background: var(--c-primary-dk); color: #94a3b8; padding: 2rem 0; font-size: 0.78rem; }
 .footer-inner { display: flex; flex-direction: column; gap: 0.7rem; }
-.footer-name  { color: #e2e8f0; font-weight: 700; font-size: 0.88rem; }
-.footer-copy  { color: #64748b; font-size: 0.72rem; margin-top: 0.1rem; }
-.footer-nav   { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.footer-name { color: #e2e8f0; font-weight: 700; font-size: 0.88rem; }
+.footer-copy { color: #64748b; font-size: 0.72rem; margin-top: 0.1rem; }
+.footer-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
 .footer-nav a { color: #94a3b8; transition: color .15s; }
 .footer-nav a:hover { color: #e2e8f0; }
 .footer-affiliate { font-size: 0.68rem; color: #475569; }
@@ -495,12 +757,16 @@ a { color: inherit; text-decoration: none; }
 /* ── Responsive ────────────────── */
 @media (max-width: 900px) {
   .article-grid { grid-template-columns: repeat(2, 1fr); }
+  .purpose-section { top: 52px; }
 }
 @media (max-width: 680px) {
-  .hero-heading { font-size: 1.2rem; }
+  .hero-heading { font-size: 1.15rem; }
   .article-grid { grid-template-columns: 1fr; }
   .brand-name { font-size: 1.05rem; }
   .featured-card { flex-direction: column; align-items: flex-start; }
   .featured-arrow { display: none; }
+  .purpose-section { top: 48px; }
+  .section-header-row { flex-wrap: nowrap; align-items: flex-start; }
+  .section-heading { font-size: 0.95rem; }
 }
 </style>
