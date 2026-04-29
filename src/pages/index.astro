@@ -112,9 +112,6 @@ const purposes = [
                     data-category={article.data.category}
                   >
                     <h3 class="article-title">{article.data.title}</h3>
-                    <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
-                      {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                    </time>
                   </a>
                 ))}
               </div>
@@ -153,9 +150,6 @@ const purposes = [
                     data-category={article.data.category}
                   >
                     <h3 class="article-title">{article.data.title}</h3>
-                    <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
-                      {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                    </time>
                   </a>
                 ))}
               </div>
@@ -194,9 +188,6 @@ const purposes = [
                     data-category={article.data.category}
                   >
                     <h3 class="article-title">{article.data.title}</h3>
-                    <time class="article-date" datetime={article.data.publishedAt.toISOString()}>
-                      {article.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                    </time>
                   </a>
                 ))}
               </div>
@@ -226,9 +217,6 @@ const purposes = [
             <a href={`/articles/${featured.slug}/`} class="featured-card">
               <div class="featured-body">
                 <h3 class="featured-title">{featured.data.title}</h3>
-                <time class="article-date" datetime={featured.data.publishedAt.toISOString()}>
-                  {featured.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                </time>
               </div>
               <span class="featured-arrow">→</span>
             </a>

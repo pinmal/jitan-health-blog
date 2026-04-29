@@ -109,16 +109,6 @@ const relatedArticles = allArticles
         <article>
           <h1 class="article-title">{title}</h1>
           <p class="article-meta">
-            <time datetime={publishedAt.toISOString()}>
-              {publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </time>
-            {updatedAt && (
-              <span class="updated">（更新:
-                <time datetime={updatedAt.toISOString()}>
-                  {updatedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </time>）
-              </span>
-            )}
             <span class="reviewer-badge">長友恭平 監修</span>
           </p>
 
