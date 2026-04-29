@@ -236,22 +236,22 @@ const purposes = [
         </section>
       )}
 
-      <!-- Categories -->
+      <!-- Categories (フィルタトリガー) -->
       <section class="section-categories">
         <div class="container">
           <h2 class="section-heading-sm">カテゴリから探す</h2>
           <div class="category-list">
             {[
-              { id: 'comparison', label: '比較記事', icon: '📊' },
-              { id: 'review',     label: 'レビュー', icon: '⭐' },
-              { id: 'health-column', label: '健康コラム', icon: '🏥' },
-              { id: 'mental-health', label: 'メンタル', icon: '🧠' },
-              { id: 'howto',     label: '仕組み化', icon: '⚙️' },
+              { filter: 'compare',   label: '比較記事',   icon: '📊' },
+              { filter: 'no-cook',   label: '宅食・時短',  icon: '🍱' },
+              { filter: 'nutrition', label: '栄養コラム', icon: '🥗' },
+              { filter: 'sleep',     label: 'メンタル',   icon: '🧠' },
+              { filter: 'diet',      label: '運動・体型', icon: '💪' },
             ].map(cat => (
-              <a href={`/${cat.id}/`} class="category-chip">
+              <button class="category-chip js-cat-filter" data-filter={cat.filter} type="button">
                 <span class="chip-icon">{cat.icon}</span>
                 <span class="chip-label">{cat.label}</span>
-              </a>
+              </button>
             ))}
           </div>
         </div>
@@ -375,6 +375,24 @@ const purposes = [
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
       applyFilter(btn.dataset.filter);
+    });
+  });
+
+  // ── カテゴリボタン（下部セクション → フィルタと連動） ──────────
+  document.querySelectorAll('.js-cat-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      // purpose-chip と同じ処理
+      document.querySelectorAll('.purpose-chip').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      const targetChip = document.querySelector(`.purpose-chip[data-filter="${filter}"]`);
+      if (targetChip) { targetChip.classList.add('active'); targetChip.setAttribute('aria-pressed', 'true'); }
+      applyFilter(filter);
+      // フィルタバーまでスクロール
+      const purposeSection = document.querySelector('.purpose-section');
+      if (purposeSection) purposeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
@@ -738,9 +756,11 @@ a { color: inherit; text-decoration: none; }
   display: inline-flex; align-items: center; gap: 0.3rem;
   background: var(--c-bg); border: 1px solid var(--c-border); border-radius: 20px;
   padding: 0.28rem 0.75rem; font-size: 0.78rem; color: var(--c-text-md);
+  cursor: pointer; text-decoration: none;
   transition: background .15s, border-color .15s, color .15s;
 }
 .category-chip:hover { background: var(--c-accent-lt); border-color: var(--c-accent); color: var(--c-accent); }
+.js-cat-filter { font-family: inherit; line-height: inherit; }
 .chip-icon { font-size: 0.85rem; line-height: 1; }
 .chip-label { font-weight: 600; }
 
