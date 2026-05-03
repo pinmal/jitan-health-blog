@@ -1,34 +1,53 @@
 ---
 // 関連記事リンクカード（記事末尾に配置）
+// 2026-05-03: 内部リンク密度UPのため複数グループ表示に拡張
 interface Article {
   href: string;
   title: string;
-  label?: string;  // 「比較」「レビュー」など短いラベル
+  label?: string;  // 「比較」「レビュー」「同じキャラ」など短いラベル
+}
+
+interface Group {
+  heading: string;
+  articles: Article[];
 }
 
 interface Props {
-  articles: Article[];
+  // 旧API: articles + heading（後方互換）
+  articles?: Article[];
   heading?: string;
+  // 新API: groups（推奨）
+  groups?: Group[];
 }
 
-const { articles, heading = 'この記事を読んだ方へ' } = Astro.props;
+const { articles, heading, groups } = Astro.props;
+
+// 旧APIで呼ばれた場合はgroups形式に変換
+const renderGroups: Group[] = groups
+  ?? (articles ? [{ heading: heading ?? 'この記事を読んだ方へ', articles }] : []);
 ---
 
 <nav class="related-articles" aria-label="関連記事">
-  <h2 class="related-heading">{heading}</h2>
-  <ul class="related-list">
-    {articles.map((a) => (
-      <li>
-        <a href={a.href} class="related-card">
-          <span class="related-arrow">→</span>
-          <span class="related-body">
-            {a.label && <span class="related-label">{a.label}</span>}
-            <span class="related-title">{a.title}</span>
-          </span>
-        </a>
-      </li>
-    ))}
-  </ul>
+  {renderGroups.map(g => (
+    g.articles.length > 0 && (
+      <section class="related-group">
+        <h2 class="related-heading">{g.heading}</h2>
+        <ul class="related-list">
+          {g.articles.map((a) => (
+            <li>
+              <a href={a.href} class="related-card">
+                <span class="related-arrow">→</span>
+                <span class="related-body">
+                  {a.label && <span class="related-label">{a.label}</span>}
+                  <span class="related-title">{a.title}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  ))}
 </nav>
 
 <style>
@@ -36,6 +55,9 @@ const { articles, heading = 'この記事を読んだ方へ' } = Astro.props;
   margin-top: 2.5rem;
   padding-top: 1.75rem;
   border-top: 1px solid #e0dbd2;
+}
+.related-group + .related-group {
+  margin-top: 1.75rem;
 }
 .related-heading {
   font-size: 0.85rem;

@@ -32,15 +32,22 @@ const slug = Astro.url.pathname.replace(/^\/articles\//, '').replace(/\/$/, '') 
 const articleSchema = generateArticleSchema({ title, description, url, publishedAt, updatedAt, category, categoryLabel });
 const siteSchema = generateSiteSchema();
 
-// 同カテゴリの関連記事を最大3件自動取得（公開済み・自身除外・下書き除外）
+// 関連記事を複数グループで取得（内部リンク密度UPのため拡張 — 2026-05-03）
 const allArticles = await getCollection('articles');
-const relatedArticles = allArticles
-  .filter(a =>
-    a.data.humanReviewed === true &&
-    a.data.category === category &&
-    a.slug !== slug &&
-    !a.id.startsWith('_')
-  )
+const validArticles = allArticles.filter(a =>
+  a.data.humanReviewed === true &&
+  a.slug !== slug &&
+  !a.id.startsWith('_')
+);
+
+// 現在の記事のキャラ・タグを取得
+const currentArticle = allArticles.find(a => a.slug === slug);
+const currentChar = currentArticle?.data.character;
+const currentTags = currentArticle?.data.tags ?? [];
+
+// グループ1: 同カテゴリの新着3件
+const sameCatArticles = validArticles
+  .filter(a => a.data.category === category)
   .sort((a, b) => new Date(b.data.publishedAt).valueOf() - new Date(a.data.publishedAt).valueOf())
   .slice(0, 3)
   .map(a => ({
@@ -48,6 +55,69 @@ const relatedArticles = allArticles
     title: a.data.title,
     label: categoryLabel,
   }));
+
+const sameCatIds = new Set(sameCatArticles.map(a => a.href));
+
+// グループ2: 同じキャラの他記事（同カテゴリ既出は除外）3件
+const sameCharArticles = currentChar
+  ? validArticles
+      .filter(a => a.data.character === currentChar && a.data.category !== category)
+      .sort((a, b) => new Date(b.data.publishedAt).valueOf() - new Date(a.data.publishedAt).valueOf())
+      .slice(0, 3)
+      .map(a => ({
+        href: `/articles/${a.slug}/`,
+        title: a.data.title,
+        label: '同じキャラ',
+      }))
+  : [];
+
+const allUsedIds = new Set([...sameCatIds, ...sameCharArticles.map(a => a.href)]);
+
+// グループ3: タグ重複が多い記事（既出除外・最大3件）
+const tagOverlapArticles = currentTags.length > 0
+  ? validArticles
+      .map(a => {
+        const overlap = (a.data.tags ?? []).filter(t => currentTags.includes(t)).length;
+        return { article: a, overlap };
+      })
+      .filter(({ article, overlap }) =>
+        overlap >= 2 && !allUsedIds.has(`/articles/${article.slug}/`)
+      )
+      .sort((a, b) => b.overlap - a.overlap || new Date(b.article.data.publishedAt).valueOf() - new Date(a.article.data.publishedAt).valueOf())
+      .slice(0, 3)
+      .map(({ article }) => ({
+        href: `/articles/${article.slug}/`,
+        title: article.data.title,
+        label: '関連トピック',
+      }))
+  : [];
+
+const charLabels: Record<string, string> = {
+  yuka: '宮本ユウカ',
+  naoko: '田中ナオコ',
+  kenji: '井上ケンジ',
+};
+
+const relatedGroups = [
+  { heading: `他の${categoryLabel}を読む`, articles: sameCatArticles },
+  ...(sameCharArticles.length > 0 ? [{
+    heading: `${currentChar ? charLabels[currentChar] : ''}の他のレビュー`,
+    articles: sameCharArticles,
+  }] : []),
+  ...(tagOverlapArticles.length > 0 ? [{
+    heading: '関連トピックの記事',
+    articles: tagOverlapArticles,
+  }] : []),
+].filter(g => g.articles.length > 0);
+
+// カテゴリナビ用
+const categoryNav = [
+  { slug: 'comparison',     label: '比較',       icon: '📊' },
+  { slug: 'review',         label: 'レビュー',   icon: '🍱' },
+  { slug: 'health-column',  label: '健康コラム', icon: '🥗' },
+  { slug: 'howto',          label: '仕組み化',   icon: '⚙️' },
+  { slug: 'mental-health',  label: 'メンタル',   icon: '🧠' },
+];
 ---
 
 <!doctype html>
@@ -87,6 +157,22 @@ const relatedArticles = allArticles
           <span class="brand-name">時短 × 健康</span>
           <span class="brand-sub">ー忙しい大人のための合理的食生活ー</span>
         </a>
+        <nav class="header-cat-nav" aria-label="カテゴリ">
+          {categoryNav.map(c => (
+            <a
+              href={`/${c.slug}/`}
+              class={`header-cat-link${c.slug === category ? ' active' : ''}`}
+              aria-current={c.slug === category ? 'page' : undefined}
+            >
+              <span class="header-cat-icon">{c.icon}</span>
+              <span class="header-cat-label">{c.label}</span>
+            </a>
+          ))}
+          <a href="/articles/" class="header-cat-link header-cat-link--all">
+            <span class="header-cat-icon">📋</span>
+            <span class="header-cat-label">全記事</span>
+          </a>
+        </nav>
       </div>
     </header>
 
@@ -114,10 +200,27 @@ const relatedArticles = allArticles
 
           <slot />
 
-          {/* 関連記事（同カテゴリから自動取得） */}
-          {relatedArticles.length > 0 && (
-            <RelatedArticles articles={relatedArticles} />
+          {/* 関連記事（同カテゴリ + 同キャラ + タグ重複の3グループ） */}
+          {relatedGroups.length > 0 && (
+            <RelatedArticles groups={relatedGroups} />
           )}
+
+          {/* カテゴリ全体へのナビ */}
+          <nav class="cat-explore" aria-label="他のカテゴリを探す">
+            <h2 class="cat-explore-heading">他のカテゴリも見る</h2>
+            <div class="cat-explore-chips">
+              {categoryNav.filter(c => c.slug !== category).map(c => (
+                <a href={`/${c.slug}/`} class="cat-explore-chip">
+                  <span>{c.icon}</span>
+                  <span>{c.label}</span>
+                </a>
+              ))}
+              <a href="/articles/" class="cat-explore-chip cat-explore-chip--all">
+                <span>📋</span>
+                <span>全記事一覧</span>
+              </a>
+            </div>
+          </nav>
 
           {/* ページトップリンク */}
           <div class="back-to-top-wrap">
@@ -501,10 +604,104 @@ img { max-width: 100%; height: auto; }
   z-index: 100;
   box-shadow: 0 1px 0 rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.3);
 }
-.header-inner { max-width: 860px; margin: 0 auto; }
+.header-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.55rem; }
 .brand { display: flex; flex-direction: column; gap: 0.05rem; text-decoration: none; }
 .brand-name { color: #fff; font-size: 1.1rem; font-weight: 800; line-height: 1.2; }
 .brand-sub  { color: #93c5fd; font-size: 0.68rem; }
+
+/* ── カテゴリナビ ── */
+.header-cat-nav {
+  display: flex;
+  gap: 0.3rem;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem 0.15rem;
+}
+.header-cat-nav::-webkit-scrollbar { display: none; }
+.header-cat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .15s, color .15s, border-color .15s;
+  text-decoration: none;
+}
+.header-cat-link:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: rgba(255,255,255,0.2);
+}
+.header-cat-link.active {
+  background: #c4703b;
+  color: #fff;
+  border-color: #c4703b;
+}
+.header-cat-link--all {
+  background: rgba(196,112,59,0.2);
+  color: #fdba74;
+  border-color: rgba(196,112,59,0.3);
+}
+.header-cat-icon { font-size: 0.85rem; line-height: 1; }
+.header-cat-label { font-weight: 600; }
+
+/* ── カテゴリ探索（記事末尾） ── */
+.cat-explore {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--c-border);
+}
+.cat-explore-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #8fa0b0;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.cat-explore-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.cat-explore-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--c-text-md);
+  text-decoration: none;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.cat-explore-chip:hover {
+  background: #fdf0e6;
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+.cat-explore-chip--all {
+  background: var(--c-primary);
+  color: #fff;
+  border-color: var(--c-primary);
+}
+.cat-explore-chip--all:hover {
+  background: var(--c-primary-dk);
+  color: #fff;
+  border-color: var(--c-primary-dk);
+}
 
 /* ── Article layout ── */
 .article-main { background: var(--c-bg); padding: 2rem 1.25rem 6rem; min-height: 70vh; }

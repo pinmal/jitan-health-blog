@@ -1,0 +1,195 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  return [
+    { params: { name: 'yuka' } },
+    { params: { name: 'naoko' } },
+    { params: { name: 'kenji' } },
+  ];
+}
+
+const { name } = Astro.params;
+
+const charMeta: Record<string, { fullName: string; tagline: string; profile: string; color: string; bg: string; avatar: string }> = {
+  yuka: {
+    fullName: '宮本ユウカ',
+    tagline: '34歳・IT企業勤務・一人暮らし',
+    profile: '仕事が忙しくて食事が後回しになりがち。「健康的に食べたいけど、毎日考えるのが面倒」という読者の分身。冷凍宅配・ミールキット・有機野菜宅配など、一人暮らし向けサービスを正直にレビューする。',
+    color: '#c4703b',
+    bg: '#fff9f6',
+    avatar: 'ユ',
+  },
+  naoko: {
+    fullName: '田中ナオコ',
+    tagline: '38歳・ITコンサル・一人暮らし',
+    profile: '健康意識が高めでコスパ感覚が鋭い。ユウカより少し先を行く先輩。情報収集してから決めるタイプで、続けられる仕組みを重視する。',
+    color: '#2d8b72',
+    bg: '#f4faf7',
+    avatar: 'ナ',
+  },
+  kenji: {
+    fullName: '井上ケンジ',
+    tagline: '41歳・大手メーカー部長・共働き4人家族',
+    profile: '「子供が食べてくれるか」が判断基準。コスト計算が得意で、続けられる仕組みを重視する。家族向けの宅食・ミールキット・食材宅配を中心にレビュー。',
+    color: '#3b5f8b',
+    bg: '#f4f7fc',
+    avatar: 'ケ',
+  },
+};
+
+const meta = charMeta[name!];
+if (!meta) return Astro.redirect('/404');
+
+const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
+const articles = allArticles
+  .filter(a => (a.data.character ?? 'yuka') === name)
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const url = `https://jitan-kenko.blog/character/${name}/`;
+const title = `${meta.fullName}の記録一覧 | 時短 × 健康`;
+const description = `${meta.fullName}（${meta.tagline}）が体験したサービス・続けてみた結果のレビュー一覧。${articles.length}件の記事。`;
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6YC8SXBSH"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P6YC8SXBSH');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="時短 × 健康" />
+    <meta property="og:locale" content="ja_JP" />
+  </head>
+  <body style={`background:${meta.bg};`}>
+    <header class="site-header">
+      <div class="container">
+        <a href="/" class="brand">
+          <span class="brand-name">時短 × 健康</span>
+          <span class="brand-sub">ー忙しい大人のための合理的食生活ー</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="char-main">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <ol>
+            <li><a href="/">トップ</a></li>
+            <li aria-current="page">{meta.fullName}の記録</li>
+          </ol>
+        </nav>
+
+        <header class="char-hero" style={`border-left-color:${meta.color}`}>
+          <div class="char-avatar" style={`background:${meta.color}`}>{meta.avatar}</div>
+          <div class="char-body">
+            <h1>{meta.fullName}の記録（{articles.length}件）</h1>
+            <p class="char-tagline">{meta.tagline}</p>
+            <p class="char-profile">{meta.profile}</p>
+            <p class="fiction-note">※ {meta.fullName}は架空のキャラクターです。体験談部分はフィクションですが、情報の内容は実際のサービス利用体験や製品情報をもとにしています。</p>
+          </div>
+        </header>
+
+        {articles.length > 0 ? (
+          <ul class="char-list">
+            {articles.map(a => (
+              <li>
+                <a href={`/articles/${a.slug}/`} class="char-card" style={`border-left-color:${meta.color}`}>
+                  <span class="char-card-title">{a.data.title}</span>
+                  {a.data.description && (
+                    <span class="char-card-desc">{a.data.description}</span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="empty">{meta.fullName}の記事はまだありません。</p>
+        )}
+
+        <section class="other-chars">
+          <h2>他のキャラクターの記録</h2>
+          <div class="char-chips">
+            {Object.entries(charMeta).filter(([k]) => k !== name).map(([k, v]) => (
+              <a href={`/character/${k}/`} class="char-chip">
+                <span class="char-chip-avatar" style={`background:${v.color}`}>{v.avatar}</span>
+                <span>{v.fullName}</span>
+              </a>
+            ))}
+            <a href="/articles/" class="char-chip char-chip--all">
+              <span>📋</span><span>全記事一覧</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>&copy; 2026 時短 × 健康</p>
+        <nav>
+          <a href="/privacy">プライバシーポリシー</a>
+          <a href="/disclaimer">免責事項</a>
+          <a href="/about">このブログについて</a>
+          <a href="/contact">お問い合わせ</a>
+        </nav>
+        <p class="affiliate-disclaimer">当サイトはA8.net等のアフィリエイトプログラムに参加しています。</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic Medium',sans-serif;color:#212b38;line-height:1.85;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+.container{max-width:860px;margin:0 auto;padding:0 1.25rem;}
+.site-header{background:#0f2545;padding:0.9rem 0;position:sticky;top:0;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.brand{display:flex;flex-direction:column;gap:0.05rem;}
+.brand-name{color:#fff;font-size:1.1rem;font-weight:800;}
+.brand-sub{color:#93c5fd;font-size:0.68rem;}
+.char-main{padding:2rem 0 5rem;min-height:70vh;}
+.breadcrumb ol{list-style:none;display:flex;flex-wrap:wrap;gap:0.2rem;font-size:0.75rem;color:#536070;margin-bottom:1.25rem;}
+.breadcrumb a{color:#536070;}
+.breadcrumb a:hover{color:#1b3f6e;}
+.breadcrumb li+li::before{content:' › ';opacity:.5;}
+.char-hero{display:flex;align-items:flex-start;gap:1.1rem;background:#fff;border:1px solid #e0dbd2;border-left:5px solid #c4703b;border-radius:10px;padding:1.5rem;margin-bottom:1.75rem;}
+.char-avatar{width:3rem;height:3rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;flex-shrink:0;}
+.char-body{flex:1;min-width:0;}
+.char-body h1{font-size:1.35rem;font-weight:800;color:#1b3f6e;margin-bottom:0.3rem;letter-spacing:-0.01em;line-height:1.35;}
+.char-tagline{font-size:0.85rem;color:#536070;font-weight:600;margin-bottom:0.75rem;}
+.char-profile{font-size:0.88rem;color:#536070;line-height:1.75;margin-bottom:0.75rem;}
+.fiction-note{font-size:0.72rem;color:#8fa0b0;line-height:1.6;background:#fef9c3;border-left:2px solid #fbbf24;padding:0.4rem 0.7rem;border-radius:4px;}
+.char-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;}
+.char-card{display:flex;flex-direction:column;gap:0.35rem;background:#fff;border:1px solid #e0dbd2;border-left:3px solid #c4703b;border-radius:8px;padding:1rem 1.15rem;transition:box-shadow .15s,transform .15s;}
+.char-card:hover{box-shadow:0 4px 14px rgba(27,63,110,.1);transform:translateY(-1px);}
+.char-card-title{font-size:0.95rem;font-weight:700;color:#1b3f6e;line-height:1.5;}
+.char-card-desc{font-size:0.78rem;color:#536070;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.empty{padding:3rem 0;text-align:center;color:#536070;}
+.other-chars{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0dbd2;}
+.other-chars h2{font-size:0.85rem;font-weight:700;color:#8fa0b0;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.75rem;}
+.char-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.char-chip{display:inline-flex;align-items:center;gap:0.45rem;background:#fff;border:1px solid #e0dbd2;border-radius:25px;padding:0.35rem 1rem 0.35rem 0.4rem;font-size:0.85rem;font-weight:600;color:#1b3f6e;transition:background .15s,border-color .15s,transform .15s;}
+.char-chip:hover{background:#fdf0e6;border-color:#c4703b;color:#c4703b;transform:translateY(-1px);}
+.char-chip-avatar{width:1.6rem;height:1.6rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;}
+.char-chip--all{padding:0.4rem 1rem;background:#1b3f6e;color:#fff;border-color:#1b3f6e;}
+.char-chip--all:hover{background:#0f2545;color:#fff;border-color:#0f2545;}
+.site-footer{background:#0f2545;color:#94a3b8;padding:2rem 0;font-size:0.78rem;}
+.footer-inner{display:flex;flex-direction:column;gap:0.65rem;}
+.footer-inner nav{display:flex;gap:1.25rem;flex-wrap:wrap;}
+.footer-inner nav a{color:#94a3b8;}
+.footer-inner nav a:hover{color:#e2e8f0;}
+.affiliate-disclaimer{font-size:0.68rem;color:#475569;}
+@media(max-width:680px){.char-hero{flex-direction:column;}.char-body h1{font-size:1.15rem;}}
+</style>

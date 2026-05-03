@@ -1,0 +1,172 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const categories = ['comparison', 'review', 'health-column', 'howto', 'mental-health'];
+  return categories.map(c => ({ params: { category: c } }));
+}
+
+const { category } = Astro.params;
+
+const categoryMeta: Record<string, { label: string; description: string; icon: string; color: string }> = {
+  comparison:      { label: '比較記事',      description: '宅食・ミールキット・ジムなどを実際に複数試して比較した記録。価格・続けやすさ・食材の質を多軸で評価。', icon: '📊', color: '#1b3f6e' },
+  review:          { label: 'レビュー',      description: '実際にサービスを使った正直なレビュー。良かった点だけでなく合わなかった点・向き不向きも記載。', icon: '🍱', color: '#c4703b' },
+  'health-column': { label: '健康コラム',    description: '食生活・睡眠・運動と健康の関係について、医師の知見をもとにわかりやすく解説。', icon: '🥗', color: '#2d8b72' },
+  howto:           { label: '仕組み化',      description: '献立・買い物・自炊を仕組み化して時短化するための実践的ガイド。', icon: '⚙️', color: '#3b5f8b' },
+  'mental-health': { label: 'メンタルヘルス', description: '食事とメンタルヘルスの関係、ストレス食い対策、睡眠の質改善など、精神保健指定医視点の解説。', icon: '🧠', color: '#7c3aed' },
+};
+
+const meta = categoryMeta[category!];
+if (!meta) return Astro.redirect('/404');
+
+const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
+const articles = allArticles
+  .filter(a => a.data.category === category)
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const url = `https://jitan-kenko.blog/${category}/`;
+const title = `${meta.label}一覧 | 時短 × 健康`;
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6YC8SXBSH"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P6YC8SXBSH');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={meta.description} />
+    <link rel="canonical" href={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="時短 × 健康" />
+    <meta property="og:locale" content="ja_JP" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a href="/" class="brand">
+          <span class="brand-name">時短 × 健康</span>
+          <span class="brand-sub">ー忙しい大人のための合理的食生活ー</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="cat-main">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <ol>
+            <li><a href="/">トップ</a></li>
+            <li aria-current="page">{meta.label}</li>
+          </ol>
+        </nav>
+
+        <header class="cat-hero" style={`border-left-color:${meta.color}`}>
+          <div class="cat-icon" aria-hidden="true">{meta.icon}</div>
+          <div>
+            <h1 class="cat-title">{meta.label}（{articles.length}件）</h1>
+            <p class="cat-desc">{meta.description}</p>
+          </div>
+        </header>
+
+        {articles.length > 0 ? (
+          <ul class="cat-list">
+            {articles.map(a => (
+              <li>
+                <a href={`/articles/${a.slug}/`} class="cat-card">
+                  <span class="cat-card-arrow">→</span>
+                  <span class="cat-card-body">
+                    <span class="cat-card-title">{a.data.title}</span>
+                    {a.data.description && (
+                      <span class="cat-card-desc">{a.data.description}</span>
+                    )}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="empty">このカテゴリにはまだ記事がありません。</p>
+        )}
+
+        <section class="other-cats">
+          <h2>他のカテゴリも見る</h2>
+          <div class="cat-chips">
+            {Object.entries(categoryMeta).filter(([k]) => k !== category).map(([k, v]) => (
+              <a href={`/${k}/`} class="cat-chip">
+                <span>{v.icon}</span>
+                <span>{v.label}</span>
+              </a>
+            ))}
+            <a href="/articles/" class="cat-chip cat-chip--all">
+              <span>📋</span><span>全記事一覧</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>&copy; 2026 時短 × 健康</p>
+        <nav>
+          <a href="/privacy">プライバシーポリシー</a>
+          <a href="/disclaimer">免責事項</a>
+          <a href="/about">このブログについて</a>
+          <a href="/contact">お問い合わせ</a>
+        </nav>
+        <p class="affiliate-disclaimer">当サイトはA8.net等のアフィリエイトプログラムに参加しています。</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic Medium',sans-serif;background:#f7f5f1;color:#212b38;line-height:1.85;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+.container{max-width:860px;margin:0 auto;padding:0 1.25rem;}
+.site-header{background:#0f2545;padding:0.9rem 0;position:sticky;top:0;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.brand{display:flex;flex-direction:column;gap:0.05rem;}
+.brand-name{color:#fff;font-size:1.1rem;font-weight:800;}
+.brand-sub{color:#93c5fd;font-size:0.68rem;}
+.cat-main{padding:2rem 0 5rem;min-height:70vh;}
+.breadcrumb ol{list-style:none;display:flex;flex-wrap:wrap;gap:0.2rem;font-size:0.75rem;color:#536070;margin-bottom:1.25rem;}
+.breadcrumb a{color:#536070;}
+.breadcrumb a:hover{color:#1b3f6e;}
+.breadcrumb li+li::before{content:' › ';opacity:.5;}
+.cat-hero{display:flex;align-items:center;gap:1rem;background:#fff;border:1px solid #e0dbd2;border-left:5px solid #1b3f6e;border-radius:10px;padding:1.5rem 1.5rem;margin-bottom:1.75rem;}
+.cat-icon{font-size:2.4rem;line-height:1;flex-shrink:0;}
+.cat-title{font-size:1.45rem;font-weight:800;color:#1b3f6e;margin-bottom:0.4rem;letter-spacing:-0.01em;line-height:1.3;}
+.cat-desc{font-size:0.88rem;color:#536070;line-height:1.7;}
+.cat-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;}
+.cat-card{display:flex;align-items:flex-start;gap:0.7rem;background:#fff;border:1px solid #e0dbd2;border-left:3px solid #1b3f6e;border-radius:8px;padding:1rem 1.15rem;transition:border-left-color .15s,box-shadow .15s,transform .15s;}
+.cat-card:hover{border-left-color:#c4703b;box-shadow:0 4px 14px rgba(27,63,110,.1);transform:translateY(-1px);}
+.cat-card-arrow{color:#1b3f6e;font-size:0.95rem;flex-shrink:0;margin-top:0.1rem;transition:color .15s;}
+.cat-card:hover .cat-card-arrow{color:#c4703b;}
+.cat-card-body{display:flex;flex-direction:column;gap:0.3rem;flex:1;min-width:0;}
+.cat-card-title{font-size:0.95rem;font-weight:700;color:#1b3f6e;line-height:1.5;}
+.cat-card-desc{font-size:0.78rem;color:#536070;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.empty{padding:3rem 0;text-align:center;color:#536070;}
+.other-cats{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0dbd2;}
+.other-cats h2{font-size:0.85rem;font-weight:700;color:#8fa0b0;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.75rem;}
+.cat-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.cat-chip{display:inline-flex;align-items:center;gap:0.3rem;background:#fff;border:1px solid #e0dbd2;border-radius:20px;padding:0.4rem 0.95rem;font-size:0.82rem;font-weight:600;color:#536070;transition:background .15s,border-color .15s,color .15s;}
+.cat-chip:hover{background:#fdf0e6;border-color:#c4703b;color:#c4703b;}
+.cat-chip--all{background:#1b3f6e;color:#fff;border-color:#1b3f6e;}
+.cat-chip--all:hover{background:#0f2545;color:#fff;border-color:#0f2545;}
+.site-footer{background:#0f2545;color:#94a3b8;padding:2rem 0;font-size:0.78rem;}
+.footer-inner{display:flex;flex-direction:column;gap:0.65rem;}
+.footer-inner nav{display:flex;gap:1.25rem;flex-wrap:wrap;}
+.footer-inner nav a{color:#94a3b8;}
+.footer-inner nav a:hover{color:#e2e8f0;}
+.affiliate-disclaimer{font-size:0.68rem;color:#475569;}
+@media(max-width:680px){.cat-hero{flex-direction:column;align-items:flex-start;}.cat-title{font-size:1.2rem;}}
+</style>

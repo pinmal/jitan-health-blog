@@ -43,11 +43,19 @@ const purposes = [
   <body>
 
     <header class="site-header">
-      <div class="container">
+      <div class="container header-container">
         <a href="/" class="brand">
           <span class="brand-name">時短 × 健康</span>
           <span class="brand-sub">ー忙しい大人のための合理的食生活ー</span>
         </a>
+        <nav class="header-cat-nav" aria-label="カテゴリ">
+          <a href="/comparison/"     class="header-cat-link"><span>📊</span><span>比較</span></a>
+          <a href="/review/"         class="header-cat-link"><span>🍱</span><span>レビュー</span></a>
+          <a href="/health-column/"  class="header-cat-link"><span>🥗</span><span>健康コラム</span></a>
+          <a href="/howto/"          class="header-cat-link"><span>⚙️</span><span>仕組み化</span></a>
+          <a href="/mental-health/"  class="header-cat-link"><span>🧠</span><span>メンタル</span></a>
+          <a href="/articles/"       class="header-cat-link header-cat-link--all"><span>📋</span><span>全記事</span></a>
+        </nav>
       </div>
     </header>
 
@@ -94,7 +102,7 @@ const purposes = [
             <div class="section-header-row">
               <h2 class="section-heading section-heading--yuka">
                 <span class="char-avatar char-avatar--yuka">ユ</span>
-                <span>宮本ユウカの記録</span>
+                <a href="/character/yuka/" class="char-section-link">宮本ユウカの記録</a>
                 <span class="article-count-badge">{yukaArticles.length}件</span>
               </h2>
               <button class="section-toggle" data-target="yuka" aria-expanded="true" type="button">
@@ -132,7 +140,7 @@ const purposes = [
             <div class="section-header-row">
               <h2 class="section-heading section-heading--naoko">
                 <span class="char-avatar char-avatar--naoko">ナ</span>
-                <span>田中ナオコの記録</span>
+                <a href="/character/naoko/" class="char-section-link">田中ナオコの記録</a>
                 <span class="article-count-badge">{naokoArticles.length}件</span>
               </h2>
               <button class="section-toggle" data-target="naoko" aria-expanded="true" type="button">
@@ -170,7 +178,7 @@ const purposes = [
             <div class="section-header-row">
               <h2 class="section-heading section-heading--kenji">
                 <span class="char-avatar char-avatar--kenji">ケ</span>
-                <span>井上ケンジの記録</span>
+                <a href="/character/kenji/" class="char-section-link">井上ケンジの記録</a>
                 <span class="article-count-badge">{kenjiArticles.length}件</span>
               </h2>
               <button class="section-toggle" data-target="kenji" aria-expanded="true" type="button">
@@ -486,9 +494,48 @@ a { color: inherit; text-decoration: none; }
   z-index: 100;
   box-shadow: 0 1px 0 rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.3);
 }
+.header-container { display: flex; flex-direction: column; gap: 0.55rem; }
 .brand { display: flex; flex-direction: column; gap: 0.1rem; }
 .brand-name { font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: -0.01em; line-height: 1.2; }
 .brand-sub { font-size: 0.7rem; color: #93c5fd; font-weight: 400; }
+
+/* ── カテゴリナビ ── */
+.header-cat-nav {
+  display: flex;
+  gap: 0.3rem;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem 0.15rem;
+}
+.header-cat-nav::-webkit-scrollbar { display: none; }
+.header-cat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .15s, color .15s, border-color .15s;
+  text-decoration: none;
+}
+.header-cat-link:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: rgba(255,255,255,0.2);
+}
+.header-cat-link--all {
+  background: rgba(196,112,59,0.2);
+  color: #fdba74;
+  border-color: rgba(196,112,59,0.3);
+}
 
 /* ── Hero ──────────────────────── */
 .hero {
@@ -609,6 +656,8 @@ a { color: inherit; text-decoration: none; }
 .section-heading--yuka::before  { background: #c4703b; }
 .section-heading--naoko::before { background: #2d8b72; }
 .section-heading--kenji::before { background: #3b5f8b; }
+.char-section-link { color: inherit; text-decoration: none; transition: color .15s; }
+.char-section-link:hover { color: var(--c-accent); text-decoration: underline; }
 
 .article-count-badge {
   font-size: 0.65rem;
