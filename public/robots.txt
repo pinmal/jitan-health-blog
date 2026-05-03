@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jitan-kenko.blog/sitemap.xml
+Sitemap: https://jitan-kenko.blog/sitemap-index.xml
