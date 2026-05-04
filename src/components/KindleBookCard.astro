@@ -1,0 +1,121 @@
+---
+// Kindle本紹介カード
+// Amazon アソシエイト対応（rel="sponsored noopener"・景品表示法PR表記済み）
+interface Props {
+  title: string;
+  url: string;
+  description: string;
+  badge?: string;
+  accentColor?: string;
+}
+
+const {
+  title,
+  url,
+  description,
+  badge = '著者の本',
+  accentColor = '#c4703b',
+} = Astro.props;
+---
+
+<div class="book-card-wrap">
+  <div class="book-card" style={`--accent: ${accentColor}`}>
+    <div class="book-label">
+      <span class="book-icon">📚</span>
+      <span class="book-badge">{badge}</span>
+      <span class="book-pr">PR</span>
+    </div>
+    <p class="book-title">{title}</p>
+    <p class="book-desc">{description}</p>
+    <a
+      href={url}
+      class="book-btn"
+      target="_blank"
+      rel="sponsored noopener noreferrer"
+    >
+      Amazonで見る（Kindle版）
+    </a>
+    <p class="book-disc">※ Amazonアソシエイトプログラムを利用したアフィリエイト広告です</p>
+  </div>
+</div>
+
+<style>
+.book-card-wrap {
+  margin: 2rem 0;
+}
+.book-card {
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.3rem 1.4rem 1rem;
+  background: #fffdf9;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: relative;
+}
+.book-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.book-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.book-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.book-pr {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #fff;
+  background: #8fa0b0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+.book-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1b3f6e;
+  line-height: 1.5;
+  margin: 0;
+}
+.book-desc {
+  font-size: 0.83rem;
+  color: #536070;
+  line-height: 1.75;
+  margin: 0;
+}
+.book-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff9900, #e47911);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.7rem 1.2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity .15s, transform .15s;
+  align-self: flex-start;
+}
+.book-btn:hover {
+  opacity: .88;
+  transform: translateY(-1px);
+}
+.book-disc {
+  font-size: 0.63rem;
+  color: #8fa0b0;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .book-btn {
+    align-self: stretch;
+  }
+}
+</style>
