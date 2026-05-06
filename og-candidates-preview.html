@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OG画像候補 — 時短 × 健康</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 32px;
+      background: #1a1a2e;
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', sans-serif;
+      color: #e0e0e0;
+    }
+    h1 { font-size: 1rem; color: #94a3b8; margin-bottom: 36px; font-weight: 400; letter-spacing: .05em; }
+    .candidates { display: flex; flex-direction: column; gap: 48px; }
+    .candidate { }
+    .label {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .label strong { color: #e2e8f0; font-size: 1rem; }
+    .label em { color: #64748b; font-style: normal; font-size: 0.78rem; }
+    /* 実寸 1200×630 → 表示 720×378 (60%) */
+    .og-wrap {
+      width: 720px;
+      height: 378px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.6);
+      position: relative;
+    }
+    .og-wrap > div {
+      transform-origin: top left;
+      transform: scale(0.6);
+      width: 1200px;
+      height: 630px;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    /* ===================== Option A: Navy Deep ===================== */
+    .og-a {
+      background: linear-gradient(135deg, #0f2545 0%, #1b3f6e 60%, #1e4d82 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .og-a::before {
+      content: '';
+      position: absolute;
+      right: -60px; top: -60px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,112,59,.18) 0%, transparent 70%);
+    }
+    .og-a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #c4703b, #e8944a, #c4703b);
+    }
+    .og-a .logo {
+      font-size: 26px;
+      color: #93c5fd;
+      font-weight: 400;
+      letter-spacing: .08em;
+      margin-bottom: 28px;
+    }
+    .og-a .title {
+      font-size: 68px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+    .og-a .title .x {
+      color: #c4703b;
+      font-style: normal;
+    }
+    .og-a .tagline {
+      font-size: 24px;
+      color: #93c5fd;
+      font-weight: 400;
+      letter-spacing: .04em;
+    }
+    .og-a .badge {
+      position: absolute;
+      right: 100px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,.07);
+      border: 2px solid rgba(196,112,59,.4);
+      border-radius: 50%;
+      width: 200px; height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .og-a .badge .icon { font-size: 64px; line-height: 1; }
+    .og-a .badge .sub { font-size: 18px; color: #c4703b; font-weight: 600; }
+
+    /* ===================== Option B: Warm Beige ===================== */
+    .og-b {
+      background: #f7f5f1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .og-b .left {
+      background: #1b3f6e;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 70px 70px;
+      position: relative;
+    }
+    .og-b .left::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: 0; bottom: 0;
+      width: 60px;
+      background: #1b3f6e;
+      clip-path: polygon(0 0, 100% 15%, 100% 85%, 0 100%);
+    }
+    .og-b .left .logo {
+      font-size: 22px;
+      color: #93c5fd;
+      margin-bottom: 20px;
+      letter-spacing: .06em;
+    }
+    .og-b .left .title {
+      font-size: 76px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.1;
+    }
+    .og-b .left .title .x { color: #c4703b; }
+    .og-b .left .accent {
+      margin-top: 24px;
+      width: 60px;
+      height: 4px;
+      background: #c4703b;
+      border-radius: 2px;
+    }
+    .og-b .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 60px 60px 80px;
+    }
+    .og-b .right .tagline {
+      font-size: 26px;
+      color: #1b3f6e;
+      line-height: 1.7;
+      font-weight: 400;
+      margin-bottom: 36px;
+    }
+    .og-b .right .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .og-b .right .pill {
+      background: white;
+      border: 1.5px solid #c4703b;
+      color: #c4703b;
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .og-b .right .pill.dark {
+      background: #1b3f6e;
+      border-color: #1b3f6e;
+      color: white;
+    }
+    .og-b .doctor {
+      position: absolute;
+      bottom: 24px;
+      right: 40px;
+      font-size: 14px;
+      color: #8fa0b0;
+    }
+    .og-b .doctor strong { color: #536070; }
+
+    /* ===================== Option C: Card Minimal ===================== */
+    .og-c {
+      background: #0f2545;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .og-c .noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+    }
+    .og-c .card {
+      position: relative;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 24px;
+      padding: 60px 80px;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .og-c .site-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(196,112,59,.15);
+      border: 1px solid rgba(196,112,59,.35);
+      color: #e8944a;
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 36px;
+      letter-spacing: .04em;
+    }
+    .og-c .main-title {
+      font-size: 86px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 28px;
+    }
+    .og-c .main-title .x { color: #c4703b; }
+    .og-c .sub-title {
+      font-size: 22px;
+      color: #93c5fd;
+      letter-spacing: .06em;
+      font-weight: 400;
+      margin-bottom: 40px;
+    }
+    .og-c .tags {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .og-c .tag {
+      background: rgba(27,63,110,.7);
+      border: 1px solid rgba(147,197,253,.2);
+      color: #93c5fd;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 17px;
+    }
+    .og-c .corner-tl, .og-c .corner-br {
+      position: absolute;
+      width: 120px; height: 120px;
+      border-color: rgba(196,112,59,.25);
+      border-style: solid;
+    }
+    .og-c .corner-tl {
+      top: 30px; left: 30px;
+      border-width: 2px 0 0 2px;
+      border-radius: 4px 0 0 0;
+    }
+    .og-c .corner-br {
+      bottom: 30px; right: 30px;
+      border-width: 0 2px 2px 0;
+      border-radius: 0 0 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>OG画像候補 (1200 × 630 px) — 時短 × 健康</h1>
+
+  <div class="candidates">
+
+    <!-- ===== Option A ===== -->
+    <div class="candidate">
+      <div class="label">
+        <strong>A — Navy Deep（ダークネイビー）</strong>
+        <em>ブログのメインカラーで統一。シンプルで視認性が高い。</em>
+      </div>
+      <div class="og-wrap">
+        <div class="og-a">
+          <div class="logo">時短 × 健康</div>
+          <div class="title">忙しい大人の<br>合理的食生活</div>
+          <div class="tagline">産業医が教える、手を抜いていい理由</div>
+          <div class="badge">
+            <div class="icon">🩺</div>
+            <div class="sub">医師監修</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Option B ===== -->
+    <div class="candidate">
+      <div class="label">
+        <strong>B — Navy × Beige（2カラム）</strong>
+        <em>左：ロゴ+タイトル、右：説明文+タグ。温かみがある。</em>
+      </div>
+      <div class="og-wrap">
+        <div class="og-b">
+          <div class="left">
+            <div class="logo">時短 × 健康</div>
+            <div class="title">時短<br><span class="x">×</span><br>健康</div>
+            <div class="accent"></div>
+          </div>
+          <div class="right">
+            <div class="tagline">忙しい大人のための<br>合理的な食生活ガイド</div>
+            <div class="pills">
+              <div class="pill dark">医師監修</div>
+              <div class="pill">宅配弁当</div>
+              <div class="pill">ミールキット</div>
+              <div class="pill">時短ごはん</div>
+            </div>
+          </div>
+          <div class="doctor"><strong>産業医 長友恭平</strong> 監修</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Option C ===== -->
+    <div class="candidate">
+      <div class="label">
+        <strong>C — Card Minimal（カード型）</strong>
+        <em>中央配置のカードデザイン。SNSでインパクトが出やすい。</em>
+      </div>
+      <div class="og-wrap">
+        <div class="og-c">
+          <div class="noise"></div>
+          <div class="corner-tl"></div>
+          <div class="corner-br"></div>
+          <div class="card">
+            <div class="site-badge">🩺 産業医監修ブログ</div>
+            <div class="main-title">時短 <span class="x">×</span> 健康</div>
+            <div class="sub-title">ー 忙しい大人のための合理的食生活 ー</div>
+            <div class="tags">
+              <div class="tag">宅配弁当</div>
+              <div class="tag">ミールキット</div>
+              <div class="tag">高タンパク食</div>
+              <div class="tag">ダイエット</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
