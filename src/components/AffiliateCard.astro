@@ -2,10 +2,18 @@
 // アフィリエイトカード：A8.net / Amazon / 楽天（直接アフィリ）の3ASP対応
 // href のみ → 単一ボタン（後方互換）
 // amazonUrl / rakutenUrl を追加すると並列ボタン表示
+// ── プロップ名エイリアス ──
+//   brand / catchcopy  → 旧フォーマット（全64記事）
+//   title / description → 新フォーマットエイリアス（brand/catchcopy に自動解決）
+//   shopComment         → description 直下に表示するコメント文（新フォーマット専用）
 interface Props {
   href?: string;          // A8.net リンク（または公式URL）
-  brand: string;
-  catchcopy: string;
+  brand?: string;
+  catchcopy?: string;
+  // 新フォーマット（title/description/shopComment）—— 旧フォーマットにフォールバック
+  title?: string;
+  description?: string;
+  shopComment?: string;
   imageSrc?: string;
   imageAlt?: string;
   price?: string;
@@ -22,6 +30,9 @@ const {
   href,
   brand,
   catchcopy,
+  title,
+  description,
+  shopComment,
   imageSrc,
   imageAlt,
   price,
@@ -33,6 +44,10 @@ const {
   rakutenUrl,
   isAffiliate = true,
 } = Astro.props;
+
+// 新旧フォーマット自動解決
+const resolvedBrand    = brand    ?? title       ?? '';
+const resolvedCatchcopy = catchcopy ?? description ?? '';
 
 // 並列ボタンモードかどうか
 const isMulti = !!(amazonUrl || rakutenUrl);
@@ -49,7 +64,7 @@ const discText = platforms.join(' / ');
   {/* バナー（上部・独立） */}
   {imageSrc && (
     <a href={href ?? amazonUrl ?? rakutenUrl ?? '#'} class="aff-banner-link" target="_blank" rel="sponsored noopener noreferrer">
-      <img src={imageSrc} alt={imageAlt ?? brand} loading="lazy" class="aff-banner-img" />
+      <img src={imageSrc} alt={imageAlt ?? resolvedBrand} loading="lazy" class="aff-banner-img" />
     </a>
   )}
 
@@ -57,8 +72,9 @@ const discText = platforms.join(' / ');
   <div class="aff-card" style={`--accent: ${accentColor}`}>
     {badge && <span class="aff-badge">{badge}</span>}
     <div class="aff-body">
-      <p class="aff-brand">{brand}</p>
-      <p class="aff-catch">{catchcopy}</p>
+      <p class="aff-brand">{resolvedBrand}</p>
+      <p class="aff-catch">{resolvedCatchcopy}</p>
+      {shopComment && <p class="aff-shop-comment">{shopComment}</p>}
 
       {price && <p class="aff-price">{price}</p>}
 
@@ -258,6 +274,17 @@ const discText = platforms.join(' / ');
 /* 楽天ボタン */
 .aff-btn--rakuten {
   background: linear-gradient(135deg, #bf0000, #9a0000);
+}
+
+/* shopComment */
+.aff-shop-comment {
+  font-size: 0.8rem;
+  color: #536070;
+  line-height: 1.6;
+  margin: 0;
+  border-left: 2px solid var(--accent);
+  padding-left: 0.6rem;
+  font-style: italic;
 }
 
 /* 開示文 */
