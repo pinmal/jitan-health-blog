@@ -126,6 +126,29 @@ https://jitan-kenko.blog/articles/yoshikei-simplemeal-yuka-drama/
 https://jitan-kenko.blog/articles/naoko-bluebottle-coffee-drama/
 ```
 
+### Day 17（予定）🔴 新規記事・優先申請（2026-05-08公開分）
+```
+https://jitan-kenko.blog/articles/panasonic-coffee-maker-yuka-drama/
+https://jitan-kenko.blog/articles/coop-shizenha-yuka-drama/
+https://jitan-kenko.blog/articles/panasonic-bistro-toaster-kenji-drama/
+https://jitan-kenko.blog/articles/fujizakura-water-naoko-drama/
+https://jitan-kenko.blog/articles/foodable-suihanki-yuka-drama/
+```
+
+### Day 18（予定）🔴 新規記事・優先申請（2026-05-08公開分）
+```
+https://jitan-kenko.blog/articles/allulose-sugar-control-yuka-drama/
+```
+
+### Day 19（予定）🔴 新規記事・優先申請（2026-05-08公開分）
+```
+https://jitan-kenko.blog/articles/anshinsoudan-senior-meal-psychiatrist/
+https://jitan-kenko.blog/articles/taihe-yuka-drama/
+https://jitan-kenko.blog/articles/muscledeli-yuka-second-drama/
+https://jitan-kenko.blog/articles/shokunbu-kenji-drama/
+https://jitan-kenko.blog/articles/ouchi-coop-yuka-drama/
+```
+
 ---
 
 ## 優先度メモ
@@ -139,4 +162,4 @@ https://jitan-kenko.blog/articles/naoko-bluebottle-coffee-drama/
 
 ---
 
-> 最終更新: 2026-05-08（Day 6実施・Day 16に新規5記事追加）
+> 最終更新: 2026-05-08（Day 6実施・Day 16に新規5記事追加・Day 17-18に別セッション作成6記事追加・Day 19に5記事追加）
