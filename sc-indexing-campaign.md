@@ -25,14 +25,16 @@
 
 ---
 
-### Day 6（予定）
-```
-https://jitan-kenko.blog/articles/dr-tsurukame-parent-care-yuka-drama/
-https://jitan-kenko.blog/articles/morning-routine-coffee-protein-kenji-drama/
-https://jitan-kenko.blog/articles/parsystem-family-kenji-drama/
-https://jitan-kenko.blog/articles/ouchi-coop-kenji-drama/
-https://jitan-kenko.blog/articles/radishboya-yuka-drama/
-```
+### Day 6（2026-05-08）✅ 申請済み
+| # | URL | 備考 |
+|---|---|---|
+| 1 | https://jitan-kenko.blog/articles/dr-tsurukame-parent-care-yuka-drama/ | ✅ 申請済み |
+| 2 | https://jitan-kenko.blog/articles/morning-routine-coffee-protein-kenji-drama/ | ✅ 申請済み |
+| 3 | https://jitan-kenko.blog/articles/parsystem-family-kenji-drama/ | ✅ 申請済み |
+| 4 | https://jitan-kenko.blog/articles/ouchi-coop-kenji-drama/ | ✅ 申請済み |
+| 5 | https://jitan-kenko.blog/articles/radishboya-yuka-drama/ | ✅ 申請済み |
+
+---
 
 ### Day 7（予定）
 ```
@@ -115,6 +117,15 @@ https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/
 https://jitan-kenko.blog/articles/soelu-review-psychiatrist/
 ```
 
+### Day 16（予定）🔴 新規記事・優先申請
+```
+https://jitan-kenko.blog/articles/radishboya-kenji-drama/
+https://jitan-kenko.blog/articles/mogmo-kenji-kids-drama/
+https://jitan-kenko.blog/articles/wanmile-yuka-drama/
+https://jitan-kenko.blog/articles/yoshikei-simplemeal-yuka-drama/
+https://jitan-kenko.blog/articles/naoko-bluebottle-coffee-drama/
+```
+
 ---
 
 ## 優先度メモ
@@ -128,4 +139,4 @@ https://jitan-kenko.blog/articles/soelu-review-psychiatrist/
 
 ---
 
-> 最終更新: 2026-05-07（Day 5実施）
+> 最終更新: 2026-05-08（Day 6実施・Day 16に新規5記事追加）
