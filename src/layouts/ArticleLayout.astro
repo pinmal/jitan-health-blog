@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { generateArticleSchema, generateSiteSchema } from '../utils/schema';
+import { generateArticleSchema, generateSiteSchema, type FaqItem } from '../utils/schema';
 import RelatedArticles from '../components/RelatedArticles.astro';
 import ReviewerCard from '../components/ReviewerCard.astro';
 
@@ -13,6 +13,7 @@ interface Props {
   updatedAt?: Date;
   noindex?: boolean;
   humanReviewed?: boolean;
+  faqs?: FaqItem[];
 }
 
 const {
@@ -24,13 +25,14 @@ const {
   updatedAt,
   noindex = false,
   humanReviewed = false,
+  faqs,
 } = Astro.props;
 
 const url = Astro.url.href;
 // 記事スラッグを抽出（例: /articles/noshi-vs-mitsuboshi → noshi-vs-mitsuboshi）
 const slug = Astro.url.pathname.replace(/^\/articles\//, '').replace(/\/$/, '') || 'article';
 
-const articleSchema = generateArticleSchema({ title, description, url, publishedAt, updatedAt, category, categoryLabel });
+const articleSchema = generateArticleSchema({ title, description, url, publishedAt, updatedAt, category, categoryLabel, faqs });
 const siteSchema = generateSiteSchema();
 
 // 関連記事を複数グループで取得（内部リンク密度UPのため拡張 — 2026-05-03）

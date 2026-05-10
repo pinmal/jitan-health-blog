@@ -18,6 +18,7 @@ const categoryLabels: Record<string, string> = {
   review: 'レビュー',
   'health-column': '健康コラム',
   howto: '仕組み化',
+  'mental-health': 'メンタルヘルス',
 };
 ---
 
@@ -30,6 +31,7 @@ const categoryLabels: Record<string, string> = {
   updatedAt={article.data.updatedAt}
   noindex={article.data.noindex}
   humanReviewed={article.data.humanReviewed}
+  faqs={article.data.faqs}
 >
   <Content />
 </ArticleLayout>

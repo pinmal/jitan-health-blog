@@ -45,7 +45,7 @@
 | 4 | https://jitan-kenko.blog/articles/myprotein-drama/ | ✅ 申請済み |
 | 5 | https://jitan-kenko.blog/articles/kurasu-coffee-drama/ | ✅ 申請済み |
 
-### Day 8（予定）
+### Day 8（2026-05-10 予定）
 ```
 https://jitan-kenko.blog/articles/base-food-drama/
 https://jitan-kenko.blog/articles/fishlle-kenji-drama/
@@ -53,6 +53,7 @@ https://jitan-kenko.blog/articles/panasonic-suihanki-drama/
 https://jitan-kenko.blog/articles/yoshikei-family-kenji-drama/
 https://jitan-kenko.blog/articles/fishlle-unused-fish-drama/
 ```
+> ⚠️ 2026-05-10: 21記事にcharacterフィールド追加・ホームページフィルターバグ修正・比較記事Q&A追加。CF Pages自動デプロイ後（〜10分）に申請推奨。
 
 ### Day 9（予定）
 ```

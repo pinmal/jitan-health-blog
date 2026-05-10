@@ -22,6 +22,10 @@ const articles = defineCollection({
     noindex: z.boolean().default(false),
     isFeatured: z.boolean().default(false),
     character: z.enum(['yuka', 'naoko', 'kenji']).optional(),
+    faqs: z.array(z.object({
+      q: z.string(),
+      a: z.string(),
+    })).optional(),
   }),
 });
 

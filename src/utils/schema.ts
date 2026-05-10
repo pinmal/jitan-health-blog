@@ -1,6 +1,6 @@
 // JSON-LD 構造化データ生成（Google E-E-A-T / MedicalWebPage 対応）
 
-const SITE_URL = 'https://jitan-kenko.pages.dev'; // 独自ドメイン取得後に変更
+const SITE_URL = 'https://jitan-kenko.blog';
 const AUTHOR_ID = `${SITE_URL}/#nagatomo`;
 
 const AUTHOR = {
@@ -27,6 +27,11 @@ const AUTHOR = {
   'knowsAbout': ['心療内科', '精神科', '産業医学', '公衆衛生', '労働衛生', '食と健康'],
 };
 
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
 interface ArticleSchemaInput {
   title: string;
   description: string;
@@ -35,41 +40,56 @@ interface ArticleSchemaInput {
   updatedAt?: Date;
   category: string;
   categoryLabel: string;
+  faqs?: FaqItem[];
 }
 
 export function generateArticleSchema(props: ArticleSchemaInput): string {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'MedicalWebPage',
-        '@id': props.url,
-        'url': props.url,
-        'name': props.title,
-        'description': props.description,
-        'inLanguage': 'ja',
-        'datePublished': props.publishedAt.toISOString().split('T')[0],
-        'dateModified': (props.updatedAt || props.publishedAt).toISOString().split('T')[0],
-        'author': AUTHOR,
-        'reviewedBy': { '@type': 'Person', '@id': AUTHOR_ID, 'name': '長友恭平' },
-        'publisher': {
-          '@type': 'Organization',
-          'name': '時短×健康ブログ',
-          'url': SITE_URL,
+  const graph: object[] = [
+    {
+      '@type': 'MedicalWebPage',
+      '@id': props.url,
+      'url': props.url,
+      'name': props.title,
+      'description': props.description,
+      'inLanguage': 'ja',
+      'datePublished': props.publishedAt.toISOString().split('T')[0],
+      'dateModified': (props.updatedAt || props.publishedAt).toISOString().split('T')[0],
+      'author': AUTHOR,
+      'reviewedBy': { '@type': 'Person', '@id': AUTHOR_ID, 'name': '長友恭平' },
+      'publisher': {
+        '@type': 'Organization',
+        'name': '時短×健康ブログ',
+        'url': SITE_URL,
+      },
+      'medicalAudience': 'Patient',
+      'lastReviewed': (props.updatedAt || props.publishedAt).toISOString().split('T')[0],
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'トップ', 'item': `${SITE_URL}/` },
+        { '@type': 'ListItem', 'position': 2, 'name': props.categoryLabel, 'item': `${SITE_URL}/${props.category}/` },
+        { '@type': 'ListItem', 'position': 3, 'name': props.title, 'item': props.url },
+      ],
+    },
+  ];
+
+  // FAQ が提供されていれば FAQPage を追加
+  if (props.faqs && props.faqs.length > 0) {
+    graph.push({
+      '@type': 'FAQPage',
+      'mainEntity': props.faqs.map(faq => ({
+        '@type': 'Question',
+        'name': faq.q,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': faq.a,
         },
-        'medicalAudience': 'Patient',
-        'lastReviewed': (props.updatedAt || props.publishedAt).toISOString().split('T')[0],
-      },
-      {
-        '@type': 'BreadcrumbList',
-        'itemListElement': [
-          { '@type': 'ListItem', 'position': 1, 'name': 'トップ', 'item': `${SITE_URL}/` },
-          { '@type': 'ListItem', 'position': 2, 'name': props.categoryLabel, 'item': `${SITE_URL}/${props.category}/` },
-        ],
-      },
-    ],
-  };
-  return JSON.stringify(schema);
+      })),
+    });
+  }
+
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
 }
 
 export function generateSiteSchema(): string {
