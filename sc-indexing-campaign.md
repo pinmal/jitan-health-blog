@@ -36,14 +36,14 @@
 
 ---
 
-### Day 7（予定）
-```
-https://jitan-kenko.blog/articles/tabechoku-farm-direct-drama/
-https://jitan-kenko.blog/articles/element-gym-drama/
-https://jitan-kenko.blog/articles/green-spoon-yuka-drama/
-https://jitan-kenko.blog/articles/myprotein-drama/
-https://jitan-kenko.blog/articles/kurasu-coffee-drama/
-```
+### Day 7（2026-05-09）✅ 申請済み
+| # | URL | 備考 |
+|---|---|---|
+| 1 | https://jitan-kenko.blog/articles/tabechoku-farm-direct-drama/ | ✅ 申請済み |
+| 2 | https://jitan-kenko.blog/articles/element-gym-drama/ | ✅ 申請済み |
+| 3 | https://jitan-kenko.blog/articles/green-spoon-yuka-drama/ | ✅ 申請済み |
+| 4 | https://jitan-kenko.blog/articles/myprotein-drama/ | ✅ 申請済み |
+| 5 | https://jitan-kenko.blog/articles/kurasu-coffee-drama/ | ✅ 申請済み |
 
 ### Day 8（予定）
 ```
@@ -149,6 +149,13 @@ https://jitan-kenko.blog/articles/shokunbu-kenji-drama/
 https://jitan-kenko.blog/articles/ouchi-coop-yuka-drama/
 ```
 
+### Day 20（予定）🔴 新規記事・優先申請（2026-09-xx公開分）
+```
+https://jitan-kenko.blog/articles/fitdish-yuka-drama/
+https://jitan-kenko.blog/articles/emoor-sleep-yuka-drama/
+https://jitan-kenko.blog/articles/narwal-cleaning-naoko-drama/
+```
+
 ---
 
 ## 優先度メモ
@@ -162,4 +169,4 @@ https://jitan-kenko.blog/articles/ouchi-coop-yuka-drama/
 
 ---
 
-> 最終更新: 2026-05-08（Day 6実施・Day 16に新規5記事追加・Day 17-18に別セッション作成6記事追加・Day 19に5記事追加）
+> 最終更新: 2026-05-09（Day 7実施・Day 20に新規3記事追加）

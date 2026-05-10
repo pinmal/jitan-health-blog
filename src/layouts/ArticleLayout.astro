@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { generateArticleSchema, generateSiteSchema } from '../utils/schema';
 import RelatedArticles from '../components/RelatedArticles.astro';
+import ReviewerCard from '../components/ReviewerCard.astro';
 
 interface Props {
   title: string;
@@ -97,6 +98,47 @@ const charLabels: Record<string, string> = {
   naoko: '田中ナオコ',
   kenji: '井上ケンジ',
 };
+
+const charColors: Record<string, string> = {
+  yuka: '#c4703b',
+  naoko: '#2d8b72',
+  kenji: '#3b5f8b',
+};
+
+// ── キャラクター記事のストーリーナビ ──
+interface StoryNav {
+  episodeNum: number;
+  totalEpisodes: number;
+  prevSlug: string | null;
+  prevTitle: string | null;
+  nextSlug: string | null;
+  nextTitle: string | null;
+}
+let storyNav: StoryNav | null = null;
+
+if (currentChar) {
+  const charArticlesAll = allArticles
+    .filter(a =>
+      a.data.character === currentChar &&
+      a.data.humanReviewed === true &&
+      !a.id.startsWith('_')
+    )
+    .sort((a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf());
+
+  const currentIdx = charArticlesAll.findIndex(a => a.slug === slug);
+  if (currentIdx !== -1) {
+    const prev = currentIdx > 0 ? charArticlesAll[currentIdx - 1] : null;
+    const next = currentIdx < charArticlesAll.length - 1 ? charArticlesAll[currentIdx + 1] : null;
+    storyNav = {
+      episodeNum: currentIdx + 1,
+      totalEpisodes: charArticlesAll.length,
+      prevSlug: prev ? `/articles/${prev.slug}/` : null,
+      prevTitle: prev ? prev.data.title : null,
+      nextSlug: next ? `/articles/${next.slug}/` : null,
+      nextTitle: next ? next.data.title : null,
+    };
+  }
+}
 
 const relatedGroups = [
   { heading: `他の${categoryLabel}を読む`, articles: sameCatArticles },
@@ -196,9 +238,59 @@ const categoryNav = [
           <h1 class="article-title">{title}</h1>
           <p class="article-meta">
             <span class="reviewer-badge">長友恭平 監修</span>
+            <time class="article-date" datetime={publishedAt.toISOString()}>
+              {updatedAt
+                ? `更新: ${updatedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}`
+                : `公開: ${publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}`}
+            </time>
           </p>
 
+          {storyNav && currentChar && (
+            <div class="story-indicator" style={`--char-color:${charColors[currentChar]}`}>
+              <a href={`/character/${currentChar}/`} class="story-indicator-link">
+                <span class="story-indicator-char">{charLabels[currentChar]}のストーリー</span>
+                <strong class="story-indicator-ep">第{storyNav.episodeNum}話 / 全{storyNav.totalEpisodes}話</strong>
+              </a>
+              {storyNav.episodeNum > 1 && (
+                <a href={`/character/${currentChar}/`} class="story-indicator-start">↩ 第1話から読む</a>
+              )}
+            </div>
+          )}
+
           <slot />
+
+          {storyNav && currentChar && (
+            <nav class="story-nav" aria-label="ストーリーナビゲーション" style={`--char-color:${charColors[currentChar]}`}>
+              <div class="story-nav-header">
+                <a href={`/character/${currentChar}/`} class="story-nav-series">
+                  {charLabels[currentChar]}のストーリー一覧
+                </a>
+                <span class="story-nav-pos">第{storyNav.episodeNum}話 / 全{storyNav.totalEpisodes}話</span>
+              </div>
+              <div class="story-nav-arrows">
+                {storyNav.prevSlug ? (
+                  <a href={storyNav.prevSlug} class="story-nav-btn story-nav-prev">
+                    <span>← 前の話</span>
+                    <span class="story-nav-title">{storyNav.prevTitle}</span>
+                  </a>
+                ) : (
+                  <span class="story-nav-btn story-nav-disabled">← 最初の話</span>
+                )}
+                <a href={`/character/${currentChar}/`} class="story-nav-center-btn">一覧へ</a>
+                {storyNav.nextSlug ? (
+                  <a href={storyNav.nextSlug} class="story-nav-btn story-nav-next">
+                    <span>次の話 →</span>
+                    <span class="story-nav-title">{storyNav.nextTitle}</span>
+                  </a>
+                ) : (
+                  <span class="story-nav-btn story-nav-disabled">最新話 →</span>
+                )}
+              </div>
+            </nav>
+          )}
+
+          {/* 医師監修カード（E-E-A-T強化・全記事CVR底上げ） */}
+          <ReviewerCard compact={false} />
 
           {/* 関連記事（同カテゴリ + 同キャラ + タグ重複の3グループ） */}
           {relatedGroups.length > 0 && (
@@ -756,6 +848,10 @@ img { max-width: 100%; height: auto; }
   color: var(--c-text-md);
   font-weight: 400;
 }
+.article-date {
+  font-size: 0.75rem;
+  color: var(--c-text-lt);
+}
 .about-link-wrap {
   margin-top: 2.5rem;
   padding-top: 1.25rem;
@@ -932,4 +1028,144 @@ img { max-width: 100%; height: auto; }
   border-radius: 6px;
   cursor: pointer;
 }
+
+/* ── ストーリーインジケーター（記事上部・コンパクト） ── */
+.story-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  padding: 0.65rem 1rem;
+  background: #fdf8f5;
+  border: 1px solid #e8d8cc;
+  border-left: 4px solid var(--char-color, #c4703b);
+  border-radius: 0 8px 8px 0;
+}
+.story-indicator-link {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  color: #536070;
+  text-decoration: none;
+  flex-wrap: wrap;
+}
+.story-indicator-link:hover { color: #1b3f6e; }
+.story-indicator-char {
+  font-size: 0.75rem;
+  color: #8fa0b0;
+}
+.story-indicator-ep {
+  color: var(--char-color, #c4703b);
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+.story-indicator-start {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: var(--char-color, #c4703b);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.18rem 0.6rem;
+  border: 1px solid var(--char-color, #c4703b);
+  border-radius: 12px;
+  white-space: nowrap;
+  transition: background .15s, color .15s;
+}
+.story-indicator-start:hover {
+  background: var(--char-color, #c4703b);
+  color: #fff;
+}
+
+/* ── ストーリーナビゲーション（記事下部・フル） ── */
+.story-nav {
+  margin: 2.25rem 0 0;
+  padding: 1.1rem 1.25rem;
+  background: #fdf8f5;
+  border: 1px solid #e8d8cc;
+  border-top: 3px solid var(--char-color, #c4703b);
+  border-radius: 0 0 10px 10px;
+}
+.story-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.story-nav-series {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--char-color, #c4703b);
+  text-decoration: none;
+}
+.story-nav-series:hover { text-decoration: underline; }
+.story-nav-pos {
+  font-size: 0.75rem;
+  color: #8fa0b0;
+}
+.story-nav-arrows {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.story-nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 7px;
+  border: 1px solid var(--c-border);
+  background: #fff;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--c-primary);
+  transition: border-color .15s, background .15s;
+  min-width: 0;
+}
+.story-nav-btn:hover {
+  border-color: var(--char-color, #c4703b);
+  background: #fffaf7;
+}
+.story-nav-prev { text-align: left; }
+.story-nav-next { text-align: right; }
+.story-nav-disabled {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.85rem;
+  border-radius: 7px;
+  border: 1px dashed #ddd6ce;
+  font-size: 0.8rem;
+  color: #b0bec8;
+}
+.story-nav-title {
+  font-size: 0.7rem;
+  color: #8fa0b0;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.story-nav-center-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  border-radius: 7px;
+  border: 1px solid var(--char-color, #c4703b);
+  background: var(--char-color, #c4703b);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity .15s;
+}
+.story-nav-center-btn:hover { opacity: .82; }
 </style>

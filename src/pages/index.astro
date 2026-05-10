@@ -6,9 +6,10 @@ import KondateGachaCTA from '../components/KondateGachaCTA.astro';
 const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
 const sortedAll = allArticles.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
-const yukaArticles  = sortedAll.filter(a => !a.data.character || a.data.character === 'yuka');
-const naokoArticles = sortedAll.filter(a => a.data.character === 'naoko');
-const kenjiArticles = sortedAll.filter(a => a.data.character === 'kenji');
+const yukaArticles    = sortedAll.filter(a => a.data.character === 'yuka');
+const naokoArticles   = sortedAll.filter(a => a.data.character === 'naoko');
+const kenjiArticles   = sortedAll.filter(a => a.data.character === 'kenji');
+const doctorArticles  = sortedAll.filter(a => !a.id.startsWith('_') && !a.data.character);
 
 const featured = allArticles.find(a => a.data.isFeatured) ?? sortedAll[0];
 const siteSchema = generateSiteSchema();
@@ -64,11 +65,11 @@ const purposes = [
       <!-- Hero -->
       <section class="hero">
         <div class="container">
-          <h2 class="hero-heading">「健康的に食べたいけど、毎日の献立を考えるのが面倒」</h2>
-          <p class="hero-sub">宅配食・栄養補助食品・こんだて提案で仕組み化すると、<strong>意思決定の負荷が下がります。</strong></p>
+          <h2 class="hero-heading">「今日も帰ったら22時か…。また惣菜か」</h2>
+          <p class="hero-sub">その罪悪感、<strong>意志の問題ではありません。</strong>仕組みの問題です。</p>
           <div class="hero-body">
-            <p>体や心の調子が落ちているとき、献立を決めること・調理の段取りを組むことは、思いのほか難しくなります。食欲がないわけではなくても、「何を作るか考える」「材料を買いに行く」「手順どおりに調理する」——この一連のプロセスが、意欲や判断力の低下した状態では相当なエネルギーを必要とするためです。</p>
-            <p>「楽をするため」ではなく、<strong>今の自分の状態に合った自己管理の一つとして</strong>——宅配食・栄養補助食品・献立の仕組み化を活用してください。</p>
+            <p>精神科医として外来を続けてきて、気づいていることがあります。調子が落ちているとき、食事が後回しになる人が多い。でも食欲がないわけじゃない。「何を作るか考える」「買いに行く」「段取りを組む」——この一連の意思決定が、しんどいときには本当に難しくなるんです。</p>
+            <p>「楽をしている」のではなく、<strong>今の状態に合った方法を選んでいる</strong>。宅配食・栄養補助食品・献立の仕組み化は、そういう選択肢です。</p>
           </div>
           <KondateGachaCTA context="weekly-plan" />
         </div>
@@ -209,6 +210,44 @@ const purposes = [
         </section>
       )}
 
+      <!-- 先生のコラム -->
+      {doctorArticles.length > 0 && (
+        <section class="section-articles section-doctor">
+          <div class="container">
+            <div class="section-header-row">
+              <h2 class="section-heading section-heading--doctor">
+                <span class="char-avatar char-avatar--doctor">医</span>
+                <span>長友医師の健康コラム</span>
+                <span class="article-count-badge">{doctorArticles.length}件</span>
+              </h2>
+              <button class="section-toggle" data-target="doctor" aria-expanded="false" type="button">
+                <span class="toggle-icon">▼</span> 広げる
+              </button>
+            </div>
+            <div class="section-collapsible" id="collapse-doctor" style="display:none">
+              <p class="char-profile">精神保健指定医・長友恭平が、食事・栄養・睡眠・メンタルヘルスの関係を医学的知見から解説。宅食・健康食サービスの選び方も医師視点でアドバイス。</p>
+              <div class="article-grid" id="grid-doctor">
+                {doctorArticles.map((article, i) => (
+                  <a
+                    href={`/articles/${article.slug}/`}
+                    class={`article-card article-card--doctor${i >= 6 ? ' card-extra' : ''}`}
+                    data-tags={(article.data.tags ?? []).join(',')}
+                    data-category={article.data.category}
+                  >
+                    <h3 class="article-title">{article.data.title}</h3>
+                  </a>
+                ))}
+              </div>
+              {doctorArticles.length > 6 && (
+                <button class="more-btn" data-grid="doctor" type="button">
+                  もっと見る（+{doctorArticles.length - 6}件）
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       <!-- フィルタ結果が0件の場合 -->
       <div class="no-results" id="no-results" style="display:none">
         <div class="container">
@@ -221,10 +260,12 @@ const purposes = [
       {featured && (
         <section class="section-featured">
           <div class="container">
-            <h2 class="section-heading"><span>一番人気の記事</span></h2>
+            <h2 class="section-heading"><span>📌 監修医がすすめる入門記事</span></h2>
             <a href={`/articles/${featured.slug}/`} class="featured-card">
               <div class="featured-body">
+                <p class="featured-eyebrow">はじめて読むなら</p>
                 <h3 class="featured-title">{featured.data.title}</h3>
+                <p class="featured-desc">{featured.data.description}</p>
               </div>
               <span class="featured-arrow">→</span>
             </a>
@@ -621,9 +662,10 @@ a { color: inherit; text-decoration: none; }
 .section-featured  { background: var(--c-bg); padding: 2rem 0; border-bottom: 1px solid var(--c-border); }
 .section-categories { background: var(--c-bg-white); padding: 1.25rem 0; }
 
-.section-yuka  { background: #fff9f6; }
-.section-naoko { background: #f4faf7; }
-.section-kenji { background: #f4f7fc; }
+.section-yuka   { background: #fff9f6; }
+.section-naoko  { background: #f4faf7; }
+.section-kenji  { background: #f4f7fc; }
+.section-doctor { background: #f5f5fa; }
 
 /* Section header row */
 .section-header-row {
@@ -653,9 +695,10 @@ a { color: inherit; text-decoration: none; }
   border-radius: 2px;
   flex-shrink: 0;
 }
-.section-heading--yuka::before  { background: #c4703b; }
-.section-heading--naoko::before { background: #2d8b72; }
-.section-heading--kenji::before { background: #3b5f8b; }
+.section-heading--yuka::before   { background: #c4703b; }
+.section-heading--naoko::before  { background: #2d8b72; }
+.section-heading--kenji::before  { background: #3b5f8b; }
+.section-heading--doctor::before { background: #6b21a8; }
 .char-section-link { color: inherit; text-decoration: none; transition: color .15s; }
 .char-section-link:hover { color: var(--c-accent); text-decoration: underline; }
 
@@ -681,9 +724,10 @@ a { color: inherit; text-decoration: none; }
   color: #fff;
   flex-shrink: 0;
 }
-.char-avatar--yuka  { background: #c4703b; }
-.char-avatar--naoko { background: #2d8b72; }
-.char-avatar--kenji { background: #3b5f8b; }
+.char-avatar--yuka   { background: #c4703b; }
+.char-avatar--naoko  { background: #2d8b72; }
+.char-avatar--kenji  { background: #3b5f8b; }
+.char-avatar--doctor { background: #6b21a8; font-size: 0.7rem; }
 
 /* Section toggle button */
 .section-toggle {
@@ -707,9 +751,10 @@ a { color: inherit; text-decoration: none; }
 .char-profile { font-size: 0.8rem; color: var(--c-text-md); line-height: 1.65; margin-bottom: 1.1rem; max-width: var(--max-w-text); }
 
 /* Per-character card accents */
-.article-card--yuka  { border-left: 3px solid #c4703b; }
-.article-card--naoko { border-left: 3px solid #2d8b72; }
-.article-card--kenji { border-left: 3px solid #3b5f8b; }
+.article-card--yuka   { border-left: 3px solid #c4703b; }
+.article-card--naoko  { border-left: 3px solid #2d8b72; }
+.article-card--kenji  { border-left: 3px solid #3b5f8b; }
+.article-card--doctor { border-left: 3px solid #6b21a8; }
 
 /* ── Article Grid ──────────────── */
 .article-grid {
@@ -782,8 +827,10 @@ a { color: inherit; text-decoration: none; }
   transition: box-shadow .2s, transform .2s;
 }
 .featured-card:hover { box-shadow: var(--c-shadow-md); transform: translateY(-2px); }
-.featured-body { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.featured-body { flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+.featured-eyebrow { font-size: 0.7rem; font-weight: 700; color: var(--c-accent); letter-spacing: 0.05em; text-transform: uppercase; }
 .featured-title { font-size: 1.05rem; font-weight: 700; color: var(--c-text); line-height: 1.5; }
+.featured-desc { font-size: 0.82rem; color: var(--c-text-md); line-height: 1.65; margin-top: 0.15rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .featured-arrow { font-size: 1.4rem; color: var(--c-accent); flex-shrink: 0; font-weight: 700; }
 
 /* ── Category Chips ────────────── */

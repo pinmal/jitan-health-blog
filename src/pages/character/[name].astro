@@ -43,8 +43,8 @@ if (!meta) return Astro.redirect('/404');
 
 const allArticles = await getCollection('articles', ({ data }) => data.humanReviewed === true);
 const articles = allArticles
-  .filter(a => (a.data.character ?? 'yuka') === name)
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+  .filter(a => a.data.character === name && !a.id.startsWith('_'))
+  .sort((a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf());
 
 const url = `https://jitan-kenko.blog/character/${name}/`;
 const title = `${meta.fullName}の記録一覧 | 時短 × 健康`;
@@ -102,18 +102,30 @@ const description = `${meta.fullName}（${meta.tagline}）が体験したサー�
         </header>
 
         {articles.length > 0 ? (
-          <ul class="char-list">
-            {articles.map(a => (
-              <li>
-                <a href={`/articles/${a.slug}/`} class="char-card" style={`border-left-color:${meta.color}`}>
-                  <span class="char-card-title">{a.data.title}</span>
-                  {a.data.description && (
-                    <span class="char-card-desc">{a.data.description}</span>
-                  )}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <>
+            <div class="story-read-hint">
+              <span>📖</span>
+              <span>第1話から順番に読むと、{meta.fullName}の変化がよくわかります</span>
+              {articles.length >= 2 && (
+                <a href={`/articles/${articles[0].slug}/`} class="story-start-btn" style={`background:${meta.color}`}>第1話から読む →</a>
+              )}
+            </div>
+            <ul class="char-list">
+              {articles.map((a, idx) => (
+                <li>
+                  <a href={`/articles/${a.slug}/`} class="char-card" style={`border-left-color:${meta.color}`}>
+                    <div class="char-card-top">
+                      <span class="char-ep-badge" style={`background:${meta.color}`}>第{idx + 1}話</span>
+                      <span class="char-card-title">{a.data.title}</span>
+                    </div>
+                    {a.data.description && (
+                      <span class="char-card-desc">{a.data.description}</span>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
         ) : (
           <p class="empty">{meta.fullName}の記事はまだありません。</p>
         )}
@@ -206,9 +218,14 @@ a{color:inherit;text-decoration:none;}
 .char-tagline{font-size:0.85rem;color:#536070;font-weight:600;margin-bottom:0.75rem;}
 .char-profile{font-size:0.88rem;color:#536070;line-height:1.75;margin-bottom:0.75rem;}
 .fiction-note{font-size:0.72rem;color:#8fa0b0;line-height:1.6;background:#fef9c3;border-left:2px solid #fbbf24;padding:0.4rem 0.7rem;border-radius:4px;}
+.story-read-hint{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;margin-bottom:1rem;padding:0.65rem 1rem;background:#fff;border:1px solid #e0dbd2;border-radius:8px;font-size:0.82rem;color:#536070;}
+.story-start-btn{margin-left:auto;display:inline-block;color:#fff;font-size:0.78rem;font-weight:700;padding:0.3rem 0.85rem;border-radius:20px;white-space:nowrap;text-decoration:none;}
+.story-start-btn:hover{opacity:.85;}
 .char-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;}
 .char-card{display:flex;flex-direction:column;gap:0.35rem;background:#fff;border:1px solid #e0dbd2;border-left:3px solid #c4703b;border-radius:8px;padding:1rem 1.15rem;transition:box-shadow .15s,transform .15s;}
 .char-card:hover{box-shadow:0 4px 14px rgba(27,63,110,.1);transform:translateY(-1px);}
+.char-card-top{display:flex;align-items:flex-start;gap:0.55rem;}
+.char-ep-badge{display:inline-flex;align-items:center;flex-shrink:0;color:#fff;font-size:0.65rem;font-weight:800;padding:0.15rem 0.5rem;border-radius:12px;letter-spacing:0.03em;margin-top:0.1rem;}
 .char-card-title{font-size:0.95rem;font-weight:700;color:#1b3f6e;line-height:1.5;}
 .char-card-desc{font-size:0.78rem;color:#536070;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .empty{padding:3rem 0;text-align:center;color:#536070;}
