@@ -1,5 +1,47 @@
 # HANDOVER.md — 時短×健康ブログ 引き継ぎ資料
-> 作成: 2026-04-25
+> 最終更新: 2026-05-14（2セッション分の作業を反映）
+> 旧版: 2026-04-25
+
+---
+
+## ⚡ 直近セッション（2026-05-14）で完了した作業
+
+### ✅ デプロイ済み（コミット `1d4f862`）
+
+1. **ドラマ記事キャラクター属性バグ全修正（31箇所）**
+   - 6ファイルでユウカのセリフが `character="naoko"` になっていたバグを修正
+   - 修正済みファイル: myprotein-drama / kurasu-coffee-drama / tabechoku-farm-direct-drama / green-spoon-drama / onigo-drama / chef-muten-tsukurioki-drama
+   - ナオコ = 経験者として答える側 / ユウカ = 質問・疑問を代弁する側
+
+2. **index.astro 先生セクションの display:none 除去**
+   - 「先生コラム」セクションがデフォルト折りたたみ（display:none）→ 常時表示に変更
+   - Googlebot が `-psychiatrist` 記事へのリンクを評価できない状態だったため修正
+   - E-E-A-T向上を目的とした対応
+
+3. **「クロール済・インデックス未登録」4記事への対応**
+   - 対象: delipicks / green-spoon-drama / onigo-drama / kitoisix（`-psychiatrist`系）
+   - FAQPage JSON-LD + Q&A セクション追加（コミット `e03f7cd`）
+
+---
+
+## 🔴 次セッションで最初にやること（最優先）
+
+### SC手動インデックス申請
+
+Cloudflare Pages のデプロイが完了しているので実施可能。
+
+**申請対象URL（`-psychiatrist` 系を優先）**:
+```
+https://jitan-kenko.blog/articles/delipicks-review-psychiatrist
+https://jitan-kenko.blog/articles/kitoisix-review-psychiatrist
+https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist
+https://jitan-kenko.blog/articles/yoshikei-mealkit-psychiatrist
+https://jitan-kenko.blog/articles/muscledeli-review-psychiatrist
+```
+
+**手順**: Google Search Console → URL検査 → 上記URLを1件ずつ入力 → 「インデックス登録をリクエスト」
+
+**背景**: これらは「クロール済・インデックス未登録」状態。先生コラムリンクの display:none 問題が原因の一つで、本日のデプロイで修正済み。
 
 ---
 
@@ -52,6 +94,8 @@
 ---
 
 ## 次にやること（優先順）
+
+### 0. SC手動インデックス申請（上記参照・最優先）
 
 ### 1. ナッシュ A8.net 承認待ち → 承認後の作業
 `weekday-dinner-systemization.mdx` のコメントアウトを外してリンク差し替え：
