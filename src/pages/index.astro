@@ -220,11 +220,11 @@ const purposes = [
                 <span>長友医師の健康コラム</span>
                 <span class="article-count-badge">{doctorArticles.length}件</span>
               </h2>
-              <button class="section-toggle" data-target="doctor" aria-expanded="false" type="button">
-                <span class="toggle-icon">▼</span> 広げる
+              <button class="section-toggle" data-target="doctor" aria-expanded="true" type="button">
+                <span class="toggle-icon">▲</span> たたむ
               </button>
             </div>
-            <div class="section-collapsible" id="collapse-doctor" style="display:none">
+            <div class="section-collapsible" id="collapse-doctor">
               <p class="char-profile">精神保健指定医・長友恭平が、食事・栄養・睡眠・メンタルヘルスの関係を医学的知見から解説。宅食・健康食サービスの選び方も医師視点でアドバイス。</p>
               <div class="article-grid" id="grid-doctor">
                 {doctorArticles.map((article, i) => (
