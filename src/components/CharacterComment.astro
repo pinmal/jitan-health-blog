@@ -23,10 +23,12 @@ const resolvedText    = preset.textColor;
 const { note = '' } = Astro.props;
 ---
 
-<aside class="character-block" style={`--ch-accent:${resolvedAccent};--ch-bg:${resolvedBg};--ch-text:${resolvedText}`}>
+<aside class="character-block" style={`--ch-accent:${resolvedAccent};--ch-bg:${resolvedBg};--ch-text:${resolvedText}`}
+  aria-label={`架空キャラクター「${resolvedName}」のフィクションシナリオ`}>
   <div class="character-header">
     <span class="character-avatar">💬</span>
     <span class="character-name">{resolvedName}</span>
+    <span class="character-fiction-badge">架空シナリオ</span>
     {note && <span class="character-note">{note}</span>}
   </div>
   <div class="character-body">
@@ -44,9 +46,10 @@ const { note = '' } = Astro.props;
 }
 .character-header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.4rem;
   margin-bottom: 0.45rem;
+  flex-wrap: wrap;
 }
 .character-avatar {
   font-size: 0.9rem;
@@ -56,6 +59,17 @@ const { note = '' } = Astro.props;
   font-weight: 700;
   color: var(--ch-accent);
   letter-spacing: 0.03em;
+}
+.character-fiction-badge {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 3px;
+  padding: 0.05rem 0.35rem;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
 }
 .character-note {
   font-size: 0.65rem;

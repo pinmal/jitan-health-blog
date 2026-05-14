@@ -259,6 +259,16 @@ const categoryNav = [
             </div>
           )}
 
+          {currentChar && (
+            <div class="fiction-disclosure" role="note" aria-label="記事形式の説明">
+              <span class="fiction-disclosure-icon">📌</span>
+              <div class="fiction-disclosure-text">
+                <strong>この記事について：</strong>
+                登場する「{charLabels[currentChar]}」は架空のキャラクターです。体験談部分はフィクションですが、製品の価格・仕様・効果に関する情報は公式サイトおよび複数の利用者レビューをもとに作成しています。アフィリエイトリンクを含みます（<a href="/disclaimer" class="fiction-disclosure-link">免責事項</a>）。
+              </div>
+            </div>
+          )}
+
           <slot />
 
           {storyNav && currentChar && (
@@ -1029,6 +1039,40 @@ img { max-width: 100%; height: auto; }
   padding: 0.5rem 1.2rem;
   border-radius: 6px;
   cursor: pointer;
+}
+
+/* ── フィクション開示バナー（dramaカテゴリ記事・全件自動表示） ── */
+.fiction-disclosure {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1.75rem;
+  font-size: 0.83rem;
+  line-height: 1.7;
+  color: #78350f;
+}
+.fiction-disclosure-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+.fiction-disclosure-text {
+  flex: 1;
+}
+.fiction-disclosure-text strong {
+  color: #92400e;
+}
+.fiction-disclosure-link {
+  color: #b45309;
+  text-decoration: underline;
+}
+.fiction-disclosure-link:hover {
+  color: #78350f;
 }
 
 /* ── ストーリーインジケーター（記事上部・コンパクト） ── */
