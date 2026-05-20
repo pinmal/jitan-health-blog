@@ -45,17 +45,47 @@
 | 4 | https://jitan-kenko.blog/articles/myprotein-drama/ | ✅ 申請済み |
 | 5 | https://jitan-kenko.blog/articles/kurasu-coffee-drama/ | ✅ 申請済み |
 
-### Day 8（2026-05-10 予定）
+---
+
+## ⚡ 今日のアクション（2026-05-20）
+
+> ⚠️ **SEOタイトル一括更新（73記事）をデプロイ後、CF Pages反映（約10分）を待ってから申請してください。**
+> 
+> タイトル変更後の再申請がGooglebotへの再クロール依頼になります。
+
+### 今日申請する5URL（最優先）
+
+```
+1. https://jitan-kenko.blog/articles/mealkit-3-comparison-kenji-drama/
+   ← SC impressions最多(27件)・順位45.9位→タイトル変更で上位狙い・Day5に既申請だが再申請推奨
+
+2. https://jitan-kenko.blog/articles/kitoisix-review-psychiatrist/
+   ← SC 8.6位(1ページ目入り目前)・タイトル変更・FAQ追加済み
+
+3. https://jitan-kenko.blog/articles/muscledeli-review-psychiatrist/
+   ← SC position 2.5位（良好）・タイトル変更により正しいクエリで検索表示されるよう再申請
+
+4. https://jitan-kenko.blog/articles/noshi-vs-mitsuboshi-vs-muscledeli/
+   ← 比較記事・購買意欲の高いクエリ・タイトル変更済み
+
+5. https://jitan-kenko.blog/articles/yoshikei-family-kenji-drama/
+   ← ヨシケイ系クエリ・タイトル「口コミ 共働き」形式に変更済み
+```
+
+### Day 8〜20 残リスト（翌日以降に順次申請）
+
+> ⚠️ Day 8〜20（2026-05-10〜2026-05-20）は未実施。1日5件ずつ申請してください。
+> 既に申請済みのものは重複しても問題なし（ペナルティなし）。
+
+**Day 8 → 2026-05-20以降**
 ```
 https://jitan-kenko.blog/articles/base-food-drama/
 https://jitan-kenko.blog/articles/fishlle-kenji-drama/
 https://jitan-kenko.blog/articles/panasonic-suihanki-drama/
-https://jitan-kenko.blog/articles/yoshikei-family-kenji-drama/
 https://jitan-kenko.blog/articles/fishlle-unused-fish-drama/
 ```
-> ⚠️ 2026-05-10: 21記事にcharacterフィールド追加・ホームページフィルターバグ修正・比較記事Q&A追加。CF Pages自動デプロイ後（〜10分）に申請推奨。
 
-### Day 9（予定）
+**Day 9 → 2026-05-21**
 ```
 https://jitan-kenko.blog/articles/chef-muten-tsukurioki-drama/
 https://jitan-kenko.blog/articles/green-spoon-drama/
@@ -64,7 +94,7 @@ https://jitan-kenko.blog/articles/wanmile-kenkodinner-drama/
 https://jitan-kenko.blog/articles/fit24-gym-yuka-drama/
 ```
 
-### Day 10（予定）
+**Day 10 → 2026-05-22**
 ```
 https://jitan-kenko.blog/articles/yasai-wo-motto-kenji-drama/
 https://jitan-kenko.blog/articles/arumeid-housekeeping-drama/
@@ -73,7 +103,7 @@ https://jitan-kenko.blog/articles/deat-workout-personal-training-drama/
 https://jitan-kenko.blog/articles/onigo-drama/
 ```
 
-### Day 11（予定）
+**Day 11 → 2026-05-23**
 ```
 https://jitan-kenko.blog/articles/mogmo-drama/
 https://jitan-kenko.blog/articles/dr-tsurukame-drama/
@@ -82,7 +112,7 @@ https://jitan-kenko.blog/articles/tsukurio-drama/
 https://jitan-kenko.blog/articles/weekday-dinner-drama/
 ```
 
-### Day 12（予定）
+**Day 12 → 2026-05-24**
 ```
 https://jitan-kenko.blog/articles/weekday-dinner-systemization/
 https://jitan-kenko.blog/articles/solo-living-food-cost-drama/
@@ -91,7 +121,7 @@ https://jitan-kenko.blog/articles/gut-brain-axis-psychiatrist/
 https://jitan-kenko.blog/articles/stress-eating-psychiatrist/
 ```
 
-### Day 13（予定）
+**Day 13 → 2026-05-25**
 ```
 https://jitan-kenko.blog/articles/sleep-and-nutrition-psychiatrist/
 https://jitan-kenko.blog/articles/sleep-quality-diet-psychiatrist/
@@ -100,61 +130,66 @@ https://jitan-kenko.blog/articles/lunch-management-solo-living-psychiatrist/
 https://jitan-kenko.blog/articles/sugar-craving-psychiatrist/
 ```
 
-### Day 14（予定）
+**Day 14 → 2026-05-26**
 ```
 https://jitan-kenko.blog/articles/mental-health-meal-delivery-psychiatrist/
-https://jitan-kenko.blog/articles/noshi-vs-mitsuboshi-vs-muscledeli/
-https://jitan-kenko.blog/articles/muscledeli-review-psychiatrist/
 https://jitan-kenko.blog/articles/exercise-mental-health-psychiatrist/
-https://jitan-kenko.blog/articles/kitoisix-review-psychiatrist/
+https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist/
+https://jitan-kenko.blog/articles/yoshikei-mealkit-psychiatrist/
+https://jitan-kenko.blog/articles/delipicks-review-psychiatrist/
 ```
 
-### Day 15（予定）
+**Day 15 → 2026-05-27**
 ```
-https://jitan-kenko.blog/articles/yoshikei-mealkit-psychiatrist/
-https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist/
-https://jitan-kenko.blog/articles/delipicks-review-psychiatrist/
 https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/
 https://jitan-kenko.blog/articles/soelu-review-psychiatrist/
-```
-
-### Day 16（予定）🔴 新規記事・優先申請
-```
 https://jitan-kenko.blog/articles/radishboya-kenji-drama/
 https://jitan-kenko.blog/articles/mogmo-kenji-kids-drama/
 https://jitan-kenko.blog/articles/wanmile-yuka-drama/
-https://jitan-kenko.blog/articles/yoshikei-simplemeal-yuka-drama/
-https://jitan-kenko.blog/articles/naoko-bluebottle-coffee-drama/
 ```
 
-### Day 17（予定）🔴 新規記事・優先申請（2026-05-08公開分）
+**Day 16 → 2026-05-28**
 ```
+https://jitan-kenko.blog/articles/yoshikei-simplemeal-yuka-drama/
+https://jitan-kenko.blog/articles/naoko-bluebottle-coffee-drama/
 https://jitan-kenko.blog/articles/panasonic-coffee-maker-yuka-drama/
 https://jitan-kenko.blog/articles/coop-shizenha-yuka-drama/
 https://jitan-kenko.blog/articles/panasonic-bistro-toaster-kenji-drama/
+```
+
+**Day 17 → 2026-05-29**
+```
 https://jitan-kenko.blog/articles/fujizakura-water-naoko-drama/
 https://jitan-kenko.blog/articles/foodable-suihanki-yuka-drama/
-```
-
-### Day 18（予定）🔴 新規記事・優先申請（2026-05-08公開分）
-```
 https://jitan-kenko.blog/articles/allulose-sugar-control-yuka-drama/
-```
-
-### Day 19（予定）🔴 新規記事・優先申請（2026-05-08公開分）
-```
 https://jitan-kenko.blog/articles/anshinsoudan-senior-meal-psychiatrist/
 https://jitan-kenko.blog/articles/taihe-yuka-drama/
+```
+
+**Day 18 → 2026-05-30**
+```
 https://jitan-kenko.blog/articles/muscledeli-yuka-second-drama/
 https://jitan-kenko.blog/articles/shokunbu-kenji-drama/
 https://jitan-kenko.blog/articles/ouchi-coop-yuka-drama/
-```
-
-### Day 20（予定）🔴 新規記事・優先申請（2026-09-xx公開分）
-```
 https://jitan-kenko.blog/articles/fitdish-yuka-drama/
 https://jitan-kenko.blog/articles/emoor-sleep-yuka-drama/
+```
+
+**Day 19 → 2026-05-31**
+```
 https://jitan-kenko.blog/articles/narwal-cleaning-naoko-drama/
+https://jitan-kenko.blog/articles/cathand-arumeid-housekeeping-yuka-drama/
+https://jitan-kenko.blog/articles/sowaka-naoko-drama/
+https://jitan-kenko.blog/articles/yourmystar-aircon-naoko-drama/
+https://jitan-kenko.blog/articles/naoko-business-trip-meal-drama/
+```
+
+**Day 20 → 2026-06-01**
+```
+https://jitan-kenko.blog/articles/ouchi-coop-yuka-drama/
+https://jitan-kenko.blog/articles/green-spoon-yuka-drama/
+https://jitan-kenko.blog/articles/myprotein-drama/
+https://jitan-kenko.blog/articles/kurasu-coffee-drama/
 ```
 
 ---
@@ -163,11 +198,11 @@ https://jitan-kenko.blog/articles/narwal-cleaning-naoko-drama/
 
 | 優先度 | 記事タイプ | 理由 |
 |---|---|---|
-| 🔴 最高 | 新規作成記事 | 公開直後はSCが未検出 |
+| 🔴 最高 | SEOタイトル変更済み記事（2026-05-20更新） | Googlebotへの再クロール依頼が必要 |
 | 🟠 高 | 比較記事（〇社比較） | 購買意欲が高いクエリ |
 | 🟡 中 | キャラ対話・レビュー記事 | 長期流入の柱 |
 | 🟢 低 | 先生監修・医療系 | E-E-A-T強化目的 |
 
 ---
 
-> 最終更新: 2026-05-09（Day 7実施・Day 20に新規3記事追加）
+> 最終更新: 2026-05-20（SEOタイトル73記事一括更新・今日のアクション欄追加）
