@@ -24,3 +24,82 @@
 - `Knowledge/infra/astro-affiliate-health-blog-pattern.md` (I-073)
 - `CPO/jitan-health-blog/character-and-format-design.md` (D-056)
 - `CPO/jitan-health-blog/writing-style-guide.md` (D-055)
+
+---
+
+## ⚠️ 記事作成時の必須チェック（2026-05-22 監査から確立）
+
+### 【絶対ルール1】未来日付記事はpublishedAtを今日の日付にする
+- 記事執筆時は `publishedAt` を **必ず当日の日付（YYYY-MM-DD）** に設定する
+- 未来日付を入れてはならない（Astro SSGはpublishedAtに関わらず全記事を公開ビルドするため）
+- 「後で公開したい」場合は `humanReviewed: false` にしてnoindexにする
+
+```yaml
+# ✅ 正しい（当日公開）
+publishedAt: 2026-05-22
+humanReviewed: true
+
+# ✅ 正しい（下書き・noindex）
+publishedAt: 2026-05-22
+humanReviewed: false
+
+# ❌ 禁止（未来日付は意味をなさない）
+publishedAt: 2026-09-10
+humanReviewed: true
+```
+
+### 【絶対ルール2】AffiliateCardにshopCommentを必ず入れる
+- 全AffiliateCardに `shopComment` プロップを入れること（MARKETING.mdルール・CVR直結）
+- 内容: 長友先生が「診療・産業医活動で観察した」視点の15〜40文字コメント
+- 「私が使った」とは書かない。「〜な患者さんに多い」「〜という傾向がある」文体
+
+```astro
+{/* ✅ 正しい例 */}
+<AffiliateCard
+  brand="GREEN SPOON"
+  catchcopy="..."
+  shopComment="「固形物がつらい時期」に液体で栄養を取れる点は、外来でも重要だと感じます"
+  ...
+/>
+
+{/* ❌ 禁止（shopCommentなし） */}
+<AffiliateCard
+  brand="GREEN SPOON"
+  catchcopy="..."
+  ...
+/>
+```
+
+### 【絶対ルール3】薬機法断定表現禁止ワード
+以下の断定表現は使用禁止。必ずヘッジ表現に変換すること。
+
+| ❌ 禁止 | ✅ 置換後 |
+|---|---|
+| 〜効果があります | 〜効果が期待できます / 〜効果が報告されています |
+| 〜に効きます | 〜に役立ちます / 〜に有用です |
+| 総合的に | 全体として |
+| 必ず〜（効能文脈） | 〜することが多い / 〜傾向があります |
+| 確実に | 場合によっては / 傾向として |
+
+### 【絶対ルール4】ファイル名ルール
+- ファイル名はすべて小文字 kebab-case
+- アンダースコア始まり（`_xxx.mdx`）は Astro でルーティング除外になるため使用禁止
+- 公開予定の記事に `_` を付けてはならない
+
+### 【絶対ルール5】記事末尾の開示文（掛け合い形式記事）
+character フィールドがある記事は必ず以下の開示文を記事末尾に入れる（冒頭のみはNG）:
+
+```
+> ※ この記事の「〇〇（キャラ名）」は架空のキャラクターです。実在の個人ではありません。
+> ※ 記事にはアフィリエイトリンクが含まれます。掲載製品は筆者（長友恭平）が内容を確認したもののみ掲載しています。
+```
+
+---
+
+## 定期監査（月1回推奨）
+
+以下のチェックを毎月1回実施する:
+1. `publishedAt` が当日以降の記事がないか確認
+2. shopCommentなしAffiliateCardの検出
+3. 薬機法断定表現の検出（`validate-yakkiho.js` 実行）
+4. A8/もしもリンクの断絶確認
