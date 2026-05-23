@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build && node scripts/generate-sitemap.mjs",
     "preview": "astro preview",
-    "validate": "node scripts/validate-yakkiho.js"
+    "validate": "node scripts/validate-yakkiho.js",
+    "check:books": "python C:/Users/yotsu/Desktop/claudecode1/CSO/kindle-publishing/cross_site_check.py --scan-all",
+    "prepare": "node scripts/install-hooks.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.0",
