@@ -1,58 +1,140 @@
-# HANDOVER.md — 時短×健康ブログ 引き継ぎ資料
-> 最終更新: 2026-05-14（2セッション分の作業を反映）
-> 旧版: 2026-04-25
+# HANDOVER.md — jitan-kenko.blog（時短×健康ブログ）
+> 最終更新: 2026-05-25
+> 旧版: 2026-05-24
 
 ---
 
-## ⚡ 直近セッション（2026-05-14）で完了した作業
+## ⚡ 直近セッション（2026-05-25）で完了した作業
 
-### ✅ デプロイ済み（コミット `1d4f862`）
+### ✅ 1. 全変更のコミット＆デプロイ
 
-1. **ドラマ記事キャラクター属性バグ全修正（31箇所）**
-   - 6ファイルでユウカのセリフが `character="naoko"` になっていたバグを修正
-   - 修正済みファイル: myprotein-drama / kurasu-coffee-drama / tabechoku-farm-direct-drama / green-spoon-drama / onigo-drama / chef-muten-tsukurioki-drama
-   - ナオコ = 経験者として答える側 / ユウカ = 質問・疑問を代弁する側
+前セッション（2026-05-24）で保留されていた修正を全てコミット・プッシュ完了。
 
-2. **index.astro 先生セクションの display:none 除去**
-   - 「先生コラム」セクションがデフォルト折りたたみ（display:none）→ 常時表示に変更
-   - Googlebot が `-psychiatrist` 記事へのリンクを評価できない状態だったため修正
-   - E-E-A-T向上を目的とした対応
+- `muscledeli-review-psychiatrist.mdx` — マッスルデリ価格修正（888〜1,100円）
+- `nashi-review-drama.mdx` — 同上
+- `noshi-vs-mitsuboshi-vs-muscledeli.mdx` — 同上
+- 81記事全件の `references_books` フィールド追加（auto_assign_references_books.py）
+- `src/content/config.ts` — `references_books` スキーマ追加
+- `CLAUDE.md` — Phase 5 デプロイ前自動ガードの説明追加
+- `yoshikei-mealkit-psychiatrist.mdx` — ミールキットコース種別補足
 
-3. **「クロール済・インデックス未登録」4記事への対応**
-   - 対象: delipicks / green-spoon-drama / onigo-drama / kitoisix（`-psychiatrist`系）
-   - FAQPage JSON-LD + Q&A セクション追加（コミット `e03f7cd`）
+pre-push hook（cross_site_check.py --scan-all）: 全件 **[OK]**
 
----
+### ✅ 2. book79 出版前クロスチェック（2026-05-25発売）
 
-## 🔴 次セッションで最初にやること（最優先）
-
-### SC手動インデックス申請
-
-Cloudflare Pages のデプロイが完了しているので実施可能。
-
-**申請対象URL（`-psychiatrist` 系を優先）**:
 ```
-https://jitan-kenko.blog/articles/delipicks-review-psychiatrist
-https://jitan-kenko.blog/articles/kitoisix-review-psychiatrist
-https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist
-https://jitan-kenko.blog/articles/yoshikei-mealkit-psychiatrist
-https://jitan-kenko.blog/articles/muscledeli-review-psychiatrist
+consistency_check.py book79  → 全件クリア
+cross_site_check.py --book book79 → [OK]
 ```
 
-**手順**: Google Search Console → URL検査 → 上記URLを1件ずつ入力 → 「インデックス登録をリクエスト」
+### ✅ 3. book17 / book19 クロスチェック（近刊）
 
-**背景**: これらは「クロール済・インデックス未登録」状態。先生コラムリンクの display:none 問題が原因の一つで、本日のデプロイで修正済み。
+```
+cross_site_check.py --book book17 → [OK]
+cross_site_check.py --book book19 → [OK]
+```
+
+### ✅ 4. yoshikei-mealkit-psychiatrist.mdx コース種別補足
+
+記事冒頭に以下の注釈を追加・コミット・プッシュ済み：
+```
+> ※ 本記事はヨシケイの**ミールキットコース**についての記録です。「夕食ネット」など他のコースは扱っていません。
+```
+
+### ✅ 5. Search Console インデックス申請URL案内
+
+以下5件をユーザーへ案内済み。ユーザーが手動でGSCに申請する。
+
+```
+https://jitan-kenko.blog/articles/base-food-drama/
+https://jitan-kenko.blog/articles/fishlle-kenji-drama/
+https://jitan-kenko.blog/articles/chef-muten-tsukurioki-drama/
+https://jitan-kenko.blog/articles/green-spoon-drama/
+https://jitan-kenko.blog/articles/nashi-review-drama/
+```
+
+申請後は `indexing-status.md` の該当行を `申請済み` に変更すること。
 
 ---
 
-## プロジェクト概要
+## 🔴 次セッション最優先タスク
 
-- **サイト名**: 時短 × 健康
-- **本番URL**: https://jitan-kenko.blog/
-- **プレビューURL**: https://dev.jitan-health-blog.pages.dev/
-- **リポジトリ**: https://github.com/pinmal/jitan-health-blog
-- **技術スタック**: Astro 4.x SSG + Cloudflare Pages（mainブランチ = 本番）
-- **ローカルパス**: `C:\Users\yotsu\Desktop\claudecode1\CPO\jitan-health-blog`
+### 1. Search Console インデックス申請ステータス更新（ユーザー申請後）
+
+上記5件の申請完了後、`indexing-status.md` を更新する。
+
+申請日と `申請済み` ステータスを記入:
+```
+| https://jitan-kenko.blog/articles/base-food-drama/ | 2026-05-25 | 申請済み | Tier2 | |
+```
+
+### 2. book20 発売後（5/31）の整合性確認
+
+book20（宅食サービス7社比較）が5/31発売予定。
+既に価格整合性修正は完了しているが、発売後に問題が出た場合は確認。
+
+### 3. 追加インデックス申請（Tier2候補の残り）
+
+現状の未申請記事のうち、次のTier2候補を確認してGSCに追加申請。
+
+---
+
+## サイト現状サマリー
+
+| 項目 | 値 |
+|---|---|
+| 本番URL | https://jitan-kenko.blog/ |
+| リポジトリ | https://github.com/pinmal/jitan-health-blog |
+| ローカルパス | `C:\Users\yotsu\Desktop\claudecode1\CPO\jitan-health-blog` |
+| 技術スタック | Astro 4.x SSG + Cloudflare Pages（mainブランチ = 本番） |
+| 記事数 | 81本（.mdx） |
+| インデックス申請済み | 5本（うち4本索引済み確認） |
+| 案内済み申請待ち | 5本 |
+
+### 索引済み確認記事（上位）
+| URL | SC状況 |
+|---|---|
+| muscledeli-review-psychiatrist | **2.5位** ★高パフォーマンス |
+| kitoisix-review-psychiatrist | **8.6位** |
+| noshi-vs-mitsuboshi-vs-muscledeli | 索引済み |
+| yoshikei-family-kenji-drama | 索引済み |
+| mealkit-3-comparison-kenji-drama | 申請済み・impressions最多（順位45.9位・改善余地あり） |
+
+---
+
+## プロジェクト絶対ルール（CLAUDE.mdより）
+
+1. `publishedAt` は当日の日付のみ（未来日付禁止）
+2. `AffiliateCard` に `shopComment` 必須（長友先生の「診療で観察した」視点・15〜40文字）
+3. 薬機法断定表現禁止（「効果があります」→「効果が期待できます」）
+4. ファイル名はすべて小文字 kebab-case（`_` 始まり禁止）
+5. 記事末尾に「架空キャラクター」「アフィリエイトリンク含む」開示文必須
+6. `git push` 前に `.git/hooks/pre-push` が自動で書籍×Web齟齬チェックを実行
+
+---
+
+## 参照必須ファイル一覧
+
+| ファイル | 用途 |
+|---|---|
+| `CPO/jitan-health-blog/CLAUDE.md` | プロジェクト全体ルール（@MARKETING.mdも自動読込） |
+| `CPO/jitan-health-blog/MARKETING.md` | 掛け合いドラマ形式・アフィリ配置ルール |
+| `CPO/jitan-health-blog/indexing-status.md` | Search Console申請追跡 |
+| `CSO/kindle-publishing/CONSISTENCY-CHECK.md` | 書籍×Web整合性台帳 |
+| `CSO/kindle-publishing/FACTS-MASTER.md` | 商品・価格の正本 |
+| `CSO/kindle-publishing/KDP-SCHEDULE.md` | 出版スケジュール（Phase2以降60冊計画） |
+| `Knowledge/infra/jitan-health-blog-a8-program-list.md` | A8プログラムのa8matコード一覧 |
+
+---
+
+## 直近のKindle出版スケジュール（jitan-kenko.blogに関連するもの）
+
+| 発売日 | book# | タイトル | Web記事との関係 |
+|---|---|---|---|
+| 5/25 ✅ | book79 | PMSをやわらげる食事の本 | cross-check済み・OK |
+| 5/28 | book17 | 腸活レシピ入門 | cross-check済み・OK |
+| 5/29 | book19 | コンビニ飯 罪悪感ゼロ | cross-check済み・OK |
+| 5/31 | book20 | 宅食サービス7社比較 | 整合性修正済み |
 
 ---
 
@@ -61,126 +143,31 @@ https://jitan-kenko.blog/articles/muscledeli-review-psychiatrist
 | ブランチ | 役割 |
 |---|---|
 | `main` | 本番（jitan-kenko.blog）自動デプロイ |
-| `dev` | 開発・プレビュー（dev.jitan-health-blog.pages.dev）|
+| `dev` | 開発・プレビュー（dev.jitan-health-blog.pages.dev） |
 
 作業は常に `dev` ブランチで行い、確認後に `main` にマージする。
 
 ---
 
-## 現在の記事一覧
+## キャラクター設定（記事執筆時）
 
-### 公開中（humanReviewed: true）— 7本
-
-| ファイル | タイトル | アフィリ状況 |
-|---|---|---|
-| `kenkonamakyubin-review-psychiatrist.mdx` | 健康直球便レビュー | ✅ A8.net承認済み |
-| `kitoisix-review-psychiatrist.mdx` | Kit Oisixレビュー | ✅ A8.net承認済み |
-| `soelu-review-psychiatrist.mdx` | SOELUオンラインヨガレビュー | ✅ A8.net承認済み |
-| `fitfoodhome-review-psychiatrist.mdx` | FIT FOOD HOMEレビュー | ✅ A8.net承認済み |
-| `muscledeli-review-psychiatrist.mdx` | マッスルデリレビュー | ✅ A8.net承認済み |
-| `delipicks-review-psychiatrist.mdx` | DELIPICKSレビュー | ✅ A8.net承認済み |
-| `yoshikei-mealkit-psychiatrist.mdx` | ヨシケイミールキット | ✅ A8.net承認済み |
-
-### 非公開（humanReviewed: false）— アフィリ待ち
-
-| ファイル | タイトル | 理由 |
-|---|---|---|
-| `weekday-dinner-systemization.mdx` | 夕食の仕組み化3ステップ | ナッシュ A8.net申請中 |
-| `sleep-and-nutrition-psychiatrist.mdx` | 睡眠と栄養の関係 | アフィリ未設定 |
-| `mental-health-meal-delivery-psychiatrist.mdx` | 宅配食をすすめる理由 | 全カード直リンク（A8未参加） |
-| `noshi-vs-mitsuboshi-vs-muscledeli.mdx` | 3社比較記事 | アフィリ未設定 |
-| `_base-food-review-psychiatrist.mdx` | BASE FOODレビュー | ファイル名`_`でAstro除外 |
-
----
-
-## 次にやること（優先順）
-
-### 0. SC手動インデックス申請（上記参照・最優先）
-
-### 1. ナッシュ A8.net 承認待ち → 承認後の作業
-`weekday-dinner-systemization.mdx` のコメントアウトを外してリンク差し替え：
-```mdx
-{/* ここのコメントを外す */}
-<AffiliateCard
-  href="← A8.netのpx.a8.net追跡URL"
-  imageSrc="← A8.netのバナーURL（300×250推奨）"
-  ...
-/>
-```
-その後 `humanReviewed: true` に変更 → dev push → main マージ
-
-### 2. 睡眠記事のアフィリ追加
-`sleep-and-nutrition-psychiatrist.mdx` に合うA8.net参加サービスを探してAffiliateCardを追加。
-候補：機能性食品・サプリ・ハーブティー系など。
-
-### 3. A8.net 新規申請の検討サービス
-以下が未参加の可能性があるため、A8.netで申請を検討：
-- ナッシュ（申請中）
-- GREEN SPOON
-- ワタミの宅食ダイレクト
-- パルシステム
-- BASE FOOD
-
-### 4. 記事追加の方向性
-- 比較記事（`noshi-vs-mitsuboshi-vs-muscledeli.mdx`）にA8リンクを追加して公開
-- 新カテゴリ「howto」「health-column」の記事を追加（現在はreviewが中心）
-
----
-
-## A8.net リンク構造（参考）
-
-```
-追跡URL: https://px.a8.net/svt/ejp?a8mat=XXXXX+YYYYY+ZZZZZ+AAAAA
-バナーURL: https://wwwXX.a8.net/svt/bgt?aid=XXXXXX&wid=001&eno=01&mid=XXXXXX&mc=1
-```
-バナーは300×250（正方形）を優先して使う。
-
----
-
-## ⚠️ 新記事を書く前に必ず読むファイル
-
-| ファイル | 内容 | タイミング |
-|---|---|---|
-| `yuka-character-bible.md` | ユウカの設定辞典（単一真実ソース） | **毎回・必須** |
-| `character-and-format-design.md` | 掛け合いドラマ形式の設計書・記事テンプレート | 初回・フォーマット確認時 |
-| `writing-style-guide.md` | 文章術10法則・冒頭フレーズ集 | 初回・文体に迷ったとき |
-
-**記事を書いたら** → `yuka-character-bible.md` の「商品使用歴」セクションを更新する
-
----
-
-## 記事フォーマット（2026-04-26〜）
-
-### 新フォーマット：掛け合いドラマ形式
-
-「精神科医の先生 × 架空キャラ・宮本ユウカ」の対話形式。
-詳細は → `character-and-format-design.md` 参照
-
-**ユウカのプロフィール（架空）**
-- 34歳・IT系・プロジェクトマネージャー・東京一人暮らし
+### 宮本ユウカ（メインキャラ）
+- 34歳・IT系プロジェクトマネージャー・東京一人暮らし
 - 帰宅23時・コンビニ飯が週4日・健康意識あるが行動できない
 - 口グセ: 「でも高くないですか?」「それ続きます?」「うーんどうだろ」
+- 担当Kindle著者としても同名で使用（宅食・食事管理系）
 
-**記事末尾の開示テキスト（全記事必須）**
-```
-※ この記事の「宮本ユウカ」は架空のキャラクターです。体験談部分はフィクションですが、
-  製品の価格・内容は公式情報と複数レビューを参照しています。
-※ アフィリエイトリンクを含みます。
-```
+### 先生（精神保健指定医・長友恭平）
+- 発言は常に「診療で観察した・患者さんに多い」視点
+- 「私が使った」とは絶対に言わない
+- `type="experience"` / `"opinion"` / `"caution"` の3種のDoctorCommentを使い分け
 
----
-
-## 重要ルール（文体）
-
-- 引用フレーズを `**「〇〇」**` で太字にしない（AI臭がするため禁止）
-- DoctorComment コンポーネント: `type="experience"` / `"opinion"` / `"caution"` の3種
-- AffiliateCard はバナー画像（imageSrc）必須。未承認の場合はコメントアウトして非表示
-- **先生の発言に「私が使った」は書かない**（医師として「観察・研究・診療経験」として語る）
-- **ユウカが「完全に解決した」と断言しない**（「まあ続けてみます」程度の温度感が自然）
+### その他キャラ
+- 佐藤ケンジ（38歳・共働き・子あり）: ケンジ系記事で夫視点
+- 山本ナオコ（40歳・在宅ワーク・有機食品こだわり派）: ナオコ系記事
 
 ---
 
-## A8.net サイト登録用紹介文（承認申請時に使う）
+## A8.net サイト登録用紹介文（申請時に使う）
 
 > 精神保健指定医・産業医の長友恭平が運営する食事管理ブログ「時短 × 健康」。意欲・判断力が低下した状態でも食事を安定させる仕組みとして、宅配弁当・ミールキット・栄養補助食品を医師の視点で評価・紹介しています。忙しい社会人・体調の波がある方をメインターゲットとし、月間PV増加中です。
-

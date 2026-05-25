@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-05-20
+> 最終更新: 2026-05-25
 
 ---
 
@@ -31,15 +31,21 @@
 
 ---
 
-## 未申請の優先候補
+## 申請案内済み（ユーザー手動申請待ち）— 2026-05-25
+
+以下の5件をユーザーへ案内済み。ユーザーがGSCで申請後にステータスを「申請済み」へ更新すること。
 
 | URL | 優先度 | 理由 |
 |---|---|---|
-| https://jitan-kenko.blog/articles/base-food-drama/ | Tier2 | Day8候補・未申請 |
-| https://jitan-kenko.blog/articles/fishlle-kenji-drama/ | Tier2 | Day8候補・未申請 |
-| https://jitan-kenko.blog/articles/chef-muten-tsukurioki-drama/ | Tier2 | Day9候補・未申請 |
-| https://jitan-kenko.blog/articles/green-spoon-drama/ | Tier2 | Day9候補・未申請 |
-| https://jitan-kenko.blog/articles/nashi-review-drama/ | Tier2 | Day11候補・未申請 |
+| https://jitan-kenko.blog/articles/base-food-drama/ | Tier2 | 案内済み・申請待ち |
+| https://jitan-kenko.blog/articles/fishlle-kenji-drama/ | Tier2 | 案内済み・申請待ち |
+| https://jitan-kenko.blog/articles/chef-muten-tsukurioki-drama/ | Tier2 | 案内済み・申請待ち |
+| https://jitan-kenko.blog/articles/green-spoon-drama/ | Tier2 | 案内済み・申請待ち |
+| https://jitan-kenko.blog/articles/nashi-review-drama/ | Tier2 | 案内済み・申請待ち |
+
+## 未申請の優先候補
+
+次セッションで追加申請候補（Tier2以下・現時点で未特定）
 
 ---
 
