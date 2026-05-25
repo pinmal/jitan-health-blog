@@ -26,6 +26,9 @@ const articles = defineCollection({
       q: z.string(),
       a: z.string(),
     })).optional(),
+    // Phase 4 (2026-05-23): cross_site_check.py 用の参照書籍指定
+    // CSO/kindle-publishing/frozen_facts/book##.yaml の forbidden_in_web を限定的に適用
+    references_books: z.array(z.string()).optional(),
   }),
 });
 
