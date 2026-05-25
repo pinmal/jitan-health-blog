@@ -31,21 +31,19 @@
 
 ---
 
-## 申請案内済み（ユーザー手動申請待ち）— 2026-05-25
+## 申請済み URL一覧（Tier2）— 2026-05-25 申請
 
-以下の5件をユーザーへ案内済み。ユーザーがGSCで申請後にステータスを「申請済み」へ更新すること。
-
-| URL | 優先度 | 理由 |
-|---|---|---|
-| https://jitan-kenko.blog/articles/base-food-drama/ | Tier2 | 案内済み・申請待ち |
-| https://jitan-kenko.blog/articles/fishlle-kenji-drama/ | Tier2 | 案内済み・申請待ち |
-| https://jitan-kenko.blog/articles/chef-muten-tsukurioki-drama/ | Tier2 | 案内済み・申請待ち |
-| https://jitan-kenko.blog/articles/green-spoon-drama/ | Tier2 | 案内済み・申請待ち |
-| https://jitan-kenko.blog/articles/nashi-review-drama/ | Tier2 | 案内済み・申請待ち |
+| URL | 申請日 | ステータス | 優先度 | メモ |
+|---|---|---|---|---|
+| https://jitan-kenko.blog/articles/base-food-drama/ | 2026-05-25 | 申請済み | Tier2 | |
+| https://jitan-kenko.blog/articles/fishlle-kenji-drama/ | 2026-05-25 | 申請済み | Tier2 | |
+| https://jitan-kenko.blog/articles/chef-muten-tsukurioki-drama/ | 2026-05-25 | 申請済み | Tier2 | |
+| https://jitan-kenko.blog/articles/green-spoon-drama/ | 2026-05-25 | 申請済み | Tier2 | |
+| https://jitan-kenko.blog/articles/nashi-review-drama/ | 2026-05-25 | 申請済み | Tier2 | |
 
 ## 未申請の優先候補
 
-次セッションで追加申請候補（Tier2以下・現時点で未特定）
+次回（3〜6週間後）GSCで上記5件の索引状況を確認後、新たな候補を追加する。
 
 ---
 
