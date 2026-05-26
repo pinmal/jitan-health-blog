@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-05-26（新記事7本 Tier1-2 全件申請済み）
+> 最終更新: 2026-05-26（FAQ追加30記事デプロイ・未申請72本を優先候補に記録）
 
 ---
 
@@ -53,9 +53,96 @@
 | https://jitan-kenko.blog/articles/nashi-tired-alternatives-yuka-drama/ | 2026-05-26 | 申請済み | Tier2 | ナッシュ飽きた 指名検索需要あり |
 | https://jitan-kenko.blog/articles/night-overeating-psychiatrist/ | 2026-05-26 | 申請済み | Tier2 | 夜食べすぎ 既存ストレス食い記事と補完 |
 
-## 未申請の優先候補
+## 未申請の優先候補（72本・1日3〜5本ずつ申請）
 
-現在なし。
+### Tier1（17本 — まずここから。商業価値・検索需要高）
+※ FAQ追加済み・updatedAt: 2026-05-26 設定済み
+
+```
+https://jitan-kenko.blog/articles/base-food-review-psychiatrist/
+https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist/
+https://jitan-kenko.blog/articles/delipicks-review-psychiatrist/
+https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/
+https://jitan-kenko.blog/articles/soelu-review-psychiatrist/
+https://jitan-kenko.blog/articles/shokuzai-takuhai-3-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/fitness-3-comparison-yuka-drama/
+https://jitan-kenko.blog/articles/yoshikei-mealkit-psychiatrist/
+https://jitan-kenko.blog/articles/mental-health-meal-delivery-psychiatrist/
+https://jitan-kenko.blog/articles/gut-brain-axis-psychiatrist/
+https://jitan-kenko.blog/articles/protein-fatigue-psychiatrist/
+https://jitan-kenko.blog/articles/exercise-mental-health-psychiatrist/
+https://jitan-kenko.blog/articles/stress-eating-psychiatrist/
+https://jitan-kenko.blog/articles/sugar-craving-psychiatrist/
+https://jitan-kenko.blog/articles/sleep-quality-diet-psychiatrist/
+https://jitan-kenko.blog/articles/sleep-and-nutrition-psychiatrist/
+https://jitan-kenko.blog/articles/lunch-management-solo-living-psychiatrist/
+```
+
+### Tier2（20本 — Tier1 完了後）
+※ FAQ追加済み（一部）
+
+```
+https://jitan-kenko.blog/articles/muscledeli-yuka-second-drama/
+https://jitan-kenko.blog/articles/green-spoon-yuka-drama/
+https://jitan-kenko.blog/articles/yoshikei-simplemeal-yuka-drama/
+https://jitan-kenko.blog/articles/radishboya-yuka-drama/
+https://jitan-kenko.blog/articles/radishboya-kenji-drama/
+https://jitan-kenko.blog/articles/fishlle-unused-fish-drama/
+https://jitan-kenko.blog/articles/mogmo-drama/
+https://jitan-kenko.blog/articles/mogmo-kenji-kids-drama/
+https://jitan-kenko.blog/articles/ouchi-coop-kenji-drama/
+https://jitan-kenko.blog/articles/ouchi-coop-yuka-drama/
+https://jitan-kenko.blog/articles/parsystem-family-kenji-drama/
+https://jitan-kenko.blog/articles/yasai-wo-motto-kenji-drama/
+https://jitan-kenko.blog/articles/shokunbu-kenji-drama/
+https://jitan-kenko.blog/articles/kenji-weekend-tsukurioki-drama/
+https://jitan-kenko.blog/articles/morning-routine-coffee-protein-kenji-drama/
+https://jitan-kenko.blog/articles/wanmile-kenkodinner-drama/
+https://jitan-kenko.blog/articles/wanmile-yuka-drama/
+https://jitan-kenko.blog/articles/kikubari-gozen-review-drama/
+https://jitan-kenko.blog/articles/happy-tempe-gut-health-yuka-drama/
+https://jitan-kenko.blog/articles/myprotein-drama/
+```
+
+### Tier3（35本 — 最後でよい）
+
+```
+https://jitan-kenko.blog/articles/allulose-sugar-control-yuka-drama/
+https://jitan-kenko.blog/articles/anshinsoudan-senior-meal-psychiatrist/
+https://jitan-kenko.blog/articles/arumeid-housekeeping-drama/
+https://jitan-kenko.blog/articles/cathand-arumeid-housekeeping-yuka-drama/
+https://jitan-kenko.blog/articles/coffee-sleep-concentration-drama/
+https://jitan-kenko.blog/articles/coop-shizenha-yuka-drama/
+https://jitan-kenko.blog/articles/deat-workout-personal-training-drama/
+https://jitan-kenko.blog/articles/dr-tsurukame-drama/
+https://jitan-kenko.blog/articles/dr-tsurukame-parent-care-yuka-drama/
+https://jitan-kenko.blog/articles/element-gym-drama/
+https://jitan-kenko.blog/articles/emoor-sleep-yuka-drama/
+https://jitan-kenko.blog/articles/fit24-gym-yuka-drama/
+https://jitan-kenko.blog/articles/fitdish-yuka-drama/
+https://jitan-kenko.blog/articles/foodable-suihanki-yuka-drama/
+https://jitan-kenko.blog/articles/fujizakura-water-naoko-drama/
+https://jitan-kenko.blog/articles/kurasu-coffee-drama/
+https://jitan-kenko.blog/articles/naoko-bluebottle-coffee-drama/
+https://jitan-kenko.blog/articles/naoko-business-trip-meal-drama/
+https://jitan-kenko.blog/articles/narwal-cleaning-naoko-drama/
+https://jitan-kenko.blog/articles/onigo-drama/
+https://jitan-kenko.blog/articles/panasonic-bistro-toaster-kenji-drama/
+https://jitan-kenko.blog/articles/panasonic-coffee-maker-yuka-drama/
+https://jitan-kenko.blog/articles/panasonic-suihanki-drama/
+https://jitan-kenko.blog/articles/poke-marche-farm-direct-yuka-drama/
+https://jitan-kenko.blog/articles/protein-lyft-hongo-kenji-drama/
+https://jitan-kenko.blog/articles/sakanoto-organic-vegetables-drama/
+https://jitan-kenko.blog/articles/solo-living-food-cost-drama/
+https://jitan-kenko.blog/articles/sowaka-naoko-drama/
+https://jitan-kenko.blog/articles/tabechoku-farm-direct-drama/
+https://jitan-kenko.blog/articles/taihe-yuka-drama/
+https://jitan-kenko.blog/articles/teryori-stock-drama/
+https://jitan-kenko.blog/articles/tsukurio-drama/
+https://jitan-kenko.blog/articles/weekday-dinner-drama/
+https://jitan-kenko.blog/articles/weekday-dinner-systemization/
+https://jitan-kenko.blog/articles/yourmystar-aircon-naoko-drama/
+```
 
 ---
 
