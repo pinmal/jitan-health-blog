@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-05-25（新記事7本追加・未申請候補に記録）
+> 最終更新: 2026-05-26（新記事7本 Tier1-2 全件申請済み）
 
 ---
 
@@ -41,19 +41,21 @@
 | https://jitan-kenko.blog/articles/green-spoon-drama/ | 2026-05-25 | 申請済み | Tier2 | |
 | https://jitan-kenko.blog/articles/nashi-review-drama/ | 2026-05-25 | 申請済み | Tier2 | |
 
-## 未申請の優先候補（新記事7本・2026-05-25公開）
+## 申請済み URL一覧（Tier1-2）— 2026-05-26 申請
 
-デプロイ後すぐにGSCでインデックス申請を行うこと。1日3〜5件の上限に注意。
+| URL | 申請日 | ステータス | 優先度 | メモ |
+|---|---|---|---|---|
+| https://jitan-kenko.blog/articles/pms-food-yuka-drama/ | 2026-05-26 | 申請済み | Tier1 | PMS×食事 情報需要高・新規カテゴリ |
+| https://jitan-kenko.blog/articles/iron-deficiency-women-psychiatrist/ | 2026-05-26 | 申請済み | Tier1 | 鉄分不足×疲れ 女性向け・競合薄め |
+| https://jitan-kenko.blog/articles/sleep-supplement-comparison-psychiatrist/ | 2026-05-26 | 申請済み | Tier1 | 睡眠サプリ比較 商業キーワード・sowaka連携 |
+| https://jitan-kenko.blog/articles/low-carb-delivery-comparison-psychiatrist/ | 2026-05-26 | 申請済み | Tier1 | 低糖質宅食比較 商業キーワード・複数アフィリ |
+| https://jitan-kenko.blog/articles/protein-bar-comparison-yuka-drama/ | 2026-05-26 | 申請済み | Tier2 | プロテインバー比較 女性向け・マイプロテイン連携 |
+| https://jitan-kenko.blog/articles/nashi-tired-alternatives-yuka-drama/ | 2026-05-26 | 申請済み | Tier2 | ナッシュ飽きた 指名検索需要あり |
+| https://jitan-kenko.blog/articles/night-overeating-psychiatrist/ | 2026-05-26 | 申請済み | Tier2 | 夜食べすぎ 既存ストレス食い記事と補完 |
 
-| URL | 優先度 | 理由 |
-|---|---|---|
-| https://jitan-kenko.blog/articles/pms-food-yuka-drama/ | Tier1 | PMS×食事 情報需要高・book79連携・新規カテゴリ |
-| https://jitan-kenko.blog/articles/iron-deficiency-women-psychiatrist/ | Tier1 | 鉄分不足×疲れ 女性向け・競合薄め |
-| https://jitan-kenko.blog/articles/sleep-supplement-comparison-psychiatrist/ | Tier1 | 睡眠サプリ比較 商業キーワード・sowaka連携 |
-| https://jitan-kenko.blog/articles/low-carb-delivery-comparison-psychiatrist/ | Tier1 | 低糖質宅食比較 商業キーワード・複数アフィリ |
-| https://jitan-kenko.blog/articles/protein-bar-comparison-yuka-drama/ | Tier2 | プロテインバー比較 女性向け・マイプロテイン連携 |
-| https://jitan-kenko.blog/articles/nashi-tired-alternatives-yuka-drama/ | Tier2 | ナッシュ飽きた 指名検索需要あり |
-| https://jitan-kenko.blog/articles/night-overeating-psychiatrist/ | Tier2 | 夜食べすぎ 既存ストレス食い記事と補完 |
+## 未申請の優先候補
+
+現在なし。
 
 ---
 
