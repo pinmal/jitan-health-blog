@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-05-27（Tier1 3本申請済み・1本索引済み確認・1本割り当て制限→翌日繰越）
+> 最終更新: 2026-05-28（FAQ全89記事追加・関連記事アルゴリズム刷新・カテゴリ修正 → CF Pagesデプロイ完了。FAQ更新した全55記事は再申請推奨）
 
 ---
 
@@ -66,7 +66,7 @@
 ## 未申請の優先候補（残68本・1日3〜5本ずつ申請）
 
 ### Tier1（12本 — まずここから。商業価値・検索需要高）
-※ FAQ追加済み・updatedAt: 2026-05-26 設定済み
+※ 全記事FAQ追加済み・updatedAt: 2026-05-28 設定済み（2026-05-28デプロイ完了）
 
 ```
 https://jitan-kenko.blog/articles/soelu-review-psychiatrist/
