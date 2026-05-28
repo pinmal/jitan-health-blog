@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-05-26（FAQ追加30記事デプロイ・未申請72本を優先候補に記録）
+> 最終更新: 2026-05-27（Tier1 3本申請済み・1本索引済み確認・1本割り当て制限→翌日繰越）
 
 ---
 
@@ -53,16 +53,22 @@
 | https://jitan-kenko.blog/articles/nashi-tired-alternatives-yuka-drama/ | 2026-05-26 | 申請済み | Tier2 | ナッシュ飽きた 指名検索需要あり |
 | https://jitan-kenko.blog/articles/night-overeating-psychiatrist/ | 2026-05-26 | 申請済み | Tier2 | 夜食べすぎ 既存ストレス食い記事と補完 |
 
-## 未申請の優先候補（72本・1日3〜5本ずつ申請）
+## 申請済み URL一覧（Tier1）— 2026-05-27 申請
 
-### Tier1（17本 — まずここから。商業価値・検索需要高）
+| URL | 申請日 | ステータス | 優先度 | メモ |
+|---|---|---|---|---|
+| https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist/ | 2026-05-27 | 索引済み確認 | Tier1 | 申請前にすでにインデックス済みだった |
+| https://jitan-kenko.blog/articles/base-food-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
+| https://jitan-kenko.blog/articles/delipicks-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
+| https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
+| https://jitan-kenko.blog/articles/soelu-review-psychiatrist/ | — | 未申請（割り当て制限） | Tier1 | 2026-05-27に割り当て上限。翌日以降に申請 |
+
+## 未申請の優先候補（残68本・1日3〜5本ずつ申請）
+
+### Tier1（12本 — まずここから。商業価値・検索需要高）
 ※ FAQ追加済み・updatedAt: 2026-05-26 設定済み
 
 ```
-https://jitan-kenko.blog/articles/base-food-review-psychiatrist/
-https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist/
-https://jitan-kenko.blog/articles/delipicks-review-psychiatrist/
-https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/
 https://jitan-kenko.blog/articles/soelu-review-psychiatrist/
 https://jitan-kenko.blog/articles/shokuzai-takuhai-3-comparison-psychiatrist/
 https://jitan-kenko.blog/articles/fitness-3-comparison-yuka-drama/
