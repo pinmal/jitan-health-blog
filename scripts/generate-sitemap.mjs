@@ -81,8 +81,21 @@ async function main() {
     ).join('\n') +
     `\n</urlset>`;
 
+  // robots.txt が指すメインのサイトマップ
   await writeFile(join(DIST_DIR, 'sitemap.xml'), xml, 'utf-8');
-  console.log(`✅ sitemap.xml 生成完了（${urls.length} URL）`);
+
+  // 過去に GSC へ登録された旧 @astrojs/sitemap 形式（sitemap-index.xml → sitemap-0.xml）が
+  // 残っていても 28URL のクリーンな内容を返すよう、同一内容を sitemap-0.xml にも出力し、
+  // sitemap-index.xml を整合させる（旧登録の自己修復・noindex記事の流出防止）。
+  await writeFile(join(DIST_DIR, 'sitemap-0.xml'), xml, 'utf-8');
+  const indexXml =
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+    `  <sitemap><loc>${SITE}/sitemap-0.xml</loc><lastmod>${today}</lastmod></sitemap>\n` +
+    `</sitemapindex>`;
+  await writeFile(join(DIST_DIR, 'sitemap-index.xml'), indexXml, 'utf-8');
+
+  console.log(`✅ sitemap.xml / sitemap-0.xml / sitemap-index.xml 生成完了（${urls.length} URL）`);
   urls.forEach(u => console.log(`   ${u.loc}`));
 }
 
