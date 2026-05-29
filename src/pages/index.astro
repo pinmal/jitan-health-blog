@@ -14,6 +14,22 @@ const doctorArticles  = sortedAll.filter(a => !a.id.startsWith('_') && !a.data.c
 const featured = allArticles.find(a => a.data.isFeatured) ?? sortedAll[0];
 const siteSchema = generateSiteSchema();
 
+// まず読んでほしい3記事（slugで指定。humanReviewed:false 記事は find で除外されるため
+// noindex ページへリンクすることは構造的に起こらない）
+const top3Slugs = [
+  'shokuzai-takuhai-3-comparison-psychiatrist',
+  'base-food-review-psychiatrist',
+  'gut-brain-axis-psychiatrist',
+];
+const top3 = top3Slugs
+  .map(s => allArticles.find(a => a.slug === s))
+  .filter(Boolean);
+const top3Badge = (cat) => {
+  if (cat === 'comparison') return { cls: 'compare', label: '比較' };
+  if (cat === 'review')     return { cls: 'review',  label: 'レビュー' };
+  return { cls: 'column', label: 'コラム' };
+};
+
 const purposes = [
   { id: 'all',       label: 'すべて',           icon: '📋' },
   { id: 'no-cook',   label: '夕食を作りたくない',  icon: '🍱' },
@@ -87,37 +103,20 @@ const purposes = [
           </h2>
           <p class="top3-sub">このサイトでよく読まれている、選びやすさの高い記事です。</p>
           <div class="top3-grid">
-
-            <a href="/articles/mealkit-3-comparison-kenji-drama/" class="top3-card">
-              <div class="top3-rank">01</div>
-              <div class="top3-body">
-                <span class="top3-badge top3-badge--compare">比較</span>
-                <h3 class="top3-title">ミールキット3社比較【2026年版】ヨシケイ・キットオイシックス・パルシステムを正直評価</h3>
-                <p class="top3-desc">共働き4人家族が1ヶ月ずつ試した価格・調理時間・子供の食いつきの比較表つき</p>
-                <span class="top3-cta">記事を読む →</span>
-              </div>
-            </a>
-
-            <a href="/articles/kitoisix-review-psychiatrist/" class="top3-card">
-              <div class="top3-rank">02</div>
-              <div class="top3-body">
-                <span class="top3-badge top3-badge--review">レビュー</span>
-                <h3 class="top3-title">キットオイシックス 口コミ【精神科医が評価】有機野菜ミールキットの正直レビュー</h3>
-                <p class="top3-desc">有機・国産食材へのこだわりと「料理が面倒な日」のリアルな課題を正直に評価</p>
-                <span class="top3-cta">記事を読む →</span>
-              </div>
-            </a>
-
-            <a href="/articles/muscledeli-review-psychiatrist/" class="top3-card">
-              <div class="top3-rank">03</div>
-              <div class="top3-body">
-                <span class="top3-badge top3-badge--review">レビュー</span>
-                <h3 class="top3-title">マッスルデリ 口コミ【精神科医が評価】高タンパク宅食の正直レビューと向き・不向き</h3>
-                <p class="top3-desc">タンパク質不足が気になる方向け。「高くない？」という疑問にも正直に答えます</p>
-                <span class="top3-cta">記事を読む →</span>
-              </div>
-            </a>
-
+            {top3.map((article, i) => {
+              const badge = top3Badge(article.data.category);
+              return (
+                <a href={`/articles/${article.slug}/`} class="top3-card">
+                  <div class="top3-rank">{String(i + 1).padStart(2, '0')}</div>
+                  <div class="top3-body">
+                    <span class={`top3-badge top3-badge--${badge.cls}`}>{badge.label}</span>
+                    <h3 class="top3-title">{article.data.title}</h3>
+                    <p class="top3-desc">{article.data.description}</p>
+                    <span class="top3-cta">記事を読む →</span>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -709,6 +708,7 @@ a { color: inherit; text-decoration: none; }
 }
 .top3-badge--compare { background: #dbeafe; color: #1e40af; }
 .top3-badge--review  { background: var(--c-accent-lt); color: var(--c-accent); }
+.top3-badge--column  { background: #ede9fe; color: #6b21a8; }
 .top3-title {
   font-size: 0.88rem;
   font-weight: 700;
@@ -719,6 +719,10 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.78rem;
   color: var(--c-text-md);
   line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .top3-cta {
   font-size: 0.75rem;
