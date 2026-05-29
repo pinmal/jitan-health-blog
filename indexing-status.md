@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-05-28（FAQ全89記事追加・関連記事アルゴリズム刷新・カテゴリ修正 → CF Pagesデプロイ完了。FAQ更新した全55記事は再申請推奨）
+> 最終更新: 2026-05-28（記事数97本に拡張：比較記事5本・健康コラム3本追加デプロイ完了）
 
 ---
 
@@ -63,9 +63,9 @@
 | https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
 | https://jitan-kenko.blog/articles/soelu-review-psychiatrist/ | — | 未申請（割り当て制限） | Tier1 | 2026-05-27に割り当て上限。翌日以降に申請 |
 
-## 未申請の優先候補（残68本・1日3〜5本ずつ申請）
+## 未申請の優先候補（残76本・1日3〜5本ずつ申請）
 
-### Tier1（12本 — まずここから。商業価値・検索需要高）
+### Tier1（17本 — まずここから。商業価値・検索需要高）
 ※ 全記事FAQ追加済み・updatedAt: 2026-05-28 設定済み（2026-05-28デプロイ完了）
 
 ```
@@ -82,6 +82,19 @@ https://jitan-kenko.blog/articles/sugar-craving-psychiatrist/
 https://jitan-kenko.blog/articles/sleep-quality-diet-psychiatrist/
 https://jitan-kenko.blog/articles/sleep-and-nutrition-psychiatrist/
 https://jitan-kenko.blog/articles/lunch-management-solo-living-psychiatrist/
+https://jitan-kenko.blog/articles/sougou-takushoku-5sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/organic-vegetable-delivery-3sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/tsukurioki-delivery-3sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/senior-meal-4sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/protein-4sha-comparison-psychiatrist/
+```
+
+### Tier2-新規（3本 — 健康コラム・2026-05-28追加）
+
+```
+https://jitan-kenko.blog/articles/chronic-fatigue-diet-guide-psychiatrist/
+https://jitan-kenko.blog/articles/irregular-meal-mental-health-psychiatrist/
+https://jitan-kenko.blog/articles/work-stress-diet-management-psychiatrist/
 ```
 
 ### Tier2（20本 — Tier1 完了後）
