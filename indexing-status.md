@@ -58,7 +58,7 @@
 | URL | 申請日 | ステータス | 優先度 | メモ |
 |---|---|---|---|---|
 | https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist/ | 2026-05-27 | 索引済み確認 | Tier1 | 申請前にすでにインデックス済みだった |
-| https://jitan-kenko.blog/articles/base-food-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | 内部リンク3本補強済み（2026-05-30: depression-cooking/protein-fatigue/meal-delivery）・**再申請を実施すること** |
+| https://jitan-kenko.blog/articles/base-food-review-psychiatrist/ | 2026-05-27 | 索引済み確認 | Tier1 | GSC確認日: 2026-05-30。内部リンク3本補強済み（depression-cooking/protein-fatigue/meal-delivery）|
 | https://jitan-kenko.blog/articles/delipicks-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
 | https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
 | https://jitan-kenko.blog/articles/soelu-review-psychiatrist/ | — | 未申請（割り当て制限） | Tier1 | 2026-05-27に割り当て上限。翌日以降に申請 |
