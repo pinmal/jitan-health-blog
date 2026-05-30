@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-05-30（記事数102本に拡張：精神科医×状況 複合クエリ5本追加デプロイ完了。DEV-INSTRUCTIONS-20260530 Task1）
+> 最終更新: 2026-05-30（記事数102本に拡張。+ noindex 6本のステータス訂正・base-food 内部リンク3本補強・再申請実施）
 
 ---
 
@@ -45,12 +45,12 @@
 
 | URL | 申請日 | ステータス | 優先度 | メモ |
 |---|---|---|---|---|
-| https://jitan-kenko.blog/articles/pms-food-yuka-drama/ | 2026-05-26 | 申請済み | Tier1 | PMS×食事 情報需要高・新規カテゴリ |
-| https://jitan-kenko.blog/articles/iron-deficiency-women-psychiatrist/ | 2026-05-26 | 申請済み | Tier1 | 鉄分不足×疲れ 女性向け・競合薄め |
-| https://jitan-kenko.blog/articles/sleep-supplement-comparison-psychiatrist/ | 2026-05-26 | 申請済み | Tier1 | 睡眠サプリ比較 商業キーワード・sowaka連携 |
-| https://jitan-kenko.blog/articles/low-carb-delivery-comparison-psychiatrist/ | 2026-05-26 | 申請済み | Tier1 | 低糖質宅食比較 商業キーワード・複数アフィリ |
-| https://jitan-kenko.blog/articles/protein-bar-comparison-yuka-drama/ | 2026-05-26 | 申請済み | Tier2 | プロテインバー比較 女性向け・マイプロテイン連携 |
-| https://jitan-kenko.blog/articles/nashi-tired-alternatives-yuka-drama/ | 2026-05-26 | 申請済み | Tier2 | ナッシュ飽きた 指名検索需要あり |
+| https://jitan-kenko.blog/articles/pms-food-yuka-drama/ | 2026-05-26 | 対象外（noindex） | Tier1 | humanReviewed:false・character:yuka・noindex出力済み・GSC申請不要 |
+| https://jitan-kenko.blog/articles/iron-deficiency-women-psychiatrist/ | 2026-05-26 | 対象外（noindex） | Tier1 | humanReviewed:false・character:yuka・noindex出力済み・GSC申請不要 |
+| https://jitan-kenko.blog/articles/sleep-supplement-comparison-psychiatrist/ | 2026-05-26 | 対象外（noindex） | Tier1 | humanReviewed:false・character:yuka・noindex出力済み・GSC申請不要 |
+| https://jitan-kenko.blog/articles/low-carb-delivery-comparison-psychiatrist/ | 2026-05-26 | 対象外（noindex） | Tier1 | humanReviewed:false・character:yuka・noindex出力済み・GSC申請不要 |
+| https://jitan-kenko.blog/articles/protein-bar-comparison-yuka-drama/ | 2026-05-26 | 対象外（noindex） | Tier2 | humanReviewed:false・character:yuka・noindex出力済み・GSC申請不要 |
+| https://jitan-kenko.blog/articles/nashi-tired-alternatives-yuka-drama/ | 2026-05-26 | 対象外（noindex） | Tier2 | humanReviewed:false・character:yuka・noindex出力済み・GSC申請不要 |
 | https://jitan-kenko.blog/articles/night-overeating-psychiatrist/ | 2026-05-26 | 申請済み | Tier2 | 夜食べすぎ 既存ストレス食い記事と補完 |
 
 ## 申請済み URL一覧（Tier1）— 2026-05-27 申請
@@ -58,7 +58,7 @@
 | URL | 申請日 | ステータス | 優先度 | メモ |
 |---|---|---|---|---|
 | https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist/ | 2026-05-27 | 索引済み確認 | Tier1 | 申請前にすでにインデックス済みだった |
-| https://jitan-kenko.blog/articles/base-food-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
+| https://jitan-kenko.blog/articles/base-food-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | 内部リンク3本補強済み（2026-05-30: depression-cooking/protein-fatigue/meal-delivery）・**再申請を実施すること** |
 | https://jitan-kenko.blog/articles/delipicks-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
 | https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/ | 2026-05-27 | 申請済み | Tier1 | FAQ追加済み・updatedAt: 2026-05-26 |
 | https://jitan-kenko.blog/articles/soelu-review-psychiatrist/ | — | 未申請（割り当て制限） | Tier1 | 2026-05-27に割り当て上限。翌日以降に申請 |
