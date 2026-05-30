@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-05-28（記事数97本に拡張：比較記事5本・健康コラム3本追加デプロイ完了）
+> 最終更新: 2026-05-30（記事数102本に拡張：精神科医×状況 複合クエリ5本追加デプロイ完了。DEV-INSTRUCTIONS-20260530 Task1）
 
 ---
 
@@ -65,7 +65,26 @@
 
 ## 未申請の優先候補（残76本・1日3〜5本ずつ申請）
 
-### Tier1（17本 — まずここから。商業価値・検索需要高）
+### Tier1-最優先・新規（5本 — 2026-05-30追加・精神科医×状況 複合クエリ）
+※ DEV-INSTRUCTIONS-20260530 Task1。大手が手薄でE-E-A-Tが活きる隙間クエリ。**申請を最優先する**。
+
+```
+https://jitan-kenko.blog/articles/depression-cooking-difficulty-psychiatrist/
+https://jitan-kenko.blog/articles/adjustment-disorder-meal-psychiatrist/
+https://jitan-kenko.blog/articles/night-shift-meal-psychiatrist/
+https://jitan-kenko.blog/articles/postpartum-meal-difficulty-psychiatrist/
+https://jitan-kenko.blog/articles/appetite-loss-weight-loss-fatigue-psychiatrist/
+```
+
+| URL | 狙うクエリ | メモ |
+|---|---|---|
+| /articles/depression-cooking-difficulty-psychiatrist/ | うつ 自炊できない 食事 | 実在医師・mental-healthハブから内部リンク |
+| /articles/adjustment-disorder-meal-psychiatrist/ | 適応障害 食事 作れない | 競合薄・精神科医独自 |
+| /articles/night-shift-meal-psychiatrist/ | 夜勤明け 食事 作りたくない | 交代勤務×食 隙間クエリ |
+| /articles/postpartum-meal-difficulty-psychiatrist/ | 産後 ごはん 作れない 限界 | 産後うつ受診導線あり |
+| /articles/appetite-loss-weight-loss-fatigue-psychiatrist/ | 食欲ない 痩せた 疲れ 原因 | レッドフラグ・内科受診誘導を最優先配置 |
+
+### Tier1（17本 — 上記5本の次。商業価値・検索需要高）
 ※ 全記事FAQ追加済み・updatedAt: 2026-05-28 設定済み（2026-05-28デプロイ完了）
 
 ```
