@@ -126,3 +126,11 @@ git push --no-verify
 2. shopCommentなしAffiliateCardの検出
 3. 薬機法断定表現の検出（`validate-yakkiho.js` 実行）
 4. A8/もしもリンクの断絶確認
+
+---
+
+## Contactフォーム（Web3Forms 共通設定）
+- 共通APIキー: `Knowledge/infra/adsense-site-complete-guide.md` (I-163) に記録済み
+- Astro: `.env.local` の `PUBLIC_WEB3FORMS_KEY` に設定
+- subject は `[jitan-kenko.blog] お問い合わせ` に設定すること
+- 実装コード: I-163 §3 参照
