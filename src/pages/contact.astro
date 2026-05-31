@@ -1,4 +1,5 @@
 ---
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 ---
 
 <!doctype html>
@@ -47,8 +48,8 @@
         <section class="section">
           <form id="contact-form" novalidate>
             <!-- Web3Forms -->
-            <input type="hidden" name="access_key" value="b8f04399-922b-47d4-b79b-ad2fc5708627" />
-            <input type="hidden" name="subject" value="[時短×健康] お問い合わせ" />
+            <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+            <input type="hidden" name="subject" value="[jitan-kenko.blog] お問い合わせ" />
             <input type="hidden" name="redirect" value="false" />
             <!-- honeypot -->
             <input type="checkbox" name="botcheck" style="display:none" />
