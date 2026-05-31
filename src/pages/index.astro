@@ -38,6 +38,18 @@ const purposes = [
   { id: 'diet',      label: 'ダイエット・体型',   icon: '💪' },
   { id: 'compare',   label: 'サービス比較',       icon: '📊' },
 ];
+
+// 悩み別エントリーカード（精神科医がよく相談される状況）
+const situationDefs = [
+  { slug: 'depression-cooking-difficulty-psychiatrist', icon: '🫂', worry: 'うつで自炊できない', short: '動けない時期に「食べること」をどう続けるか' },
+  { slug: 'night-shift-meal-psychiatrist',              icon: '🌙', worry: '夜勤明けに食事を作りたくない', short: '体のリズムが狂う交代勤務と食事の設計' },
+  { slug: 'postpartum-meal-difficulty-psychiatrist',    icon: '👶', worry: '産後ごはんが作れない', short: '産後の体力・メンタルと食事の関係' },
+  { slug: 'appetite-loss-weight-loss-fatigue-psychiatrist', icon: '⚠️', worry: '食欲がない・体重が減っている', short: '精神科医が「受診を」と言うサインとは' },
+  { slug: 'stress-eating-psychiatrist',                 icon: '😤', worry: 'ストレスで食べ過ぎてしまう', short: '夜の過食の仕組みと食事設計' },
+];
+const situationCards = situationDefs
+  .map(d => ({ ...d, article: allArticles.find(a => a.slug === d.slug) }))
+  .filter(c => c.article);
 ---
 
 <!doctype html>
@@ -120,6 +132,31 @@ const purposes = [
           </div>
         </div>
       </section>
+
+      <!-- 悩み別エントリーセクション（精神科医がよく相談される状況） -->
+      {situationCards.length > 0 && (
+        <section class="situation-section">
+          <div class="container">
+            <h2 class="situation-heading">
+              <span class="situation-heading-icon">🩺</span>
+              精神科医がよく相談される「状況」から探す
+            </h2>
+            <p class="situation-sub">大手サイトが扱わない「食事が難しくなる状況」を、医師の視点で解説しています。</p>
+            <div class="situation-grid">
+              {situationCards.map(c => (
+                <a href={`/articles/${c.slug}/`} class="situation-card">
+                  <span class="situation-icon">{c.icon}</span>
+                  <div class="situation-body">
+                    <span class="situation-worry">{c.worry}</span>
+                    <span class="situation-short">{c.short}</span>
+                    <span class="situation-cta">精神科医の解説を読む →</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <!-- 目的別フィルタ -->
       <section class="purpose-section">
@@ -726,6 +763,84 @@ a { color: inherit; text-decoration: none; }
 }
 .top3-cta {
   font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-top: 0.2rem;
+}
+
+/* ── 悩み別エントリー ──────────── */
+.situation-section {
+  background: var(--c-bg-white);
+  padding: 2rem 0 2.25rem;
+  border-bottom: 1px solid var(--c-border);
+}
+.situation-heading {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--c-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+.situation-heading-icon { font-size: 1.1rem; }
+.situation-sub {
+  font-size: 0.82rem;
+  color: var(--c-text-lt);
+  margin-bottom: 1.2rem;
+}
+.situation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+@media (max-width: 700px) {
+  .situation-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 701px) and (max-width: 900px) {
+  .situation-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.situation-card {
+  background: var(--c-bg);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r);
+  padding: 1rem 1.1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow .18s, transform .18s, border-color .18s;
+}
+.situation-card:hover {
+  box-shadow: var(--c-shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--c-primary);
+}
+.situation-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+  padding-top: 0.1rem;
+}
+.situation-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.situation-worry {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.4;
+}
+.situation-short {
+  font-size: 0.76rem;
+  color: var(--c-text-md);
+  line-height: 1.55;
+}
+.situation-cta {
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--c-accent);
   margin-top: 0.2rem;
