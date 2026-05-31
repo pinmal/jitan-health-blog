@@ -1,5 +1,4 @@
 ---
-import ReviewerCard from '../components/ReviewerCard.astro';
 ---
 
 <!doctype html>
@@ -40,7 +39,25 @@ import ReviewerCard from '../components/ReviewerCard.astro';
 
         <section class="section">
           <h2 class="section-h2">監修者</h2>
-          <ReviewerCard />
+          <div class="reviewer-profile">
+            <div class="reviewer-header">
+              <div class="reviewer-name-block">
+                <span class="reviewer-name">長友 恭平</span>
+                <span class="reviewer-cred">精神保健指定医・産業医</span>
+              </div>
+              <div class="reviewer-affil">よつば加納クリニック 院長（精神科・心療内科 / 宮崎県）</div>
+            </div>
+            <div class="reviewer-body">
+              <p>精神科・心療内科専門医として、うつ病・適応障害・不安障害・PTSDをはじめとする精神疾患の外来診療を担当。産業医として企業の職場メンタルヘルス支援にも携わっている。</p>
+              <p>外来では「食事が乱れているのはわかっているけど、動けない」という訴えを繰り返し聞く。意志の問題ではなく、食環境・準備コスト・意思決定負荷の問題であることが多い。宅食・栄養補助食品を「自己管理の選択肢」として活用する観点から、本ブログを開設した。</p>
+              <p>「医師が書くと堅い。アフィリエイト記事は表面的。そのあいだを埋めるものが、あまりない」——そのギャップを埋めることが、このブログの目的。</p>
+            </div>
+            <div class="reviewer-links">
+              <a href="https://drnagatomo2026.com" target="_blank" rel="nofollow noopener noreferrer" class="reviewer-link">
+                公式サイト（心療内科・精神科ブログ）→
+              </a>
+            </div>
+          </div>
         </section>
 
         <section class="section">
@@ -137,52 +154,59 @@ a { color: inherit; text-decoration: none; }
 }
 .section p:last-child { margin-bottom: 0; }
 
-/* ── キャラクターリスト ── */
-.char-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.char-card {
+/* ── 監修者プロフィール ── */
+.reviewer-profile {
+  background: #fff;
+  border: 1px solid #e0dbd2;
+  border-left: 4px solid #1b3f6e;
   border-radius: 8px;
-  padding: 1rem 1.1rem;
-  border-left: 3px solid #ccc;
+  padding: 1.5rem 1.75rem;
 }
-.char--yuka  { background: #fdf6f1; border-left-color: #c4703b; }
-.char--naoko { background: #f1fdf8; border-left-color: #2d8b72; }
-.char--kenji { background: #f1f5fd; border-left-color: #3b5f8b; }
-
-.char-header {
+.reviewer-header {
+  margin-bottom: 1rem;
+}
+.reviewer-name-block {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
+  gap: 0.75rem;
+  margin-bottom: 0.3rem;
+  flex-wrap: wrap;
 }
-.char-icon { font-size: 0.9rem; }
-.char-name {
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: #212b38;
+.reviewer-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1b3f6e;
 }
-.char-tag {
-  font-size: 0.65rem;
+.reviewer-cred {
+  font-size: 0.8rem;
   color: #8fa0b0;
   border: 1px solid #d0dce8;
   border-radius: 3px;
-  padding: 0.1rem 0.4rem;
+  padding: 0.1rem 0.5rem;
 }
-.char-card p {
+.reviewer-affil {
   font-size: 0.88rem;
   color: #536070;
-  line-height: 1.8;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
-.char-card p:last-child { margin-bottom: 0; }
-.char-note {
-  font-size: 0.75rem !important;
-  color: #94a3b8 !important;
-  font-style: italic;
+.reviewer-body p {
+  font-size: 0.92rem;
+  color: #536070;
+  line-height: 1.9;
+  margin-bottom: 0.75rem;
 }
+.reviewer-body p:last-child { margin-bottom: 0; }
+.reviewer-links {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid #e2e8f0;
+}
+.reviewer-link {
+  font-size: 0.85rem;
+  color: #1b3f6e;
+  text-decoration: underline;
+}
+.reviewer-link:hover { color: #c4703b; }
 
 .ext-link { color: #1b3f6e; text-decoration: underline; }
 .ext-link:hover { color: #c4703b; }

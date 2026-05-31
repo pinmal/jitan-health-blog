@@ -18,7 +18,7 @@
          crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>お問い合わせ | 時短 × 健康</title>
-    <meta name="description" content="記事の誤り・改善提案・サービスに関するお問い合わせはこちらからどうぞ。" />
+    <meta name="description" content="記事の誤り・改善提案・サービスに関するお問い合わせはこちらからどうぞ。通常2〜3営業日以内にご返答いたします。" />
     <link rel="canonical" href="https://jitan-kenko.blog/contact/" />
   </head>
   <body>
@@ -39,22 +39,42 @@
 
         <section class="section">
           <div class="notice">
-            <p>記事内容の誤り・改善提案・サービスに関するご質問などお気軽にどうぞ。</p>
+            <p>記事内容の誤り・改善提案・サービスに関するご質問などお気軽にどうぞ。<br>通常2〜3営業日以内にご返答いたします。</p>
             <p class="caution">※ 個別の症状・診断・治療に関するご相談はお受けできません。医療に関するご相談はかかりつけ医にご相談ください。</p>
           </div>
         </section>
 
         <section class="section">
-          <div class="form-wrap">
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLSflX6bfUhbKTOiB-N_3w6ll9RntGxUbj1gz-slkkMOE-GpOOA/viewform?embedded=true"
-              width="100%"
-              height="780"
-              frameborder="0"
-              marginheight="0"
-              marginwidth="0"
-            >読み込んでいます…</iframe>
-          </div>
+          <form id="contact-form" novalidate>
+            <!-- Web3Forms -->
+            <input type="hidden" name="access_key" value="b8f04399-922b-47d4-b79b-ad2fc5708627" />
+            <input type="hidden" name="subject" value="[時短×健康] お問い合わせ" />
+            <input type="hidden" name="redirect" value="false" />
+            <!-- honeypot -->
+            <input type="checkbox" name="botcheck" style="display:none" />
+
+            <div class="form-group">
+              <label for="name">お名前 <span class="required">必須</span></label>
+              <input type="text" id="name" name="name" required placeholder="例：山田 太郎" autocomplete="name" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">メールアドレス <span class="required">必須</span></label>
+              <input type="email" id="email" name="email" required placeholder="例：example@mail.com" autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+              <label for="message">お問い合わせ内容 <span class="required">必須</span></label>
+              <textarea id="message" name="message" rows="6" required placeholder="ご質問・記事への誤り指摘・改善提案などお気軽にどうぞ。"></textarea>
+            </div>
+
+            <button type="submit" id="submit-btn" class="submit-btn">
+              <span class="btn-text">送信する</span>
+              <span class="btn-loading" aria-hidden="true">送信中…</span>
+            </button>
+
+            <div id="result" class="result-msg" role="alert" aria-live="polite"></div>
+          </form>
         </section>
 
       </div>
@@ -62,7 +82,7 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>&copy; 2026 長友恭平</p>
+        <p>&copy; 2026 時短 × 健康</p>
         <nav class="footer-nav">
           <a href="/privacy">プライバシーポリシー</a>
           <a href="/disclaimer">免責事項</a>
@@ -74,6 +94,49 @@
 
   </body>
 </html>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const result = document.getElementById('result') as HTMLElement;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+    result.textContent = '';
+    result.className = 'result-msg';
+
+    try {
+      const formData = new FormData(form);
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        result.textContent = '送信が完了しました。ご連絡ありがとうございます。2〜3営業日以内にご返答いたします。';
+        result.className = 'result-msg success';
+        form.reset();
+      } else {
+        throw new Error(data.message || 'Unknown error');
+      }
+    } catch (err) {
+      result.textContent = '送信に失敗しました。しばらく経ってから再度お試しください。';
+      result.className = 'result-msg error';
+    } finally {
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+    }
+  });
+</script>
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -114,6 +177,7 @@ a { color: inherit; text-decoration: none; }
   border-left: 4px solid #c4703b;
   border-radius: 8px;
   padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
 }
 .notice p {
   font-size: 0.92rem;
@@ -127,17 +191,85 @@ a { color: inherit; text-decoration: none; }
   color: #8fa0b0 !important;
 }
 
-.form-wrap {
+/* ── フォーム ── */
+form {
   background: #fff;
   border: 1px solid #e0dbd2;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 10px;
+  padding: 1.75rem 2rem;
 }
-.form-wrap iframe {
+.form-group {
+  margin-bottom: 1.25rem;
+}
+.form-group label {
   display: block;
-  width: 100%;
-  border: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.4rem;
 }
+.required {
+  display: inline-block;
+  font-size: 0.7rem;
+  background: #c4703b;
+  color: #fff;
+  border-radius: 3px;
+  padding: 0.05rem 0.4rem;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #212b38;
+  background: #fafafa;
+  transition: border-color 0.15s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1b3f6e;
+  background: #fff;
+}
+.form-group textarea {
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #1b3f6e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.submit-btn:hover:not(:disabled) { background: #163360; }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-loading { display: none; }
+.submit-btn.loading .btn-text    { display: none; }
+.submit-btn.loading .btn-loading { display: inline; }
+
+.result-msg {
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  min-height: 1.2em;
+}
+.result-msg.success { color: #166534; }
+.result-msg.error   { color: #991b1b; }
 
 .site-footer {
   background: #0f2545;
@@ -149,4 +281,9 @@ a { color: inherit; text-decoration: none; }
 .footer-nav   { display: flex; gap: 1.25rem; flex-wrap: wrap; }
 .footer-nav a { color: #94a3b8; }
 .footer-nav a:hover { color: #e2e8f0; }
+
+@media (max-width: 560px) {
+  form { padding: 1.25rem 1rem; }
+  .submit-btn { width: 100%; justify-content: center; }
+}
 </style>
