@@ -40,7 +40,8 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 
         <section class="section">
           <div class="notice">
-            <p>記事内容の誤り・改善提案・サービスに関するご質問などお気軽にどうぞ。<br>通常2〜3営業日以内にご返答いたします。</p>
+            <p>記事内容の誤り・情報の修正依頼・リンク切れのご報告はこちらからお送りください。</p>
+            <p class="caution">※ 送信いただいた内容は記事改善の参考にしますが、個別のご返信はいたしません。</p>
             <p class="caution">※ 個別の症状・診断・治療に関するご相談はお受けできません。医療に関するご相談はかかりつけ医にご相談ください。</p>
           </div>
         </section>
@@ -66,7 +67,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 
             <div class="form-group">
               <label for="message">お問い合わせ内容 <span class="required">必須</span></label>
-              <textarea id="message" name="message" rows="6" required placeholder="ご質問・記事への誤り指摘・改善提案などお気軽にどうぞ。"></textarea>
+              <textarea id="message" name="message" rows="6" required placeholder="例：〇〇の記事の△△という記述が誤っています。正しくは〜"></textarea>
             </div>
 
             <button type="submit" id="submit-btn" class="submit-btn">
@@ -123,7 +124,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
       const data = await res.json();
 
       if (data.success) {
-        result.textContent = '送信が完了しました。ご連絡ありがとうございます。2〜3営業日以内にご返答いたします。';
+        result.textContent = '送信が完了しました。ご報告ありがとうございます。内容は記事改善の参考にいたします。';
         result.className = 'result-msg success';
         form.reset();
       } else {
