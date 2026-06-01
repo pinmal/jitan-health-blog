@@ -8,6 +8,7 @@
     "preview": "astro preview",
     "validate": "node scripts/validate-yakkiho.js",
     "check:books": "python C:/Users/yotsu/Desktop/claudecode1/CSO/kindle-publishing/cross_site_check.py --scan-all",
+    "check:console": "python C:/Users/yotsu/Desktop/claudecode1/scripts/check-console.py https://jitan-kenko.blog",
     "prepare": "node scripts/install-hooks.js"
   },
   "dependencies": {
