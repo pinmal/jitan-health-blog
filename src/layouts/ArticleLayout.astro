@@ -399,7 +399,7 @@ const categoryNav = [
       </div>
     </div>
   <!-- affiliate_click auto-tracker -->
-  <script>
+  <script is:inline>
   (function(){document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.href||'';var s=null;if(h.indexOf('amazon.co.jp')!==-1)s='amazon';else if(h.indexOf('afl.rakuten.co.jp')!==-1||h.indexOf('search.rakuten.co.jp')!==-1)s='rakuten';else if(h.indexOf('naturum.co.jp')!==-1)s='naturum';else if(h.indexOf('af.moshimo.com')!==-1)s='moshimo';else if(h.indexOf('px.a8.net')!==-1){try{var ar=new URL(h).searchParams.get('a8ejpredirect');s=ar&&new URL(decodeURIComponent(ar)).hostname.indexOf('naturum.co.jp')!==-1?'naturum':'a8';}catch(e2){s='a8';}}if(!s)return;var l='unknown';try{var u=new URL(h);var k=u.searchParams.get('k')||u.searchParams.get('keyword');if(k){l=decodeURIComponent(k).slice(0,60);}else{var m=u.pathname.match(/\/dp\/([A-Z0-9]{10})/);if(m)l='ASIN:'+m[1];var r=u.searchParams.get('a8ejpredirect');if(r){try{var i=new URL(decodeURIComponent(r));var nk=i.searchParams.get('keyword')||i.searchParams.get('k');if(nk)l=decodeURIComponent(nk).slice(0,60);}catch(e2){}}var pc=u.searchParams.get('pc');if(pc){try{var iu=new URL(decodeURIComponent(pc));var sg=iu.pathname.split('/').filter(Boolean);var ix=sg.indexOf('mall');if(ix>=0&&sg[ix+1])l=decodeURIComponent(sg[ix+1]).slice(0,60);}catch(e2){}}}}catch(e){}if(typeof window.gtag==='function')window.gtag('event','affiliate_click',{store:s,item_label:l,page_path:window.location.pathname});},{passive:true});})();
   </script>
   </body>
