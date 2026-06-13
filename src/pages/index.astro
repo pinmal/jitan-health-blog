@@ -179,6 +179,44 @@ const situationCards = situationDefs
         </div>
       </section>
 
+      <!-- 先生のコラム（医師コラムを最上位に配置・AdSense E-E-A-T対策） -->
+      {doctorArticles.length > 0 && (
+        <section class="section-articles section-doctor">
+          <div class="container">
+            <div class="section-header-row">
+              <h2 class="section-heading section-heading--doctor">
+                <span class="char-avatar char-avatar--doctor">医</span>
+                <span>長友医師の健康コラム</span>
+                <span class="article-count-badge">{doctorArticles.length}件</span>
+              </h2>
+              <button class="section-toggle" data-target="doctor" aria-expanded="true" type="button">
+                <span class="toggle-icon">▲</span> たたむ
+              </button>
+            </div>
+            <div class="section-collapsible" id="collapse-doctor">
+              <p class="char-profile">精神保健指定医・長友恭平が、食事・栄養・睡眠・メンタルヘルスの関係を医学的知見から解説。宅食・健康食サービスの選び方も医師視点でアドバイス。</p>
+              <div class="article-grid" id="grid-doctor">
+                {doctorArticles.map((article, i) => (
+                  <a
+                    href={`/articles/${article.slug}/`}
+                    class={`article-card article-card--doctor${i >= 6 ? ' card-extra' : ''}`}
+                    data-tags={(article.data.tags ?? []).join(',')}
+                    data-category={article.data.category}
+                  >
+                    <h3 class="article-title">{article.data.title}</h3>
+                  </a>
+                ))}
+              </div>
+              {doctorArticles.length > 6 && (
+                <button class="more-btn" data-grid="doctor" type="button">
+                  もっと見る（+{doctorArticles.length - 6}件）
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       <!-- ユウカ -->
       {yukaArticles.length > 0 && (
         <section class="section-articles section-yuka" data-char="yuka">
@@ -286,44 +324,6 @@ const situationCards = situationDefs
               {kenjiArticles.length > 6 && (
                 <button class="more-btn" data-grid="kenji" type="button">
                   もっと見る（+{kenjiArticles.length - 6}件）
-                </button>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      <!-- 先生のコラム -->
-      {doctorArticles.length > 0 && (
-        <section class="section-articles section-doctor">
-          <div class="container">
-            <div class="section-header-row">
-              <h2 class="section-heading section-heading--doctor">
-                <span class="char-avatar char-avatar--doctor">医</span>
-                <span>長友医師の健康コラム</span>
-                <span class="article-count-badge">{doctorArticles.length}件</span>
-              </h2>
-              <button class="section-toggle" data-target="doctor" aria-expanded="true" type="button">
-                <span class="toggle-icon">▲</span> たたむ
-              </button>
-            </div>
-            <div class="section-collapsible" id="collapse-doctor">
-              <p class="char-profile">精神保健指定医・長友恭平が、食事・栄養・睡眠・メンタルヘルスの関係を医学的知見から解説。宅食・健康食サービスの選び方も医師視点でアドバイス。</p>
-              <div class="article-grid" id="grid-doctor">
-                {doctorArticles.map((article, i) => (
-                  <a
-                    href={`/articles/${article.slug}/`}
-                    class={`article-card article-card--doctor${i >= 6 ? ' card-extra' : ''}`}
-                    data-tags={(article.data.tags ?? []).join(',')}
-                    data-category={article.data.category}
-                  >
-                    <h3 class="article-title">{article.data.title}</h3>
-                  </a>
-                ))}
-              </div>
-              {doctorArticles.length > 6 && (
-                <button class="more-btn" data-grid="doctor" type="button">
-                  もっと見る（+{doctorArticles.length - 6}件）
                 </button>
               )}
             </div>
