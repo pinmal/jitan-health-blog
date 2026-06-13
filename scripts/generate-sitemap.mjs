@@ -30,8 +30,12 @@ function parseFrontmatter(content) {
     humanReviewed: getFrontmatterValue(yaml, 'humanReviewed') === 'true',
     publishedAt:   getFrontmatterValue(yaml, 'publishedAt'),
     updatedAt:     getFrontmatterValue(yaml, 'updatedAt') ?? null,
+    category:      getFrontmatterValue(yaml, 'category'),
   };
 }
+
+// ヘッダーナビと一致する indexable なカテゴリハブ（[category].astro が生成）
+const CATEGORY_HUBS = ['comparison', 'review', 'health-column', 'howto', 'mental-health'];
 
 async function main() {
   const files = (await readdir(SRC_DIR)).filter(
@@ -47,6 +51,7 @@ async function main() {
         slug:        file.replace('.mdx', ''),
         publishedAt: fm.publishedAt,
         lastmod:     fm.updatedAt ?? fm.publishedAt,
+        category:    fm.category,
       });
     }
   }
@@ -58,8 +63,32 @@ async function main() {
 
   const today = new Date().toISOString().split('T')[0];
 
+  // 実コンテンツの最新日付（トップ・/articles/ 索引の lastmod に使う。
+  // ビルド毎の today を使うとクロールシグナルにノイズが乗るため・S-5）
+  const maxLastmod = articles.reduce(
+    (mx, a) => (a.lastmod && a.lastmod > mx ? a.lastmod : mx),
+    '1970-01-01'
+  );
+  // カテゴリ別の最新日付（カテゴリハブの lastmod に使う）
+  const catLastmod = {};
+  for (const a of articles) {
+    if (!a.category) continue;
+    if (!catLastmod[a.category] || a.lastmod > catLastmod[a.category]) {
+      catLastmod[a.category] = a.lastmod;
+    }
+  }
+
   const urls = [
-    { loc: `${SITE}/`, lastmod: today, changefreq: 'weekly',  priority: '1.0' },
+    { loc: `${SITE}/`, lastmod: maxLastmod, changefreq: 'weekly',  priority: '1.0' },
+    // indexable なカテゴリハブ + 全記事索引（トピッククラスタのハブ・クロール発見経路）
+    // ※ character/[name] は意図的 noindex のため収録しない
+    { loc: `${SITE}/articles/`, lastmod: maxLastmod, changefreq: 'weekly', priority: '0.7' },
+    ...CATEGORY_HUBS.map(c => ({
+      loc:        `${SITE}/${c}/`,
+      lastmod:    catLastmod[c] ?? maxLastmod,
+      changefreq: 'weekly',
+      priority:   '0.7',
+    })),
     ...articles.map(a => ({
       loc:        `${SITE}/articles/${a.slug}/`,
       lastmod:    a.lastmod,

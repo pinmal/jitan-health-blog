@@ -1,5 +1,5 @@
 ---
-// 全記事末尾に表示する医療監修フッター（E-E-A-T強化）
+// 全記事末尾に表示する医療監修カード（E-E-A-T強化・I-162「資格1行はNG・詳細プロフィール必須」対応）
 interface Props {
   compact?: boolean;
 }
@@ -7,28 +7,108 @@ interface Props {
 const {} = Astro.props;
 ---
 
-<p class="reviewer-footer">
-  監修: 長友 恭平（精神保健指定医・産業医）&#8202;|&#8202;
-  <a href="https://drnagatomo2026.com" target="_blank" rel="nofollow noopener noreferrer">
-    心療内科・精神科ブログ →
-  </a>
-</p>
+<aside class="reviewer-card" aria-label="この記事の監修者">
+  <p class="reviewer-card-label">この記事を監修した人</p>
+  <div class="reviewer-card-head">
+    <div class="reviewer-card-avatar" aria-hidden="true">長友</div>
+    <div class="reviewer-card-id">
+      <span class="reviewer-card-name">長友 恭平</span>
+      <span class="reviewer-card-cred">精神保健指定医 ／ 産業医</span>
+      <span class="reviewer-card-affil">よつば加納クリニック 院長（精神科・心療内科 / 宮崎県）</span>
+    </div>
+  </div>
+  <p class="reviewer-card-bio">
+    うつ病・適応障害・不安障害などの外来診療を担当し、産業医として職場のメンタルヘルス支援にも携わる。
+    「食事が乱れているのはわかっているけど動けない」という訴えに日々向き合い、宅配食・栄養補助食品を
+    <strong>状態に合った自己管理の選択肢</strong>として扱う立場から記事を監修しています。
+  </p>
+  <div class="reviewer-card-links">
+    <a href="/about" class="reviewer-card-link reviewer-card-link--primary">監修者の詳しいプロフィール →</a>
+    <a href="https://drnagatomo2026.com" target="_blank" rel="nofollow noopener noreferrer" class="reviewer-card-link">
+      心療内科・精神科ブログ →
+    </a>
+  </div>
+</aside>
 
 <style>
-.reviewer-footer {
-  margin-top: 2rem;
-  padding-top: 0.85rem;
-  border-top: 1px solid #e2e8f0;
-  font-size: 0.78rem;
-  color: #94a3b8;
-  line-height: 1.6;
+.reviewer-card {
+  margin-top: 2.25rem;
+  background: #fff;
+  border: 1px solid #e0dbd2;
+  border-left: 4px solid #1b3f6e;
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
 }
-.reviewer-footer a {
-  color: #94a3b8;
+.reviewer-card-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #8fa0b0;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.reviewer-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+.reviewer-card-avatar {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #1b3f6e;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.reviewer-card-id {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+.reviewer-card-name {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #1b3f6e;
+}
+.reviewer-card-cred {
+  font-size: 0.76rem;
+  color: #536070;
+  font-weight: 600;
+}
+.reviewer-card-affil {
+  font-size: 0.74rem;
+  color: #8fa0b0;
+}
+.reviewer-card-bio {
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: #536070;
+  margin-bottom: 0.9rem;
+}
+.reviewer-card-bio strong {
+  color: #1b3f6e;
+}
+.reviewer-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #eee7dd;
+}
+.reviewer-card-link {
+  font-size: 0.8rem;
+  color: #536070;
   text-decoration: none;
+  font-weight: 600;
 }
-.reviewer-footer a:hover {
-  color: #475569;
-  text-decoration: underline;
-}
+.reviewer-card-link:hover { color: #c4703b; text-decoration: underline; }
+.reviewer-card-link--primary { color: #1b3f6e; }
 </style>

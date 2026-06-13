@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { generateArticleSchema, generateSiteSchema, type FaqItem } from '../utils/schema';
+import { generateArticleSchema, type FaqItem } from '../utils/schema';
 import RelatedArticles from '../components/RelatedArticles.astro';
 import ReviewerCard from '../components/ReviewerCard.astro';
 
@@ -33,7 +33,6 @@ const url = Astro.url.href;
 const slug = Astro.url.pathname.replace(/^\/articles\//, '').replace(/\/$/, '') || 'article';
 
 const articleSchema = generateArticleSchema({ title, description, url, publishedAt, updatedAt, category, categoryLabel, faqs });
-const siteSchema = generateSiteSchema();
 
 // 関連記事を複数グループで取得（2026-05-28: タグ重複優先 + 比較記事プロモーション対応）
 const allArticles = await getCollection('articles');
@@ -199,16 +198,17 @@ const categoryNav = [
       gtag('js', new Date());
       gtag('config', 'G-P6YC8SXBSH');
     </script>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9842738692752047"
+    {/* Google AdSense — 実在医師監修(humanReviewed)ページのみ配信。架空キャラのnoindex記事には広告を出さない（再審査の心証・コンテンツ品質方針 I-159/I-161） */}
+    {humanReviewed && (
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9842738692752047"
          crossorigin="anonymous"></script>
+    )}
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | 時短 × 健康</title>
     <meta name="description" content={description} />
     {(noindex || !humanReviewed) && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={url} />
     <script type="application/ld+json" set:html={articleSchema} />
-    <script type="application/ld+json" set:html={siteSchema} />
     <meta property="og:title" content={`${title} | 時短 × 健康`} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="article" />

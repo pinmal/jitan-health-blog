@@ -1,7 +1,19 @@
 // JSON-LD 構造化データ生成（Google E-E-A-T / MedicalWebPage 対応）
+//
+// 設計（2026-06-13 統合）:
+//   記事ページは単一の <script> / 単一の @graph に
+//   MedicalWebPage + BreadcrumbList + FAQPage + WebSite + Organization + Person
+//   を収め、@id 相互参照でエンティティを1つに解決させる。
+//   - 媒体（発行元）= Organization #organization
+//   - 著者/監修    = Person #nagatomo
+//   - サイト        = WebSite #website
+//   これにより「誰が発行する媒体か」「誰が書いたか」が割れずに統合される。
 
 const SITE_URL = 'https://jitan-kenko.blog';
 const AUTHOR_ID = `${SITE_URL}/#nagatomo`;
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const DEFAULT_IMAGE = `${SITE_URL}/og-default.png`;
 
 const AUTHOR = {
   '@type': 'Person',
@@ -27,6 +39,28 @@ const AUTHOR = {
   'knowsAbout': ['心療内科', '精神科', '産業医学', '公衆衛生', '労働衛生', '食と健康'],
 };
 
+const ORGANIZATION = {
+  '@type': 'Organization',
+  '@id': ORG_ID,
+  'name': '時短×健康ブログ',
+  'url': SITE_URL,
+  'logo': {
+    '@type': 'ImageObject',
+    'url': DEFAULT_IMAGE,
+  },
+  'founder': { '@id': AUTHOR_ID },
+};
+
+const WEBSITE = {
+  '@type': 'WebSite',
+  '@id': WEBSITE_ID,
+  'url': SITE_URL,
+  'name': '時短×健康ブログ — 状態に合った自己管理としての食事',
+  'description': '精神保健指定医・長友恭平が監修。体や心の調子が落ちているときでも食事を安定させるための、宅配食・栄養補助食品・献立の仕組み化について解説します。',
+  'inLanguage': 'ja',
+  'publisher': { '@id': ORG_ID },
+};
+
 export interface FaqItem {
   q: string;
   a: string;
@@ -41,9 +75,13 @@ interface ArticleSchemaInput {
   category: string;
   categoryLabel: string;
   faqs?: FaqItem[];
+  image?: string;
 }
 
 export function generateArticleSchema(props: ArticleSchemaInput): string {
+  const published = props.publishedAt.toISOString().split('T')[0];
+  const modified = (props.updatedAt || props.publishedAt).toISOString().split('T')[0];
+
   const graph: object[] = [
     {
       '@type': 'MedicalWebPage',
@@ -52,17 +90,16 @@ export function generateArticleSchema(props: ArticleSchemaInput): string {
       'name': props.title,
       'description': props.description,
       'inLanguage': 'ja',
-      'datePublished': props.publishedAt.toISOString().split('T')[0],
-      'dateModified': (props.updatedAt || props.publishedAt).toISOString().split('T')[0],
-      'author': AUTHOR,
-      'reviewedBy': { '@type': 'Person', '@id': AUTHOR_ID, 'name': '長友恭平' },
-      'publisher': {
-        '@type': 'Organization',
-        'name': '時短×健康ブログ',
-        'url': SITE_URL,
-      },
+      'datePublished': published,
+      'dateModified': modified,
+      'image': props.image || DEFAULT_IMAGE,
+      'isPartOf': { '@id': WEBSITE_ID },
+      'mainEntityOfPage': props.url,
+      'author': { '@id': AUTHOR_ID },
+      'reviewedBy': { '@id': AUTHOR_ID },
+      'publisher': { '@id': ORG_ID },
       'medicalAudience': 'Patient',
-      'lastReviewed': (props.updatedAt || props.publishedAt).toISOString().split('T')[0],
+      'lastReviewed': modified,
     },
     {
       '@type': 'BreadcrumbList',
@@ -89,24 +126,15 @@ export function generateArticleSchema(props: ArticleSchemaInput): string {
     });
   }
 
+  // サイト・発行元・著者エンティティを同一グラフに収め @id で解決させる
+  graph.push(WEBSITE, ORGANIZATION, AUTHOR);
+
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
 }
 
 export function generateSiteSchema(): string {
-  const schema = {
+  return JSON.stringify({
     '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'WebSite',
-        '@id': `${SITE_URL}/#website`,
-        'url': SITE_URL,
-        'name': '時短×健康ブログ — 状態に合った自己管理としての食事',
-        'description': '精神保健指定医・長友恭平が監修。体や心の調子が落ちているときでも食事を安定させるための、宅配食・栄養補助食品・献立の仕組み化について解説します。',
-        'inLanguage': 'ja',
-        'publisher': { '@id': AUTHOR_ID },
-      },
-      AUTHOR,
-    ],
-  };
-  return JSON.stringify(schema);
+    '@graph': [WEBSITE, ORGANIZATION, AUTHOR],
+  });
 }
