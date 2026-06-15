@@ -1,0 +1,515 @@
+---
+const BOOKS = [
+  // ── 時短・食事管理 ──────────────────────────────
+  {
+    section: 'time',
+    num: 'book06',
+    asin: 'B0GY1BZ91Y',
+    title: '帰宅22時からでも続けられる一人暮らし時短メシ50品',
+    desc: '仕事終わりでも10分以内で完結する献立50選。買い物からの逆算設計で「献立を考える」手間をゼロにする。',
+    badge: '時短',
+  },
+  {
+    section: 'time',
+    num: 'book13',
+    asin: 'B0GX32M6WX',
+    title: '週末2時間で作り置き60選',
+    desc: '日曜の2時間が平日5日間の夕食を解決する。冷蔵・冷凍保存ルールと使い回し献立60レシピ。',
+    badge: '作り置き',
+  },
+  {
+    section: 'time',
+    num: 'book19',
+    asin: 'B0GYSSXVQL',
+    title: 'コンビニ飯 罪悪感ゼロ！忙しい30代のリアルな食事管理術',
+    desc: 'コンビニ食を「手抜き」ではなく「戦略」に変える。栄養バランスを保ちながらコストを抑える選び方。',
+    badge: 'コンビニ',
+  },
+  {
+    section: 'time',
+    num: 'book21',
+    asin: 'B0H2RVPVMW',
+    title: '自炊が続かない人の「70点ごはん」習慣ガイド',
+    desc: '完璧を求めるから続かない。70点で十分という考え方で、料理が苦手な人でも無理なく続く食習慣を作る。',
+    badge: '習慣化',
+  },
+  {
+    section: 'time',
+    num: 'book27',
+    asin: 'B0GX38LGCG',
+    title: '一人暮らしの食費1万5千円生活',
+    desc: '食費を削っても栄養を落とさない。買い物ルーティンと食材の使い切り術で月15,000円を実現する方法。',
+    badge: '節約',
+  },
+  {
+    section: 'time',
+    num: 'book33',
+    asin: 'B0H398RMYR',
+    title: '冷凍保存マスター術 食材ロスゼロで食費を自動的に減らす',
+    desc: '食材を腐らせる前に冷凍するだけで食費が下がる。食材別の正しい冷凍方法と解凍・調理テク。',
+    badge: '冷凍',
+  },
+  {
+    section: 'time',
+    num: 'book43',
+    asin: 'B0H38YLS4V',
+    title: 'スープジャー弁当50選 朝5分で作る職場ランチ',
+    desc: '朝5分のお湯を注ぐだけで昼に熱々スープが完成。節約・栄養・時短を一度に解決するスープジャー活用術。',
+    badge: '弁当',
+  },
+  {
+    section: 'time',
+    num: 'book44',
+    asin: 'B0H3DSNDP6',
+    title: '電子レンジだけで作る週5の晩ごはん',
+    desc: 'コンロを一切使わずレンジだけで作れる晩ごはん。洗い物も最小限で、平日の帰宅後30分を丸ごと取り戻す。',
+    badge: '電子レンジ',
+  },
+  {
+    section: 'time',
+    num: 'book45',
+    asin: 'B0GX32M8RN',
+    title: '在宅ワーカーの昼食ルーティン完全ガイド',
+    desc: '在宅勤務の昼食は「作りすぎ」か「食べなさすぎ」になりがち。午後の集中力を落とさない昼食設計を解説。',
+    badge: '在宅',
+  },
+  // ── 宅食・サービス選び ──────────────────────────
+  {
+    section: 'takushoku',
+    num: 'book20',
+    asin: 'B0H2S1PM6P',
+    title: '宅食サービス7社を使い続けた記録 — PM目線の本音比較',
+    desc: 'ナッシュ・ワタミ・nosh・三ツ星ファームなど7社を半年間継続使用。コスト・栄養・利便性を本音で比較した記録。',
+    badge: '宅食比較',
+  },
+  // ── 健康・栄養管理 ──────────────────────────────
+  {
+    section: 'health',
+    num: 'book17',
+    asin: 'B0H2RRLKR9',
+    title: '腸活レシピ入門 腸内環境を整える食事習慣',
+    desc: '腸内環境が整うと疲れにくくなる。食物繊維・発酵食品の取り方と、続けやすい腸活レシピを紹介。',
+    badge: '腸活',
+  },
+  {
+    section: 'health',
+    num: 'book70',
+    asin: 'B0H3JZHNPP',
+    title: '疲労回復ごはん 仕事で疲れた日に食べる栄養満点レシピ',
+    desc: '疲労回復に効くビタミンB群・鉄・亜鉛を日常食で取る方法。仕事帰りに「これを食べれば回復できる」レシピ集。',
+    badge: '疲労回復',
+  },
+  {
+    section: 'health',
+    num: 'book71',
+    asin: 'B0H25RFD55',
+    title: 'ゆるい糖質制限 我慢しない食べ方で体重を落とす',
+    desc: '極端な糖質カットなしに体重を管理する方法。「食べていいもの・控えるもの」を明快に整理した入門書。',
+    badge: '糖質制限',
+  },
+  {
+    section: 'health',
+    num: 'book74',
+    asin: 'B0H24395ZM',
+    title: '健康診断の数値を食事で改善するコレステロール・血糖値対策',
+    desc: 'LDLコレステロール・血糖値・中性脂肪を食事でコントロール。健診結果を見ながら取り組める実践ガイド。',
+    badge: '健康診断',
+  },
+  {
+    section: 'health',
+    num: 'book79',
+    asin: 'B0H2T55QKV',
+    title: 'PMSをやわらげる食事の本',
+    desc: '月経前の不調（イライラ・むくみ・過食）を食事でやわらげる。マグネシウム・ビタミンB6など栄養素別に解説。',
+    badge: 'PMS',
+  },
+  {
+    section: 'health',
+    num: 'book120',
+    asin: 'B0H41395P2',
+    title: '夏バテしない食事の本',
+    desc: '夏の食欲低下・倦怠感を食事でケアする。冷たいものを食べすぎない工夫と、体を冷やしすぎない献立設計。',
+    badge: '夏バテ',
+  },
+];
+
+const TAG = 'jitankenko-22';
+function amazonUrl(asin, bookNum) {
+  const utm = `utm_source=kindle&utm_medium=ebook&utm_campaign=${bookNum}&utm_content=kindle-guide`;
+  return `https://www.amazon.co.jp/dp/${asin}/?tag=${TAG}&${utm}`;
+}
+
+const timeBooks    = BOOKS.filter(b => b.section === 'time');
+const takushokuBooks = BOOKS.filter(b => b.section === 'takushoku');
+const healthBooks  = BOOKS.filter(b => b.section === 'health');
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "時短×健康 Kindle本ガイド — 宮本ユウカの全著作一覧",
+  "description": "時短料理・宅食・健康管理をテーマにした全16冊のKindle本を一覧で紹介。忙しい30代・40代の食生活を楽にする本を、テーマ別に分類しています。",
+  "url": "https://jitan-kenko.blog/kindle-guide/",
+  "hasPart": BOOKS.map(b => ({
+    "@type": "Book",
+    "name": b.title,
+    "url": `https://www.amazon.co.jp/dp/${b.asin}/`,
+  }))
+});
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6YC8SXBSH"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P6YC8SXBSH');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9842738692752047"
+         crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kindle本ガイド — 時短×健康の全著作16冊 | 時短 × 健康</title>
+    <meta name="description" content="時短料理・宅食・健康管理をテーマにした全16冊のKindle本一覧。忙しい30代・40代の食生活を楽にする本を、テーマ別にまとめました。著者：宮本ユウカ。" />
+    <link rel="canonical" href="https://jitan-kenko.blog/kindle-guide/" />
+    <script type="application/ld+json" set:html={jsonLd} />
+  </head>
+  <body>
+
+    <header class="site-header">
+      <div class="container header-container">
+        <a href="/" class="brand">
+          <span class="brand-name">時短 × 健康</span>
+          <span class="brand-sub">ー忙しい大人のための合理的食生活ー</span>
+        </a>
+        <nav class="header-cat-nav" aria-label="カテゴリ">
+          <a href="/comparison/"    class="header-cat-link"><span>📊</span><span>比較</span></a>
+          <a href="/review/"        class="header-cat-link"><span>🍱</span><span>レビュー</span></a>
+          <a href="/health-column/" class="header-cat-link"><span>🥗</span><span>健康コラム</span></a>
+          <a href="/howto/"         class="header-cat-link"><span>⚙️</span><span>仕組み化</span></a>
+          <a href="/mental-health/" class="header-cat-link"><span>🧠</span><span>メンタル</span></a>
+          <a href="/articles/"      class="header-cat-link header-cat-link--all"><span>📋</span><span>全記事</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+
+      <section class="page-hero">
+        <div class="container">
+          <p class="page-breadcrumb"><a href="/">ホーム</a> › Kindle本ガイド</p>
+          <h1 class="page-title">📚 Kindle本ガイド</h1>
+          <p class="page-lead">時短 × 健康ブログの著者・宮本ユウカが書いた全16冊をテーマ別に一覧にしています。<br>
+          電子書籍なのでスマホですぐ読め、Kindle Unlimited 対象作品も含まれます。</p>
+          <div class="ku-note">
+            <span class="ku-badge">KU</span>
+            <span>Kindle Unlimited 読み放題プラン対象。月額980円で全冊読み放題。</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 時短・食事管理 -->
+      <section class="book-section">
+        <div class="container">
+          <h2 class="section-title">
+            <span class="section-icon">🍱</span>
+            時短・食事管理
+            <span class="section-count">{timeBooks.length}冊</span>
+          </h2>
+          <p class="section-desc">帰宅後の夕食準備・お弁当・食費節約など、毎日の食事をラクにするテーマの本です。</p>
+          <div class="book-grid">
+            {timeBooks.map(b => (
+              <a href={amazonUrl(b.asin, b.num)} target="_blank" rel="sponsored noopener noreferrer" class="book-card">
+                <div class="book-card-inner">
+                  <span class="book-badge">{b.badge}</span>
+                  <h3 class="book-title">{b.title}</h3>
+                  <p class="book-desc">{b.desc}</p>
+                  <span class="book-cta">Amazonで見る →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 宅食・サービス選び -->
+      <section class="book-section book-section--alt">
+        <div class="container">
+          <h2 class="section-title">
+            <span class="section-icon">🏠</span>
+            宅食・サービス選び
+            <span class="section-count">{takushokuBooks.length}冊</span>
+          </h2>
+          <p class="section-desc">宅食サービスを本音で比較。忙しい人がサービスを賢く選ぶための情報をまとめています。</p>
+          <div class="book-grid">
+            {takushokuBooks.map(b => (
+              <a href={amazonUrl(b.asin, b.num)} target="_blank" rel="sponsored noopener noreferrer" class="book-card">
+                <div class="book-card-inner">
+                  <span class="book-badge">{b.badge}</span>
+                  <h3 class="book-title">{b.title}</h3>
+                  <p class="book-desc">{b.desc}</p>
+                  <span class="book-cta">Amazonで見る →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 健康・栄養管理 -->
+      <section class="book-section">
+        <div class="container">
+          <h2 class="section-title">
+            <span class="section-icon">🥗</span>
+            健康・栄養管理
+            <span class="section-count">{healthBooks.length}冊</span>
+          </h2>
+          <p class="section-desc">腸活・疲労回復・糖質制限・健康診断の数値改善など、体の状態を食事で整えるテーマの本です。</p>
+          <div class="book-grid">
+            {healthBooks.map(b => (
+              <a href={amazonUrl(b.asin, b.num)} target="_blank" rel="sponsored noopener noreferrer" class="book-card">
+                <div class="book-card-inner">
+                  <span class="book-badge">{b.badge}</span>
+                  <h3 class="book-title">{b.title}</h3>
+                  <p class="book-desc">{b.desc}</p>
+                  <span class="book-cta">Amazonで見る →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 著者プロフィール -->
+      <section class="author-section">
+        <div class="container">
+          <div class="author-card">
+            <h2 class="author-heading">著者について</h2>
+            <p class="author-name">宮本ユウカ</p>
+            <p class="author-bio">IT企業でプロジェクトマネージャーとして働きながら、食事管理の効率化を追求してきた。帰宅が22時を過ぎる生活の中で、コスト・栄養・時短を同時に解決する食事の仕組みを自分で作り上げた経験をもとに執筆。Kindle本の著作は現在16冊。</p>
+            <p class="author-note">※ 宮本ユウカは架空のキャラクターです。プロフィール・体験談はフィクションですが、内容については実際の調査に基づいています。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- サイト誘導 -->
+      <section class="site-cta-section">
+        <div class="container">
+          <div class="site-cta-box">
+            <p class="site-cta-lead">📖 ブログ記事も読んでみてください</p>
+            <p class="site-cta-desc">宅食・時短・健康に関する詳細な比較記事・レビュー・医師コラムを無料で読めます。</p>
+            <a href="/articles/" class="site-cta-btn">全記事を見る</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <p class="footer-name">時短 × 健康</p>
+          <p class="footer-copy">&copy; 2026 時短 × 健康</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="/privacy">プライバシーポリシー</a>
+          <a href="/disclaimer">免責事項</a>
+          <a href="/about">このブログについて</a>
+          <a href="/contact">お問い合わせ</a>
+          <a href="https://drnagatomo2026.com" target="_blank" rel="nofollow noopener noreferrer">監修医の医療ブログ</a>
+        </nav>
+        <p class="footer-affiliate">当サイトはA8.net等のアフィリエイトプログラム及びAmazonアソシエイト・プログラムに参加しています。</p>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<style>
+:root {
+  --c-primary:      #1b3f6e;
+  --c-primary-dk:   #0f2545;
+  --c-primary-md:   #2d6090;
+  --c-accent:       #c4703b;
+  --c-accent-lt:    #fdf0e6;
+  --c-bg:           #f7f5f1;
+  --c-bg-white:     #ffffff;
+  --c-bg-alt:       #eeeae3;
+  --c-text:         #212b38;
+  --c-text-md:      #536070;
+  --c-text-lt:      #8fa0b0;
+  --c-border:       #e0dbd2;
+  --c-shadow-sm:    0 2px 10px rgba(27,63,110,.07);
+  --c-shadow-md:    0 4px 24px rgba(27,63,110,.11);
+  --r:              10px;
+  --r-sm:           6px;
+  --max-w:          1080px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN',
+               'Noto Sans JP', 'Yu Gothic Medium', sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+
+/* Header */
+.site-header {
+  background: var(--c-primary-dk);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.3);
+}
+.header-container { display: flex; flex-direction: column; gap: 0.55rem; }
+.brand { display: flex; flex-direction: column; gap: 0.1rem; }
+.brand-name { font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: -0.01em; line-height: 1.2; }
+.brand-sub { font-size: 0.7rem; color: #93c5fd; font-weight: 400; }
+.header-cat-nav {
+  display: flex; gap: 0.3rem; overflow-x: auto;
+  -ms-overflow-style: none; scrollbar-width: none;
+  margin: 0 -0.5rem; padding: 0 0.5rem 0.15rem;
+}
+.header-cat-nav::-webkit-scrollbar { display: none; }
+.header-cat-link {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  padding: 0.28rem 0.7rem; font-size: 0.74rem; font-weight: 600;
+  color: #cbd5e1; background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+  white-space: nowrap; flex-shrink: 0;
+  transition: background .15s, color .15s;
+}
+.header-cat-link:hover { background: rgba(255,255,255,.14); color: #fff; }
+.header-cat-link--all { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); }
+
+/* Page Hero */
+.page-hero {
+  background: linear-gradient(135deg, var(--c-primary) 0%, var(--c-primary-dk) 100%);
+  padding: 2.5rem 0 2rem;
+  color: #fff;
+}
+.page-breadcrumb { font-size: 0.78rem; color: rgba(255,255,255,.6); margin-bottom: 0.8rem; }
+.page-breadcrumb a { color: rgba(255,255,255,.7); }
+.page-breadcrumb a:hover { color: #fff; }
+.page-title { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin-bottom: 0.75rem; }
+.page-lead { font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,.88); margin-bottom: 1rem; }
+.ku-note {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  border-radius: var(--r-sm); padding: 0.45rem 0.9rem;
+  font-size: 0.82rem; color: rgba(255,255,255,.9);
+}
+.ku-badge {
+  background: #ff9900; color: #fff; font-size: 0.7rem; font-weight: 700;
+  padding: 0.1rem 0.4rem; border-radius: 4px; flex-shrink: 0;
+}
+
+/* Book Section */
+.book-section { padding: 3rem 0; }
+.book-section--alt { background: var(--c-bg-alt); }
+.section-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 1.3rem; font-weight: 800; color: var(--c-primary);
+  margin-bottom: 0.5rem;
+}
+.section-icon { font-size: 1.4rem; }
+.section-count {
+  margin-left: auto; font-size: 0.78rem; font-weight: 600;
+  color: var(--c-text-lt); background: var(--c-bg-alt);
+  padding: 0.15rem 0.6rem; border-radius: 12px;
+}
+.book-section--alt .section-count { background: var(--c-bg-white); }
+.section-desc { font-size: 0.88rem; color: var(--c-text-md); margin-bottom: 1.5rem; }
+
+/* Book Grid */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.book-card {
+  display: block;
+  background: var(--c-bg-white);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r);
+  box-shadow: var(--c-shadow-sm);
+  transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.book-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--c-shadow-md);
+  border-color: var(--c-accent);
+}
+.book-card-inner { padding: 1.1rem 1.1rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.book-badge {
+  display: inline-block; font-size: 0.7rem; font-weight: 700;
+  color: var(--c-accent); background: var(--c-accent-lt);
+  border: 1px solid rgba(196,112,59,.2); border-radius: 4px;
+  padding: 0.1rem 0.45rem; align-self: flex-start;
+}
+.book-title {
+  font-size: 0.92rem; font-weight: 700; line-height: 1.55;
+  color: var(--c-text);
+}
+.book-desc { font-size: 0.8rem; line-height: 1.7; color: var(--c-text-md); }
+.book-cta {
+  font-size: 0.8rem; font-weight: 700; color: #ff9900;
+  margin-top: 0.25rem;
+}
+
+/* Author Section */
+.author-section { padding: 3rem 0; background: var(--c-bg-white); }
+.author-card {
+  max-width: 640px; margin: 0 auto;
+  border: 1px solid var(--c-border); border-radius: var(--r);
+  padding: 1.75rem; background: var(--c-bg);
+}
+.author-heading { font-size: 1rem; font-weight: 700; color: var(--c-text-md); margin-bottom: 0.5rem; }
+.author-name { font-size: 1.15rem; font-weight: 800; color: var(--c-primary); margin-bottom: 0.6rem; }
+.author-bio { font-size: 0.88rem; line-height: 1.85; color: var(--c-text); margin-bottom: 0.75rem; }
+.author-note { font-size: 0.78rem; color: var(--c-text-lt); }
+
+/* Site CTA */
+.site-cta-section { padding: 3rem 0; }
+.site-cta-box {
+  background: linear-gradient(135deg, var(--c-primary) 0%, var(--c-primary-md) 100%);
+  border-radius: var(--r); padding: 2rem; text-align: center; color: #fff;
+}
+.site-cta-lead { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+.site-cta-desc { font-size: 0.88rem; color: rgba(255,255,255,.85); margin-bottom: 1.25rem; }
+.site-cta-btn {
+  display: inline-block;
+  background: var(--c-accent); color: #fff;
+  font-size: 0.9rem; font-weight: 700;
+  padding: 0.7rem 2rem; border-radius: var(--r-sm);
+  transition: opacity .15s;
+}
+.site-cta-btn:hover { opacity: .88; }
+
+/* Footer */
+.site-footer {
+  background: var(--c-primary-dk); color: rgba(255,255,255,.7);
+  padding: 2rem 0; margin-top: 0;
+}
+.footer-inner { display: flex; flex-direction: column; gap: 0.75rem; }
+.footer-name { font-size: 0.9rem; font-weight: 700; color: #fff; }
+.footer-copy { font-size: 0.75rem; }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+.footer-nav a { font-size: 0.78rem; color: rgba(255,255,255,.6); }
+.footer-nav a:hover { color: #fff; }
+.footer-affiliate { font-size: 0.72rem; color: rgba(255,255,255,.4); }
+
+@media (max-width: 600px) {
+  .book-grid { grid-template-columns: 1fr; }
+  .page-hero { padding: 1.75rem 0 1.5rem; }
+}
+</style>
