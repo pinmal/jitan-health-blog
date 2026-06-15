@@ -16,6 +16,10 @@ const {
   badge = '著者の本',
   accentColor = '#c4703b',
 } = Astro.props;
+
+// 記事スラッグをUTM contentとして自動付与（GA4でどの記事からのKindleクリックか追跡するため）
+const slug = Astro.url.pathname.replace(/^\/articles\//, '').replace(/\/$/, '') || 'top';
+const finalUrl = url.includes('utm_source') ? url : `${url}&utm_source=jitankenko&utm_medium=web&utm_content=${slug}`;
 ---
 
 <div class="book-card-wrap">
@@ -28,7 +32,7 @@ const {
     <p class="book-title">{title}</p>
     <p class="book-desc">{description}</p>
     <a
-      href={url}
+      href={finalUrl}
       class="book-btn"
       target="_blank"
       rel="sponsored noopener noreferrer"

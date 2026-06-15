@@ -3,7 +3,7 @@
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
 > 1日の上限目安: 3〜5 URL
 > ベースURL: https://jitan-kenko.blog/
-> 最終更新: 2026-06-13
+> 最終更新: 2026-06-15（自動更新）
 
 ---
 
@@ -111,20 +111,49 @@
 
 | URL | 優先度 | 理由 |
 |---|---|---|
-| https://jitan-kenko.blog/articles/tsukurioki-delivery-3sha-comparison-psychiatrist/ | Tier1 | 宅食3社比較・ProductCard複数・商業価値高 |
-| https://jitan-kenko.blog/articles/senior-meal-4sha-comparison-psychiatrist/ | Tier1 | シニア向け宅食4社比較・比較記事・検索需要高 |
-| https://jitan-kenko.blog/articles/protein-4sha-comparison-psychiatrist/ | Tier1 | プロテイン4社比較・商業価値高・検索需要高 |
-| https://jitan-kenko.blog/articles/work-stress-diet-management-psychiatrist/ | Tier1 | 仕事ストレス×食事管理・医師コラム・検索需要高 |
-| https://jitan-kenko.blog/articles/irregular-meal-mental-health-psychiatrist/ | Tier1 | 不規則食事×メンタルヘルス・医師コラム・検索需要高 |
-| https://jitan-kenko.blog/articles/chronic-fatigue-diet-guide-psychiatrist/ | Tier1 | 慢性疲労×食事ガイド・医師コラム・検索需要高 |
-| https://jitan-kenko.blog/articles/weekday-dinner-systemization/ | Tier2 | 平日夕食システム化・情報記事・検索需要中 |
-| https://jitan-kenko.blog/articles/anshinsoudan-senior-meal-psychiatrist/ | Tier2 | 安心相談×シニア宅食・医師コラム・検索需要中 |
+
+
+### Tier2（自動検出）
+| URL | 優先度 | 理由 |
+|---|---|---|
 
 
 ## 更新ルール（Claudeへの指示）
 - GSCの話題が出たら**このファイルを最初にRead**する
 - 手動申請URLを案内したら**即座にこのファイルを更新**する
 - 申請後6週間経過して未索引のURLはステータスを「未索引（要リライト）」に変更
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
