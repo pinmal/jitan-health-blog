@@ -42,8 +42,17 @@ function checkFile(filePath) {
   const lines = content.split('\n');
   const issues = [];
 
+  // frontmatter（---〜---）はSEOタイトル・descriptionのキーワードを含むためスキップ
+  let frontmatterEnd = -1;
+  if (lines[0] && lines[0].trim() === '---') {
+    for (let i = 1; i < lines.length; i++) {
+      if (lines[i].trim() === '---') { frontmatterEnd = i; break; }
+    }
+  }
+
   NG_WORDS.forEach(({ word, level, reason }) => {
     lines.forEach((line, idx) => {
+      if (frontmatterEnd >= 0 && idx <= frontmatterEnd) return;
       if (line.includes(word)) {
         issues.push({ line: idx + 1, word, level, reason, context: line.trim().slice(0, 80) });
       }
