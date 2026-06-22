@@ -1,10 +1,10 @@
 ---
 // こんだてガチャへの送客バナー（双方向連携）
-// ストア公開後に true に変更する
-const KONDATE_GACHA_LIVE = false;
+// ストア公開後に true に変更する → 2026-06-22 Google Play 公開につき点灯
+const KONDATE_GACHA_LIVE = true;
 
 interface Props {
-  context?: 'leftover' | 'weekly-plan' | 'quick-meal' | 'general';
+  context?: 'leftover' | 'weekly-plan' | 'quick-meal' | 'family-meal' | 'health-meal' | 'general';
   ingredient?: string;
 }
 const { context = 'general', ingredient } = Astro.props;
@@ -24,16 +24,25 @@ const messages: Record<string, { title: string; desc: string }> = {
     title: '5分で夕食を決める — こんだてガチャ',
     desc: '冷蔵庫の中身をサッと入力するだけ。手軽に時短レシピを発見。',
   },
+  'family-meal': {
+    title: '家族の献立、ガチャでマンネリ解消',
+    desc: '毎日の家族ごはんがワンパターンになっていませんか？ジャンルを選んでガチャを回すだけで、献立のレパートリーが広がります。',
+  },
+  'health-meal': {
+    title: '健康を考えた献立を、ガチャで手軽に',
+    desc: '栄養バランスを考えて献立を組むのは大変。食べたいジャンルを選ぶだけで、今日の一品がパッと決まります。',
+  },
   general: {
     title: 'こんだてガチャ — 余り食材レシピ検索',
     desc: '食材を入力するだけでレシピをランダム提案。時短 × ロスゼロを実現。',
   },
 };
 
-const msg = messages[context];
-const deeplink = ingredient
-  ? `https://kondate-gacha.pages.dev/?ingredient=${encodeURIComponent(ingredient)}`
-  : 'https://kondate-gacha.pages.dev/';
+// 未定義 context が渡ってもクラッシュさせない（フラグ休眠中に潜んだ不整合の恒久対策）
+const msg = messages[context] ?? messages.general;
+// DL（インストール）をKPIとするため Google Play へ送客。referrer でインストール計測。
+// ※ ingredient 等の deep-link は Web版専用機能のためストア送客では引き継がない。
+const deeplink = `https://play.google.com/store/apps/details?id=com.kondategacha.app&referrer=utm_source%3Djitan-kenko%26utm_medium%3Dreferral%26utm_campaign%3Darticle-cta`;
 ---
 
 {KONDATE_GACHA_LIVE && (
@@ -52,9 +61,9 @@ const deeplink = ingredient
       class="kondate-btn"
       target="_blank"
       rel="noopener"
-      aria-label="こんだてガチャを開く（新しいタブ）"
+      aria-label="こんだてガチャをダウンロード（新しいタブ）"
     >
-      無料で使う →
+      無料でダウンロード →
     </a>
   </div>
 </aside>
