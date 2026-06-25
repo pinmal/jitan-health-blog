@@ -30,6 +30,7 @@ const SECTIONS = [
       { num: 'book27', asin: 'B0GX38LGCG', title: '一人暮らしの食費1万5千円生活',                        desc: '食費を削っても栄養を落とさない。買い物ルーティンと食材の使い切り術で月15,000円を実現する方法。',   badge: '節約' },
       { num: 'book72', asin: 'B0H64LQ6SN', title: '食費月1万円でも栄養バランスが取れる献立術',             desc: '月28,000円のコンビニ食費を月1万円に圧縮した食費設計記録。1日330円の予算で栄養バランスを崩さない買い物・献立システムを解説。',                              badge: '月1万円' },
       { num: 'book73', asin: 'B0H6HD6CWS', title: '夜ごはん×翌日弁当 一度の料理で二度おいしい作り方',      desc: '夕食を作りながら翌日の弁当も同時に完成させる「一石二鳥」設計術。帰宅後のキッチンに立つのは一度だけ——共働き・一人暮らしの調理時間を半分にする献立の考え方。',   badge: '弁当×夕飯' },
+      { num: 'book75', asin: 'B0H6L2MB9P', title: 'ミールプレップ入門 週末2時間で平日の食事を全部準備する', desc: '週末の2時間で平日5日分の食事を完成させる「ミールプレップ」入門。調理順序・冷蔵冷凍の保存設計・飽きない味変テクを日本の一人暮らしに合わせて再設計した実践ガイド。', badge: 'ミールプレップ' },
       { num: 'book33', asin: 'B0H398RMYR', title: '冷凍保存マスター術 食材ロスゼロで食費を自動的に減らす', desc: '食材を腐らせる前に冷凍するだけで食費が下がる。食材別の正しい冷凍方法と解凍・調理テク。',           badge: '冷凍' },
       { num: 'book43', asin: 'B0H38YLS4V', title: 'スープジャー弁当50選 朝5分で作る職場ランチ',            desc: '朝5分のお湯を注ぐだけで昼に熱々スープが完成。節約・栄養・時短を一度に解決するスープジャー活用術。', badge: '弁当' },
       { num: 'book44', asin: 'B0H3DSNDP6', title: '電子レンジだけで作る週5の晩ごはん',                   desc: 'コンロを一切使わずレンジだけで作れる晩ごはん。洗い物も最小限で、平日の帰宅後30分を丸ごと取り戻す。', badge: 'レンジ' },
@@ -81,7 +82,7 @@ const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "name": "時短×健康 Kindle本ガイド — 宮本ユウカの全著作一覧",
-  "description": "時短料理・宅食・健康管理をテーマにした全18冊のKindle本を一覧で紹介。忙しい30代・40代の食生活を楽にする本を、テーマ別に分類しています。",
+  "description": "時短料理・宅食・健康管理をテーマにした全19冊のKindle本を一覧で紹介。忙しい30代・40代の食生活を楽にする本を、テーマ別に分類しています。",
   "url": "https://jitan-kenko.blog/kindle-guide/",
   "hasPart": allBooks.map(b => ({
     "@type": "Book",
@@ -105,8 +106,8 @@ const jsonLd = JSON.stringify({
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9842738692752047"
          crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kindle本ガイド — 時短×健康の全著作18冊 | 時短 × 健康</title>
-    <meta name="description" content="時短料理・宅食・健康管理をテーマにした全18冊のKindle本一覧。忙しい30代・40代の食生活を楽にする本を、テーマ別にまとめました。著者：宮本ユウカ。" />
+    <title>Kindle本ガイド — 時短×健康の全著作19冊 | 時短 × 健康</title>
+    <meta name="description" content="時短料理・宅食・健康管理をテーマにした全19冊のKindle本一覧。忙しい30代・40代の食生活を楽にする本を、テーマ別にまとめました。著者：宮本ユウカ。" />
     <link rel="canonical" href="https://jitan-kenko.blog/kindle-guide/" />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
@@ -135,7 +136,7 @@ const jsonLd = JSON.stringify({
         <div class="container">
           <p class="page-breadcrumb"><a href="/">ホーム</a> › Kindle本ガイド</p>
           <h1 class="page-title">📚 Kindle本ガイド</h1>
-          <p class="page-lead">時短 × 健康ブログの著者・宮本ユウカが書いた全18冊をテーマ別に一覧にしています。<br>
+          <p class="page-lead">時短 × 健康ブログの著者・宮本ユウカが書いた全19冊をテーマ別に一覧にしています。<br>
           各テーマの詳しい解説記事もあわせて読むと、本の内容がより深く理解できます。</p>
           <div class="ku-note">
             <span class="ku-badge">KU</span>
@@ -219,7 +220,7 @@ const jsonLd = JSON.stringify({
           <div class="author-card">
             <h2 class="author-heading">著者について</h2>
             <p class="author-name">宮本ユウカ</p>
-            <p class="author-bio">IT企業でプロジェクトマネージャーとして働きながら、食事管理の効率化を追求してきた。帰宅が22時を過ぎる生活の中で、コスト・栄養・時短を同時に解決する食事の仕組みを自分で作り上げた経験をもとに執筆。Kindle本の著作は現在18冊。</p>
+            <p class="author-bio">IT企業でプロジェクトマネージャーとして働きながら、食事管理の効率化を追求してきた。帰宅が22時を過ぎる生活の中で、コスト・栄養・時短を同時に解決する食事の仕組みを自分で作り上げた経験をもとに執筆。Kindle本の著作は現在19冊。</p>
             <p class="author-note">※ 宮本ユウカは架空のキャラクターです。プロフィール・体験談はフィクションですが、内容については実際の調査に基づいています。</p>
           </div>
         </div>
