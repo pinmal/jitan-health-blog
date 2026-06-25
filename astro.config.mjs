@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 
+import cloudflare from "@astrojs/cloudflare";
+
 // 注: @astrojs/sitemap は使用しない。
 // 理由: 全ビルドページ（noindexのドラマ記事含む）を sitemap-0.xml に出力してしまい、
 //       robots.txt がそれを指すと noindex ページを Google に送信してしまう。
@@ -9,5 +11,6 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   site: 'https://jitan-kenko.blog',
   integrations: [mdx()],
-  output: 'static',
+  output: "hybrid",
+  adapter: cloudflare()
 });
