@@ -38,6 +38,10 @@ const SECTIONS = [
       { num: 'book45', asin: 'B0GX32M8RN', title: '在宅ワーカーの昼食ルーティン完全ガイド',               desc: '在宅勤務の昼食は「作りすぎ」か「食べなさすぎ」になりがち。午後の集中力を落とさない昼食設計を解説。', badge: '在宅' },
       { num: 'book267', asin: 'B0H7PH4JLQ', title: '週末3時間バッチ調理で5日間の食事を確保する本', desc: '週末土曜3時間の仕込みで月〜金5日分の夕食を確保するバッチ調理術。PMの工程設計思考を食事管理に応用し、帰宅後10分以内に食べられる状態を仕組みで作る実践ガイド。', badge: 'バッチ調理' },
     ],
+    products: [
+      { name: 'ガラス製保存容器セット', href: 'https://www.amazon.co.jp/s?k=ガラス保存容器+電子レンジ対応+密閉&tag=jitankenko-22', desc: 'バッチ調理の必需品。においが移りにくく電子レンジ・食洗機対応。700ml〜1000mlサイズを4〜5個そろえると一人暮らしの仕込み量にちょうどよい。', badge: '保存容器' },
+      { name: '炊飯器（タイマー機能付き）', href: 'https://www.amazon.co.jp/s?k=炊飯器+タイマー+5合+マイコン&tag=jitankenko-22', desc: '前夜にセットして朝に炊き上がり。週に一度まとめて炊いて冷凍保存する「ご飯の仕込み」もバッチ調理の重要な一工程。', badge: '炊飯器' },
+    ],
   },
   {
     id: 'takushoku',
@@ -108,7 +112,7 @@ const jsonLd = JSON.stringify({
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9842738692752047"
          crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kindle本ガイド — 時短×健康の全著作19冊 | 時短 × 健康</title>
+    <title>Kindle本ガイド — 時短×健康の全著作20冊 | 時短 × 健康</title>
     <meta name="description" content="時短料理・宅食・健康管理をテーマにした全20冊のKindle本一覧。忙しい30代・40代の食生活を楽にする本を、テーマ別にまとめました。著者：宮本ユウカ。" />
     <link rel="canonical" href="https://jitan-kenko.blog/kindle-guide/" />
     <script type="application/ld+json" set:html={jsonLd} />
@@ -212,6 +216,28 @@ const jsonLd = JSON.stringify({
                 </a>
               ))}
             </div>
+
+            <!-- 層3: 関連グッズ（書籍で紹介する道具・サービス） -->
+            {'products' in sec && sec.products && sec.products.length > 0 && (
+              <>
+                <div class="layer-header layer-header--products">
+                  <span class="layer-icon">🛒</span>
+                  <span class="layer-label-text">書籍で紹介するグッズ</span>
+                </div>
+                <div class="book-grid">
+                  {sec.products.map((p: { name: string; href: string; desc: string; badge: string }) => (
+                    <a href={p.href} target="_blank" rel="sponsored noopener noreferrer" class="book-card product-card">
+                      <div class="book-card-inner">
+                        <span class="book-badge product-badge">{p.badge}</span>
+                        <h3 class="book-title">{p.name}</h3>
+                        <p class="book-desc">{p.desc}</p>
+                        <span class="book-cta">Amazonで探す →</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </section>
       ))}
