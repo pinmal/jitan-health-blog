@@ -88,25 +88,25 @@ const discText = platforms.join(' / ');
       {isMulti ? (
         <div class="aff-btn-row">
           {href && (
-            <a href={href} class="aff-btn aff-btn--a8" target="_blank" rel="sponsored noopener noreferrer" style={`--accent: ${accentColor}`}>
-              公式サイトで見る
+            <a href={href} class="aff-btn aff-btn--a8 affiliate-link-btn" target="_blank" rel="sponsored noopener noreferrer" style={`--accent: ${accentColor}`} data-ga-brand={resolvedBrand} data-ga-platform="A8.net">
+              最安値をチェック
             </a>
           )}
           {amazonUrl && (
-            <a href={amazonUrl} class="aff-btn aff-btn--amazon" target="_blank" rel="sponsored noopener noreferrer">
+            <a href={amazonUrl} class="aff-btn aff-btn--amazon affiliate-link-btn" target="_blank" rel="sponsored noopener noreferrer" data-ga-brand={resolvedBrand} data-ga-platform="Amazon">
               Amazonで見る
             </a>
           )}
           {rakutenUrl && (
-            <a href={rakutenUrl} class="aff-btn aff-btn--rakuten" target="_blank" rel="sponsored noopener noreferrer">
+            <a href={rakutenUrl} class="aff-btn aff-btn--rakuten affiliate-link-btn" target="_blank" rel="sponsored noopener noreferrer" data-ga-brand={resolvedBrand} data-ga-platform="楽天">
               楽天で見る
             </a>
           )}
         </div>
       ) : (
         href && (
-          <a href={href} class="aff-btn aff-btn--single" target="_blank" rel="sponsored noopener noreferrer" style={`--accent: ${accentColor}`}>
-            公式サイトをみる →
+          <a href={href} class="aff-btn aff-btn--single affiliate-link-btn" target="_blank" rel="sponsored noopener noreferrer" data-ga-brand={resolvedBrand} data-ga-platform={platform}>
+            最安値をチェック →
           </a>
         )
       )}
@@ -220,7 +220,7 @@ const discText = platforms.join(' / ');
 /* ── 単一ボタン（後方互換） ── */
 .aff-btn--single {
   display: block;
-  background: var(--accent);
+  background: #e67e22;
   color: #fff;
   text-align: center;
   padding: 0.72rem 1rem;
@@ -295,3 +295,18 @@ const discText = platforms.join(' / ');
   text-align: right;
 }
 </style>
+
+<script>
+(function () {
+  document.querySelectorAll('.affiliate-link-btn').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'affiliate_click', {
+          brand: el.dataset.gaBrand,
+          platform: el.dataset.gaPlatform,
+        });
+      }
+    });
+  });
+})();
+</script>
