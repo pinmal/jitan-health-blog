@@ -58,6 +58,12 @@ const SECTIONS = [
     books: [
       { num: 'book20', asin: 'B0H2S1PM6P', title: '宅食サービス7社を使い続けた記録 — PM目線の本音比較', desc: 'ナッシュ・ワタミ・nosh・三ツ星ファームなど7社を半年間継続使用。コスト・栄養・利便性を本音で比較した記録。', badge: '宅食比較' },
     ],
+    productsLabel: '書籍で紹介する宅食サービス',
+    products: [
+      { name: 'ヨシケイ（ミールキット）', href: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8MSAK2+1QM6+I7FOH', desc: '食材・調味料がセットで届くミールキット。買い物不要で帰宅後20〜30分で調理が完了。書籍で比較した7社のうち、コスパと調理ハードルのバランスが取りやすいサービス。', badge: 'ミールキット', cta: '公式サイトへ →' },
+      { name: 'マッスルデリ（低糖質宅食）', href: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8L00II+4CPY+5YRHE', desc: '高たんぱく・低糖質設計の冷凍宅食。レンジ5分で完成。体型を管理しながら食事の準備時間をゼロにしたい人向け。', badge: '低糖質', cta: '公式サイトへ →' },
+      { name: 'わんまいる 健幸ディナー', href: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+ASS3KQ+2SIM+609HU', desc: '1食ごとに冷凍された副菜セットの和食宅食。湯せん5分で本格的な夕食が完成する。高齢の家族への仕送りにも向く。', badge: '和食宅配', cta: '公式サイトへ →' },
+    ],
   },
   {
     id: 'health',
@@ -79,6 +85,11 @@ const SECTIONS = [
       { num: 'book74',  asin: 'B0H24395ZM', title: '健康診断の数値を食事で改善するコレステロール・血糖値対策',    desc: 'LDLコレステロール・血糖値・中性脂肪を食事でコントロール。健診結果を見ながら取り組める実践ガイド。',                                       badge: '健康診断' },
       { num: 'book79',  asin: 'B0H2T55QKV', title: 'PMSをやわらげる食事の本',                                   desc: '月経前の不調（イライラ・むくみ・過食）を食事でやわらげる。マグネシウム・ビタミンB6など栄養素別に解説。',                               badge: 'PMS' },
       { num: 'book120', asin: 'B0H41395P2', title: '夏バテしない食事の本',                                       desc: '夏の食欲低下・倦怠感を食事でケアする。冷たいものを食べすぎない工夫と、体を冷やしすぎない献立設計。',                                     badge: '夏バテ' },
+    ],
+    productsLabel: '書籍で紹介するサプリ・健康食品',
+    products: [
+      { name: 'Myprotein（プロテイン）', href: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8NDQ5U+45DI+60H7M', desc: '食事だけではたんぱく質が不足しがちな日の補助に。ヨーグルト・牛乳に溶かすだけで手軽に補給できる国際的ブランド。疲労回復・腸活レシピと組み合わせて活用できる。', badge: 'たんぱく質', cta: '公式サイトへ →' },
+      { name: 'アルロース専門店（低GI甘味料）', href: 'https://px.a8.net/svt/ejp?a8mat=4B1THV+3258GQ+1CFC+1THW9E', desc: '砂糖の代わりに使える低GI甘味料。血糖値スパイクを緩やかにしながら甘さを楽しめる。糖質制限・コレステロール管理中の料理・スイーツ作りに。', badge: '低GI', cta: '公式サイトへ →' },
     ],
   },
 ];
@@ -222,16 +233,16 @@ const jsonLd = JSON.stringify({
               <>
                 <div class="layer-header layer-header--products">
                   <span class="layer-icon">🛒</span>
-                  <span class="layer-label-text">書籍で紹介するグッズ</span>
+                  <span class="layer-label-text">{(sec as any).productsLabel ?? '書籍で紹介するグッズ'}</span>
                 </div>
                 <div class="book-grid">
-                  {sec.products.map((p: { name: string; href: string; desc: string; badge: string }) => (
+                  {sec.products.map((p: { name: string; href: string; desc: string; badge: string; cta?: string }) => (
                     <a href={p.href} target="_blank" rel="sponsored noopener noreferrer" class="book-card product-card">
                       <div class="book-card-inner">
                         <span class="book-badge product-badge">{p.badge}</span>
                         <h3 class="book-title">{p.name}</h3>
                         <p class="book-desc">{p.desc}</p>
-                        <span class="book-cta">Amazonで探す →</span>
+                        <span class="book-cta">{p.cta ?? 'Amazonで探す →'}</span>
                       </div>
                     </a>
                   ))}
@@ -397,6 +408,7 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 0.65rem;
 }
 .layer-header--books { margin-top: 1.75rem; }
+.layer-header--products { margin-top: 1.75rem; }
 .layer-icon { font-size: 1rem; line-height: 1; }
 .layer-label-text { letter-spacing: 0.01em; }
 
