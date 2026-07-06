@@ -11,9 +11,9 @@ const { category } = Astro.params;
 const categoryMeta: Record<string, { label: string; description: string; icon: string; color: string }> = {
   comparison:      { label: '比較記事',      description: '宅食・ミールキット・ジムなどを実際に複数試して比較した記録。価格・続けやすさ・食材の質を多軸で評価。', icon: '📊', color: '#1b3f6e' },
   review:          { label: 'レビュー',      description: '実際にサービスを使った正直なレビュー。良かった点だけでなく合わなかった点・向き不向きも記載。', icon: '🍱', color: '#c4703b' },
-  'health-column': { label: '健康コラム',    description: '食生活・睡眠・運動と健康の関係について、医師の知見をもとにわかりやすく解説。', icon: '🥗', color: '#2d8b72' },
+  'health-column': { label: '健康コラム',    description: '食生活・睡眠・運動と健康の関係について、わかりやすく解説。', icon: '🥗', color: '#2d8b72' },
   howto:           { label: '仕組み化',      description: '献立・買い物・自炊を仕組み化して時短化するための実践的ガイド。', icon: '⚙️', color: '#3b5f8b' },
-  'mental-health': { label: 'メンタルヘルス', description: '食事とメンタルヘルスの関係、ストレス食い対策、睡眠の質改善など、精神保健指定医視点の解説。', icon: '🧠', color: '#7c3aed' },
+  'mental-health': { label: 'メンタルヘルス', description: '食事とメンタルヘルスの関係、ストレス食い対策、睡眠の質改善について解説。', icon: '🧠', color: '#7c3aed' },
 };
 
 const meta = categoryMeta[category!];

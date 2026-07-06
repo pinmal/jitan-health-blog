@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import { generateArticleSchema, type FaqItem } from '../utils/schema';
 import RelatedArticles from '../components/RelatedArticles.astro';
-import ReviewerCard from '../components/ReviewerCard.astro';
+import SiteInfoCard from '../components/SiteInfoCard.astro';
 
 interface Props {
   title: string;
@@ -198,7 +198,7 @@ const categoryNav = [
       gtag('js', new Date());
       gtag('config', 'G-P6YC8SXBSH');
     </script>
-    {/* Google AdSense — 実在医師監修(humanReviewed)ページのみ配信。架空キャラのnoindex記事には広告を出さない（再審査の心証・コンテンツ品質方針 I-159/I-161） */}
+    {/* Google AdSense — 公開済み（humanReviewed）ページのみ配信。下書き・noindex記事には広告を出さない */}
     {humanReviewed && (
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9842738692752047"
          crossorigin="anonymous"></script>
@@ -254,7 +254,7 @@ const categoryNav = [
       <div class="article-container">
         {!humanReviewed && (
           <div class="draft-banner" role="alert">
-            ⚠️ この記事は医師による最終確認待ちです（noindex中）
+            ⚠️ この記事は編集確認中です（noindex中）
           </div>
         )}
 
@@ -269,7 +269,6 @@ const categoryNav = [
         <article>
           <h1 class="article-title">{title}</h1>
           <p class="article-meta">
-            <span class="reviewer-badge">長友恭平 監修</span>
             <time class="article-date" datetime={publishedAt.toISOString()}>
               {updatedAt
                 ? `更新: ${updatedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}`
@@ -331,8 +330,7 @@ const categoryNav = [
             </nav>
           )}
 
-          {/* 医師監修カード（E-E-A-T強化・全記事CVR底上げ） */}
-          <ReviewerCard compact={false} />
+          <SiteInfoCard />
 
           {/* 関連記事（同カテゴリ + 同キャラ + タグ重複の3グループ） */}
           {relatedGroups.length > 0 && (

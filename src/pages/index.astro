@@ -17,9 +17,9 @@ const siteSchema = generateSiteSchema();
 // まず読んでほしい3記事（slugで指定。humanReviewed:false 記事は find で除外されるため
 // noindex ページへリンクすることは構造的に起こらない）
 const top3Slugs = [
-  'shokuzai-takuhai-3-comparison-psychiatrist',
-  'base-food-review-psychiatrist',
-  'gut-brain-axis-psychiatrist',
+  'mealkit-3-comparison-kenji-drama',
+  'batch-cooking-weekend-solo-yuka-drama',
+  'noshi-vs-mitsuboshi-vs-muscledeli',
 ];
 const top3 = top3Slugs
   .map(s => allArticles.find(a => a.slug === s))
@@ -39,13 +39,13 @@ const purposes = [
   { id: 'compare',   label: 'サービス比較',       icon: '📊' },
 ];
 
-// 悩み別エントリーカード（精神科医がよく相談される状況）
+// 悩み別エントリーカード（忙しい大人がよく抱える状況）
 const situationDefs = [
-  { slug: 'depression-cooking-difficulty-psychiatrist', icon: '🫂', worry: 'うつで自炊できない', short: '動けない時期に「食べること」をどう続けるか' },
-  { slug: 'night-shift-meal-psychiatrist',              icon: '🌙', worry: '夜勤明けに食事を作りたくない', short: '体のリズムが狂う交代勤務と食事の設計' },
-  { slug: 'postpartum-meal-difficulty-psychiatrist',    icon: '👶', worry: '産後ごはんが作れない', short: '産後の体力・メンタルと食事の関係' },
-  { slug: 'appetite-loss-weight-loss-fatigue-psychiatrist', icon: '⚠️', worry: '食欲がない・体重が減っている', short: '精神科医が「受診を」と言うサインとは' },
-  { slug: 'stress-eating-psychiatrist',                 icon: '😤', worry: 'ストレスで食べ過ぎてしまう', short: '夜の過食の仕組みと食事設計' },
+  { slug: 'weekday-dinner-drama',                    icon: '🍱', worry: '平日夕食を作る気力がない', short: '帰宅後30分で夕食を用意する仕組みを作る' },
+  { slug: 'solo-living-food-cost-drama',             icon: '💸', worry: '一人暮らしの食費が高い', short: 'コスパよく栄養を取るための選択肢' },
+  { slug: 'kenji-weekend-tsukurioki-drama',          icon: '📦', worry: '週末のまとめ作りが続かない', short: '無理なく続く平日ストックの作り方' },
+  { slug: 'naoko-business-trip-meal-drama',          icon: '🧳', worry: '出張・単身で食生活が乱れる', short: '外食・宅食を使いながら栄養を整える方法' },
+  { slug: 'batch-cooking-weekend-solo-yuka-drama',   icon: '🥘', worry: '自炊時間を週一にまとめたい', short: 'バッチ調理で平日の料理ゼロを実現する' },
 ];
 const situationCards = situationDefs
   .map(d => ({ ...d, article: allArticles.find(a => a.slug === d.slug) }))
@@ -68,7 +68,7 @@ const situationCards = situationDefs
          crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>時短 × 健康 — 忙しい大人のための合理的食生活</title>
-    <meta name="description" content="体や心の調子が落ちているとき、献立を決めること・調理の段取りを組むことは難しくなります。精神保健指定医の長友恭平が、状態に合った自己管理の一つとして宅配食・栄養補助食品の活用法を解説します。" />
+    <meta name="description" content="忙しい日常で「今日も夕食どうしよう」と悩む大人のための食事ブログ。宅食・ミールキット・冷凍弁当を3人のキャラクターが実際に試した体験談と比較で紹介します。" />
     <link rel="canonical" href="https://jitan-kenko.blog/" />
     <script type="application/ld+json" set:html={siteSchema} />
   </head>
@@ -99,8 +99,8 @@ const situationCards = situationDefs
           <h2 class="hero-heading">「今日も帰ったら22時か…。また惣菜か」</h2>
           <p class="hero-sub">その罪悪感、<strong>意志の問題ではありません。</strong>仕組みの問題です。</p>
           <div class="hero-body">
-            <p>精神科医として外来を続けてきて、気づいていることがあります。調子が落ちているとき、食事が後回しになる人が多い。でも食欲がないわけじゃない。「何を作るか考える」「買いに行く」「段取りを組む」——この一連の意思決定が、しんどいときには本当に難しくなるんです。</p>
-            <p>「楽をしている」のではなく、<strong>今の状態に合った方法を選んでいる</strong>。宅配食・栄養補助食品・献立の仕組み化は、そういう選択肢です。</p>
+            <p>「献立を考える」「材料を買いに行く」「段取りを組んで調理する」——これだけで、仕事終わりのエネルギーをごっそり持っていかれます。</p>
+            <p>「楽をしている」のではなく、<strong>今の状態に合った方法を選んでいる</strong>。宅配食・ミールキット・冷凍弁当・献立の仕組み化は、そういう選択肢です。</p>
           </div>
           <KondateGachaCTA context="weekly-plan" />
         </div>
@@ -133,15 +133,15 @@ const situationCards = situationDefs
         </div>
       </section>
 
-      <!-- 悩み別エントリーセクション（精神科医がよく相談される状況） -->
+      <!-- 悩み別エントリーセクション -->
       {situationCards.length > 0 && (
         <section class="situation-section">
           <div class="container">
             <h2 class="situation-heading">
-              <span class="situation-heading-icon">🩺</span>
-              精神科医がよく相談される「状況」から探す
+              <span class="situation-heading-icon">💬</span>
+              「こんな状況」から探す
             </h2>
-            <p class="situation-sub">大手サイトが扱わない「食事が難しくなる状況」を、医師の視点で解説しています。</p>
+            <p class="situation-sub">忙しい大人が実際に直面する「食事の困りごと」別に記事を探せます。</p>
             <div class="situation-grid">
               {situationCards.map(c => (
                 <a href={`/articles/${c.slug}/`} class="situation-card">
@@ -149,7 +149,7 @@ const situationCards = situationDefs
                   <div class="situation-body">
                     <span class="situation-worry">{c.worry}</span>
                     <span class="situation-short">{c.short}</span>
-                    <span class="situation-cta">精神科医の解説を読む →</span>
+                    <span class="situation-cta">記事を読む →</span>
                   </div>
                 </a>
               ))}
@@ -179,43 +179,6 @@ const situationCards = situationDefs
         </div>
       </section>
 
-      <!-- 先生のコラム（医師コラムを最上位に配置・AdSense E-E-A-T対策） -->
-      {doctorArticles.length > 0 && (
-        <section class="section-articles section-doctor">
-          <div class="container">
-            <div class="section-header-row">
-              <h2 class="section-heading section-heading--doctor">
-                <span class="char-avatar char-avatar--doctor">医</span>
-                <span>長友医師の健康コラム</span>
-                <span class="article-count-badge">{doctorArticles.length}件</span>
-              </h2>
-              <button class="section-toggle" data-target="doctor" aria-expanded="true" type="button">
-                <span class="toggle-icon">▲</span> たたむ
-              </button>
-            </div>
-            <div class="section-collapsible" id="collapse-doctor">
-              <p class="char-profile">精神保健指定医・長友恭平が、食事・栄養・睡眠・メンタルヘルスの関係を医学的知見から解説。宅食・健康食サービスの選び方も医師視点でアドバイス。</p>
-              <div class="article-grid" id="grid-doctor">
-                {doctorArticles.map((article, i) => (
-                  <a
-                    href={`/articles/${article.slug}/`}
-                    class={`article-card article-card--doctor${i >= 6 ? ' card-extra' : ''}`}
-                    data-tags={(article.data.tags ?? []).join(',')}
-                    data-category={article.data.category}
-                  >
-                    <h3 class="article-title">{article.data.title}</h3>
-                  </a>
-                ))}
-              </div>
-              {doctorArticles.length > 6 && (
-                <button class="more-btn" data-grid="doctor" type="button">
-                  もっと見る（+{doctorArticles.length - 6}件）
-                </button>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
 
       <!-- ユウカ -->
       {yukaArticles.length > 0 && (
