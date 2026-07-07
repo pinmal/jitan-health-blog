@@ -298,7 +298,11 @@ const discText = platforms.join(' / ');
 
 <script>
 (function () {
+  // 同一script断片がKindleBookCard.astro等にも複製配置されているため、
+  // 同一ページ内で複数回実行されても二重計上しないようdata属性でガードする
   document.querySelectorAll('.affiliate-link-btn').forEach(function (el) {
+    if (el.dataset.gaTracked === '1') return;
+    el.dataset.gaTracked = '1';
     el.addEventListener('click', function () {
       if (typeof gtag !== 'undefined') {
         gtag('event', 'affiliate_click', {

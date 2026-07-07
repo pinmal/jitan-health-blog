@@ -217,7 +217,7 @@ const jsonLd = JSON.stringify({
             </div>
             <div class="book-grid">
               {sec.books.map(b => (
-                <a href={amazonUrl(b.asin, b.num)} target="_blank" rel="sponsored noopener noreferrer" class="book-card">
+                <a href={amazonUrl(b.asin, b.num)} target="_blank" rel="sponsored noopener noreferrer" class="book-card affiliate-link-btn" data-ga-brand={b.title} data-ga-platform="Kindle">
                   <div class="book-card-inner">
                     <span class="book-badge">{b.badge}</span>
                     <h3 class="book-title">{b.title}</h3>
@@ -295,6 +295,24 @@ const jsonLd = JSON.stringify({
       </div>
     </footer>
 
+    <script>
+    (function () {
+      // このページはAffiliateCard.astroを使わず独自<html>構造のため、
+      // Kindleリンク(book-card)のaffiliate_clickを個別に計測する
+      document.querySelectorAll('.affiliate-link-btn').forEach(function (el) {
+        if (el.dataset.gaTracked === '1') return;
+        el.dataset.gaTracked = '1';
+        el.addEventListener('click', function () {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'affiliate_click', {
+              brand: el.dataset.gaBrand,
+              platform: el.dataset.gaPlatform,
+            });
+          }
+        });
+      });
+    })();
+    </script>
   </body>
 </html>
 

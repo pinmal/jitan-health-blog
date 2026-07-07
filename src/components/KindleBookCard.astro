@@ -33,15 +33,35 @@ const finalUrl = url.includes('utm_source') ? url : `${url}&utm_source=jitankenk
     <p class="book-desc">{description}</p>
     <a
       href={finalUrl}
-      class="book-btn"
+      class="book-btn affiliate-link-btn"
       target="_blank"
       rel="sponsored noopener noreferrer"
+      data-ga-brand={title}
+      data-ga-platform="Kindle"
     >
       Amazonで見る（Kindle版）
     </a>
     <p class="book-disc">※ Amazonアソシエイトプログラムを利用したアフィリエイト広告です</p>
   </div>
 </div>
+
+<script>
+(function () {
+  // AffiliateCard.astroの同一トラッカーと重複配置される場合があるためガード付き
+  document.querySelectorAll('.affiliate-link-btn').forEach(function (el) {
+    if (el.dataset.gaTracked === '1') return;
+    el.dataset.gaTracked = '1';
+    el.addEventListener('click', function () {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'affiliate_click', {
+          brand: el.dataset.gaBrand,
+          platform: el.dataset.gaPlatform,
+        });
+      }
+    });
+  });
+})();
+</script>
 
 <style>
 .book-card-wrap {
