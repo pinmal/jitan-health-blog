@@ -1,6 +1,44 @@
 
 ## 未申請の優先候補（自動検出 2026-06-19）
 
+### Tier1（2026-07-13 タイトル変更後再申請 Phase3）
+| URL | 優先度 | 理由 |
+|---|---|---|
+| https://jitan-kenko.blog/articles/naoko-business-trip-meal-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/narwal-cleaning-naoko-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/nashi-review-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/nashi-tired-alternatives-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/onigo-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/onkatsu-gohan-hie-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/ouchi-coop-kenji-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/panasonic-bistro-toaster-kenji-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/panasonic-coffee-maker-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/panasonic-suihanki-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/parsystem-family-kenji-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/pms-food-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/pms-iron-diet-psychiatrist/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/poke-marche-farm-direct-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/protein-bar-comparison-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/protein-lyft-hongo-kenji-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/radishboya-kenji-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/radishboya-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/sakanoto-organic-vegetables-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/solo-living-food-cost-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/sowaka-naoko-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/tabechoku-farm-direct-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/teryori-stock-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/tsukurio-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/wanmile-kenkodinner-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/wanmile-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/weekday-dinner-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/weekday-dinner-systemization/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/yasai-wo-motto-kenji-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/yoshikei-family-kenji-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/yourmystar-aircon-naoko-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/fishlle-unused-fish-drama/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/noshi-vs-mitsuboshi-vs-muscledeli/ | Tier1 | タイトル変更後再申請 |
+| https://jitan-kenko.blog/articles/yoshikei-simplemeal-yuka-drama/ | Tier1 | タイトル変更後再申請 |
+
 ### Tier2（自動検出）
 | URL | 優先度 | 理由 |
 |---|---|---|
@@ -86,4 +124,32 @@
 | https://jitan-kenko.blog/articles/yoshikei-mealkit-psychiatrist | 2026-06-22 | 索引済み確認 | - | ログ復元 2026-06-22 |
 
 | https://jitan-kenko.blog/articles/batch-cooking-weekend-solo-yuka-drama/ | 2026-07-07 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/allulose-sugar-control-yuka-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/arumeid-housekeeping-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/coffee-sleep-concentration-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/deat-workout-personal-training-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/dr-tsurukame-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/fit24-gym-yuka-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/fitdish-yuka-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/foodable-suihanki-yuka-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/fujizakura-water-naoko-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/happy-tempe-gut-health-yuka-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/kikubari-gozen-review-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/mogmo-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/mogmo-kenji-kids-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
+
+| https://jitan-kenko.blog/articles/naoko-bluebottle-coffee-drama/ | 2026-07-13 | 申請済み | - | 自動申請 by script |
 
