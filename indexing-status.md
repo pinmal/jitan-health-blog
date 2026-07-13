@@ -4,7 +4,6 @@
 ### Tier2（自動検出）
 | URL | 優先度 | 理由 |
 |---|---|---|
-| https://jitan-kenko.blog/articles/batch-cooking-weekend-solo-yuka-drama/ | Tier2 | 自動検出 2026-07-06 |
 
 ## 申請済み・確認済み URL一覧
 
@@ -85,3 +84,6 @@
 | https://jitan-kenko.blog/articles/weekday-dinner-systemization | 2026-06-22 | 申請済み | - | ログ復元 2026-06-22 |
 | https://jitan-kenko.blog/articles/work-stress-diet-management-psychiatrist | 2026-06-22 | 申請済み | - | ログ復元 2026-06-22 |
 | https://jitan-kenko.blog/articles/yoshikei-mealkit-psychiatrist | 2026-06-22 | 索引済み確認 | - | ログ復元 2026-06-22 |
+
+| https://jitan-kenko.blog/articles/batch-cooking-weekend-solo-yuka-drama/ | 2026-07-07 | 申請済み | - | 自動申請 by script |
+

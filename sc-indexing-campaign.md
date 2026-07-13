@@ -2,7 +2,7 @@
 
 > 目的: 手動インデックス申請の重複防止・進捗管理
 > 申請方法: Google Search Console → URL検査 → 「インデックス登録をリクエスト」
-> 1日の目安: 5URL（SC側のクォータを考慮）
+> 1日の目安: API経由2,000件/日・手動UI操作の場合は安全圏として20〜50件/日
 > ベースURL: https://jitan-kenko.blog/articles/
 
 ---
@@ -205,4 +205,128 @@ https://jitan-kenko.blog/articles/kurasu-coffee-drama/
 
 ---
 
-> 最終更新: 2026-05-20（SEOタイトル73記事一括更新・今日のアクション欄追加）
+---
+
+## Phase 2 — 精神科医タイトル削除後 再インデックス申請（2026-07-06〜）
+
+> 目的: `humanReviewed: true` に復元した26件のキャッシュ更新（旧スニペット「精神科医・長友恭平」を置き換える）
+> 優先度: 🔴 最高（title/description が変わっているため再クロールが必要）
+
+**Day A1 → 2026-07-07（一括28件）**
+> API経由のクォータは2,000件/日。5件/日の制限は手動UI想定の過去設定。全26件を一括申請。
+```
+https://jitan-kenko.blog/articles/sougou-takushoku-5sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/muscledeli-review-psychiatrist/
+https://jitan-kenko.blog/articles/kitoisix-review-psychiatrist/
+https://jitan-kenko.blog/articles/low-carb-delivery-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/protein-4sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/shokuzai-takuhai-3-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/organic-vegetable-delivery-3sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/senior-meal-4sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/tsukurioki-delivery-3sha-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/yoshikei-mealkit-psychiatrist/
+https://jitan-kenko.blog/articles/base-food-review-psychiatrist/
+https://jitan-kenko.blog/articles/delipicks-review-psychiatrist/
+https://jitan-kenko.blog/articles/fitfoodhome-review-psychiatrist/
+https://jitan-kenko.blog/articles/kenkonamakyubin-review-psychiatrist/
+https://jitan-kenko.blog/articles/soelu-review-psychiatrist/
+https://jitan-kenko.blog/articles/sleep-and-nutrition-psychiatrist/
+https://jitan-kenko.blog/articles/sleep-quality-diet-psychiatrist/
+https://jitan-kenko.blog/articles/sleep-supplement-comparison-psychiatrist/
+https://jitan-kenko.blog/articles/summer-hydration-electrolyte-psychiatrist/
+https://jitan-kenko.blog/articles/night-shift-meal-psychiatrist/
+https://jitan-kenko.blog/articles/iron-deficiency-women-psychiatrist/
+https://jitan-kenko.blog/articles/ldl-cholesterol-food-psychiatrist/
+https://jitan-kenko.blog/articles/chronic-fatigue-diet-guide-psychiatrist/
+https://jitan-kenko.blog/articles/appetite-loss-weight-loss-fatigue-psychiatrist/
+https://jitan-kenko.blog/articles/protein-fatigue-psychiatrist/
+https://jitan-kenko.blog/articles/lunch-management-solo-living-psychiatrist/
+https://jitan-kenko.blog/
+https://jitan-kenko.blog/about/
+```
+
+---
+
+## Phase 3 — 全62記事タイトル修正後 再インデックス申請（2026-07-13〜）
+
+> 目的: BOM除去＋【精神科医監修】【精神科医が解説】を全タイトルから削除（コミット0d9bd40）後の再クロール依頼
+> 優先度: 🔴 最高（title変更 = Googlebotに新タイトルを認識させる必要あり）
+> 方式: 1日20〜50件ずつ手動申請 or API自動申請（sc-indexing-campaign.md登録→明朝9:00自動実行）
+
+**Day B1 → 2026-07-14（最優先20件）**
+```
+https://jitan-kenko.blog/articles/allulose-sugar-control-yuka-drama/
+https://jitan-kenko.blog/articles/arumeid-housekeeping-drama/
+https://jitan-kenko.blog/articles/base-food-drama/
+https://jitan-kenko.blog/articles/cathand-arumeid-housekeeping-yuka-drama/
+https://jitan-kenko.blog/articles/chef-muten-tsukurioki-drama/
+https://jitan-kenko.blog/articles/coffee-sleep-concentration-drama/
+https://jitan-kenko.blog/articles/deat-workout-personal-training-drama/
+https://jitan-kenko.blog/articles/dr-tsurukame-drama/
+https://jitan-kenko.blog/articles/dr-tsurukame-parent-care-yuka-drama/
+https://jitan-kenko.blog/articles/element-gym-drama/
+https://jitan-kenko.blog/articles/emoor-sleep-yuka-drama/
+https://jitan-kenko.blog/articles/fishlle-kenji-drama/
+https://jitan-kenko.blog/articles/fit24-gym-yuka-drama/
+https://jitan-kenko.blog/articles/fitdish-yuka-drama/
+https://jitan-kenko.blog/articles/fitness-3-comparison-yuka-drama/
+https://jitan-kenko.blog/articles/foodable-suihanki-yuka-drama/
+https://jitan-kenko.blog/articles/fujizakura-water-naoko-drama/
+https://jitan-kenko.blog/articles/green-spoon-drama/
+https://jitan-kenko.blog/articles/green-spoon-yuka-drama/
+https://jitan-kenko.blog/articles/happy-tempe-gut-health-yuka-drama/
+```
+
+**Day B2 → 2026-07-15（21件）**
+```
+https://jitan-kenko.blog/articles/kenji-weekend-tsukurioki-drama/
+https://jitan-kenko.blog/articles/kikubari-gozen-review-drama/
+https://jitan-kenko.blog/articles/kurasu-coffee-drama/
+https://jitan-kenko.blog/articles/mogmo-drama/
+https://jitan-kenko.blog/articles/mogmo-kenji-kids-drama/
+https://jitan-kenko.blog/articles/morning-routine-coffee-protein-kenji-drama/
+https://jitan-kenko.blog/articles/myprotein-drama/
+https://jitan-kenko.blog/articles/naoko-bluebottle-coffee-drama/
+https://jitan-kenko.blog/articles/naoko-business-trip-meal-drama/
+https://jitan-kenko.blog/articles/narwal-cleaning-naoko-drama/
+https://jitan-kenko.blog/articles/nashi-review-drama/
+https://jitan-kenko.blog/articles/nashi-tired-alternatives-yuka-drama/
+https://jitan-kenko.blog/articles/onigo-drama/
+https://jitan-kenko.blog/articles/onkatsu-gohan-hie-yuka-drama/
+https://jitan-kenko.blog/articles/ouchi-coop-kenji-drama/
+https://jitan-kenko.blog/articles/panasonic-bistro-toaster-kenji-drama/
+https://jitan-kenko.blog/articles/panasonic-coffee-maker-yuka-drama/
+https://jitan-kenko.blog/articles/panasonic-suihanki-drama/
+https://jitan-kenko.blog/articles/parsystem-family-kenji-drama/
+https://jitan-kenko.blog/articles/pms-food-yuka-drama/
+https://jitan-kenko.blog/articles/pms-iron-diet-psychiatrist/
+```
+
+**Day B3 → 2026-07-16（21件）**
+```
+https://jitan-kenko.blog/articles/poke-marche-farm-direct-yuka-drama/
+https://jitan-kenko.blog/articles/protein-bar-comparison-yuka-drama/
+https://jitan-kenko.blog/articles/protein-lyft-hongo-kenji-drama/
+https://jitan-kenko.blog/articles/radishboya-kenji-drama/
+https://jitan-kenko.blog/articles/radishboya-yuka-drama/
+https://jitan-kenko.blog/articles/sakanoto-organic-vegetables-drama/
+https://jitan-kenko.blog/articles/solo-living-food-cost-drama/
+https://jitan-kenko.blog/articles/sowaka-naoko-drama/
+https://jitan-kenko.blog/articles/tabechoku-farm-direct-drama/
+https://jitan-kenko.blog/articles/teryori-stock-drama/
+https://jitan-kenko.blog/articles/tsukurio-drama/
+https://jitan-kenko.blog/articles/wanmile-kenkodinner-drama/
+https://jitan-kenko.blog/articles/wanmile-yuka-drama/
+https://jitan-kenko.blog/articles/weekday-dinner-drama/
+https://jitan-kenko.blog/articles/weekday-dinner-systemization/
+https://jitan-kenko.blog/articles/yasai-wo-motto-kenji-drama/
+https://jitan-kenko.blog/articles/yoshikei-family-kenji-drama/
+https://jitan-kenko.blog/articles/yourmystar-aircon-naoko-drama/
+https://jitan-kenko.blog/articles/fishlle-unused-fish-drama/
+https://jitan-kenko.blog/articles/noshi-vs-mitsuboshi-vs-muscledeli/
+https://jitan-kenko.blog/articles/yoshikei-simplemeal-yuka-drama/
+```
+
+---
+
+> 最終更新: 2026-07-13（Phase 3 — 全62記事タイトル修正後 再インデックス申請登録）
