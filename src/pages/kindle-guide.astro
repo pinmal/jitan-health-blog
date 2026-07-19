@@ -164,29 +164,6 @@ const jsonLd = JSON.stringify({
         </div>
       </section>
 
-      <!-- こんだてガチャ送客（双方向連携・献立を決める導線） -->
-      <section class="app-cta-section">
-        <div class="container">
-          <a
-            href="https://play.google.com/store/apps/details?id=com.kondategacha.app&referrer=utm_source%3Djitan-kenko%26utm_medium%3Dreferral%26utm_campaign%3Dkindle-guide"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="app-cta-box"
-            aria-label="こんだてガチャをダウンロード（無料・新しいタブ）"
-          >
-            <span class="app-cta-icon">
-              <img src="/images/kondate-gacha-icon.png" alt="こんだてガチャ" width="56" height="56" />
-            </span>
-            <span class="app-cta-body">
-              <span class="app-cta-tag">無料アプリ</span>
-              <span class="app-cta-title">今日の献立、3秒で決まる「こんだてガチャ」</span>
-              <span class="app-cta-desc">「何作ろう…」と毎日悩んでいませんか？食べたいジャンルを選んでガチャを回すだけで、今日の献立が一瞬で決まります。本を読む前に、まずインストールしてみてください。</span>
-            </span>
-            <span class="app-cta-btn">Google Playで無料DL →</span>
-          </a>
-        </div>
-      </section>
-
       {SECTIONS.map(sec => (
         <section class:list={['book-section', sec.alt && 'book-section--alt']} id={sec.id}>
           <div class="container">
@@ -531,42 +508,6 @@ a { color: inherit; text-decoration: none; }
   transition: opacity .15s;
 }
 .site-cta-btn:hover { opacity: .88; }
-
-/* App CTA (こんだてガチャ送客) */
-.app-cta-section { padding: 2.25rem 0 0; }
-.app-cta-box {
-  display: flex; align-items: center; gap: 1.1rem;
-  background: linear-gradient(135deg, #fff7ed 0%, var(--c-accent-lt) 100%);
-  border: 1.5px solid var(--c-accent);
-  border-radius: var(--r);
-  padding: 1.2rem 1.4rem;
-  box-shadow: var(--c-shadow-sm);
-  transition: transform .18s, box-shadow .18s;
-}
-.app-cta-box:hover { transform: translateY(-2px); box-shadow: var(--c-shadow-md); }
-.app-cta-icon { flex-shrink: 0; line-height: 0; }
-.app-cta-icon img { width: 56px; height: 56px; border-radius: 13px; box-shadow: var(--c-shadow-sm); }
-.app-cta-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.app-cta-tag {
-  align-self: flex-start;
-  font-size: 0.68rem; font-weight: 700; color: #fff;
-  background: var(--c-accent); border-radius: 4px;
-  padding: 0.1rem 0.5rem; margin-bottom: 0.35rem;
-}
-.app-cta-title { font-size: 1rem; font-weight: 800; color: var(--c-primary-dk); margin-bottom: 0.3rem; line-height: 1.5; }
-.app-cta-desc { font-size: 0.83rem; line-height: 1.7; color: var(--c-text-md); }
-.app-cta-btn {
-  flex-shrink: 0;
-  background: var(--c-accent); color: #fff;
-  font-size: 0.9rem; font-weight: 700;
-  padding: 0.7rem 1.5rem; border-radius: var(--r-sm);
-  white-space: nowrap;
-}
-.app-cta-box:hover .app-cta-btn { background: #a85a2b; }
-@media (max-width: 600px) {
-  .app-cta-box { flex-wrap: wrap; }
-  .app-cta-btn { width: 100%; text-align: center; }
-}
 
 /* Footer */
 .site-footer {
