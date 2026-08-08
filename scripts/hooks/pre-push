@@ -6,6 +6,22 @@
 # 【復元方法】git clone 後に npm install を実行すると自動でインストールされる
 # 手動復元: node scripts/install-hooks.js
 
+# --- BOM ガード (2026-08-09 追加) ---------------------------------------
+# UTF-8 BOM 付き mdx は Astro では読めるが、自作パーサ
+# (scripts/generate-sitemap.mjs / CTO/gsc-auto-indexing/gsc_auto_indexing.py) を壊し、
+# sitemap 脱落・インデックス申請漏れを fail-silent で引き起こす。
+# 2026-08-09 の監査で 28/108 本が脱落していたため、push 前に機械的に止める。
+echo "[pre-push] mdx の UTF-8 BOM 検査中..."
+BOM_FILES=$(grep -rlI $'\xef\xbb\xbf' src/content/articles --include='*.mdx' 2>/dev/null)
+if [ -n "$BOM_FILES" ]; then
+  echo ""
+  echo "[pre-push] CRITICAL: UTF-8 BOM 付きの mdx を検出 -> push を中止"
+  echo "$BOM_FILES" | sed 's/^/  - /'
+  echo "[pre-push] 除去例: python -c \"import sys,codecs;p=sys.argv[1];b=open(p,'rb').read();open(p,'wb').write(b[3:] if b.startswith(codecs.BOM_UTF8) else b)\" <file>"
+  exit 1
+fi
+echo "[pre-push] OK: BOM なし"
+
 echo "[pre-push] cross_site_check.py --scan-all 実行中..."
 python "C:/Users/yotsu/Desktop/claudecode1/CSO/kindle-publishing/cross_site_check.py" --scan-all
 RC=$?

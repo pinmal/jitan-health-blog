@@ -19,12 +19,29 @@ function getFrontmatterValue(yaml, key) {
   return m ? m[1].trim().replace(/^["']|["']$/g, '') : null;
 }
 
-/** フロントマターブロックをパース（LF / CRLF 両対応） */
-function parseFrontmatter(content) {
-  // Windows CRLF (\r\n) と Unix LF (\n) を統一
-  const normalized = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+/**
+ * フロントマターブロックをパース（LF / CRLF / UTF-8 BOM 両対応）
+ *
+ * ⚠️ 解析失敗時は null を返さず throw する（fail-loud）。
+ * 旧実装は BOM 付き mdx で /^---/ が外れて null を返し、その記事を
+ * 黙って sitemap から除外していた（2026-08-09 監査で28本の脱落を検出）。
+ * 「ビルドは常に成功するが出力が欠けている」状態を二度と作らないため、
+ * 解析できないファイルはビルドを止める。
+ */
+function parseFrontmatter(content, file) {
+  // UTF-8 BOM (U+FEFF) を除去してから、Windows CRLF (\r\n) と Unix LF (\n) を統一
+  const normalized = content
+    .replace(/^\uFEFF/, '')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n');
   const m = normalized.match(/^---\n([\s\S]*?)\n---/);
-  if (!m) return null;
+  if (!m) {
+    throw new Error(
+      `フロントマターを解析できません: ${file}\n` +
+      `  先頭が "---" で始まる YAML ブロックである必要があります。\n` +
+      `  先頭バイト: ${JSON.stringify(content.slice(0, 8))}`
+    );
+  }
   const yaml = m[1];
   return {
     humanReviewed: getFrontmatterValue(yaml, 'humanReviewed') === 'true',
@@ -43,18 +60,46 @@ async function main() {
   );
 
   const articles = [];
+  let parsed = 0;
+  let bomFound = 0;
+  const excluded = [];
   for (const file of files) {
     const content = await readFile(join(SRC_DIR, file), 'utf-8');
-    const fm = parseFrontmatter(content);
-    if (fm && fm.humanReviewed) {
+    if (content.charCodeAt(0) === 0xFEFF) bomFound++;
+    const fm = parseFrontmatter(content, file);   // 解析失敗は throw（fail-loud）
+    parsed++;
+    if (fm.humanReviewed) {
       articles.push({
         slug:        file.replace('.mdx', ''),
         publishedAt: fm.publishedAt,
         lastmod:     fm.updatedAt ?? fm.publishedAt,
         category:    fm.category,
       });
+    } else {
+      excluded.push(file);
     }
   }
+
+  // 検証ゲート: 「解析成功数 == 総ファイル数」を必ず表示する。
+  // 常に成功する検証は検証にならない（I-168）ため、実数を突き合わせて出力する。
+  console.log(`[sitemap] frontmatter 解析: ${parsed} / ${files.length} 件`);
+  if (parsed !== files.length) {
+    console.error(`[sitemap] ✗ 解析できなかった記事があります（${files.length - parsed}件）`);
+    process.exit(1);
+  }
+  if (bomFound > 0) {
+    console.error(
+      `[sitemap] ✗ UTF-8 BOM 付きの mdx が ${bomFound} 件あります。\n` +
+      `  BOM は Astro では読めても自作パーサ（本スクリプト / gsc_auto_indexing.py）を壊し、\n` +
+      `  sitemap 脱落・インデックス申請漏れの原因になります。除去してください。`
+    );
+    process.exit(1);
+  }
+  console.log(`[sitemap] BOM 付きファイル: 0 件`);
+  console.log(
+    `[sitemap] humanReviewed: true = ${articles.length} 件 / ` +
+    `false = ${excluded.length} 件${excluded.length ? ` (${excluded.join(', ')})` : ''}`
+  );
 
   // 公開日の新しい順
   articles.sort((a, b) =>
@@ -97,6 +142,19 @@ async function main() {
     })),
   ];
 
+  // URL 総数の突合（トップ + /articles/ + カテゴリハブ + 記事）
+  const expectedUrls = 2 + CATEGORY_HUBS.length + articles.length;
+  if (urls.length !== expectedUrls) {
+    console.error(`[sitemap] ✗ URL数が想定と不一致: ${urls.length} != ${expectedUrls}`);
+    process.exit(1);
+  }
+  const missingLastmod = urls.filter(u => !u.lastmod || u.lastmod === '1970-01-01');
+  if (missingLastmod.length > 0) {
+    console.error(`[sitemap] ✗ lastmod 欠落 ${missingLastmod.length} 件: ${missingLastmod.map(u => u.loc).join(', ')}`);
+    process.exit(1);
+  }
+  console.log(`[sitemap] lastmod 付与: ${urls.length} / ${urls.length} 件`);
+
   const xml =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -114,7 +172,7 @@ async function main() {
   await writeFile(join(DIST_DIR, 'sitemap.xml'), xml, 'utf-8');
 
   // 過去に GSC へ登録された旧 @astrojs/sitemap 形式（sitemap-index.xml → sitemap-0.xml）が
-  // 残っていても 28URL のクリーンな内容を返すよう、同一内容を sitemap-0.xml にも出力し、
+  // 残っていてもクリーンな内容を返すよう、同一内容を sitemap-0.xml にも出力し、
   // sitemap-index.xml を整合させる（旧登録の自己修復・noindex記事の流出防止）。
   await writeFile(join(DIST_DIR, 'sitemap-0.xml'), xml, 'utf-8');
   const indexXml =
