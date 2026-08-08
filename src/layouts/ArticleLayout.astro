@@ -13,6 +13,7 @@ interface Props {
   updatedAt?: Date;
   noindex?: boolean;
   humanReviewed?: boolean;
+  adsenseHold?: boolean;
   faqs?: FaqItem[];
 }
 
@@ -25,10 +26,16 @@ const {
   updatedAt,
   noindex = false,
   humanReviewed = false,
+  adsenseHold = false,
   faqs,
 } = Astro.props;
 
 const url = Astro.url.href;
+
+// noindex の判定はここ1箇所に集約する。
+// scripts/generate-sitemap.mjs の除外条件と必ず同じにすること
+// （片方だけ変えると「noindexなのにsitemapへ送る」I-159 の罠になる）。
+const isNoindex = noindex || adsenseHold || !humanReviewed;
 // 記事スラッグを抽出（例: /articles/noshi-vs-mitsuboshi → noshi-vs-mitsuboshi）
 const slug = Astro.url.pathname.replace(/^\/articles\//, '').replace(/\/$/, '') || 'article';
 
@@ -198,15 +205,15 @@ const categoryNav = [
       gtag('js', new Date());
       gtag('config', 'G-P6YC8SXBSH');
     </script>
-    {/* Google AdSense — 公開済み（humanReviewed）ページのみ配信。下書き・noindex記事には広告を出さない */}
-    {humanReviewed && (
+    {/* Google AdSense — 検索に出すページのみ配信。下書き・noindex記事には広告を出さない */}
+    {!isNoindex && (
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9842738692752047"
          crossorigin="anonymous"></script>
     )}
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | 時短 × 健康</title>
     <meta name="description" content={description} />
-    {(noindex || !humanReviewed) && <meta name="robots" content="noindex, follow" />}
+    {isNoindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={url} />
     <script type="application/ld+json" set:html={articleSchema} />
     <meta property="og:title" content={`${title} | 時短 × 健康`} />

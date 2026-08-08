@@ -45,10 +45,21 @@ function parseFrontmatter(content, file) {
   const yaml = m[1];
   return {
     humanReviewed: getFrontmatterValue(yaml, 'humanReviewed') === 'true',
+    noindex:       getFrontmatterValue(yaml, 'noindex') === 'true',
+    adsenseHold:   getFrontmatterValue(yaml, 'adsenseHold') === 'true',
     publishedAt:   getFrontmatterValue(yaml, 'publishedAt'),
     updatedAt:     getFrontmatterValue(yaml, 'updatedAt') ?? null,
     category:      getFrontmatterValue(yaml, 'category'),
   };
+}
+
+/**
+ * sitemap に載せてよいか。
+ * ⚠️ src/layouts/ArticleLayout.astro の isNoindex と必ず同じ条件にすること。
+ * 片方だけ変えると「noindex ページを sitemap で Google に送る」罠になる（I-159）。
+ */
+function isIndexable(fm) {
+  return fm.humanReviewed && !fm.noindex && !fm.adsenseHold;
 }
 
 // ヘッダーナビと一致する indexable なカテゴリハブ（[category].astro が生成）
@@ -68,7 +79,7 @@ async function main() {
     if (content.charCodeAt(0) === 0xFEFF) bomFound++;
     const fm = parseFrontmatter(content, file);   // 解析失敗は throw（fail-loud）
     parsed++;
-    if (fm.humanReviewed) {
+    if (isIndexable(fm)) {
       articles.push({
         slug:        file.replace('.mdx', ''),
         publishedAt: fm.publishedAt,
@@ -76,7 +87,10 @@ async function main() {
         category:    fm.category,
       });
     } else {
-      excluded.push(file);
+      const why = !fm.humanReviewed ? 'humanReviewed:false'
+                : fm.noindex        ? 'noindex:true'
+                :                     'adsenseHold:true';
+      excluded.push(`${file}(${why})`);
     }
   }
 
@@ -97,8 +111,8 @@ async function main() {
   }
   console.log(`[sitemap] BOM 付きファイル: 0 件`);
   console.log(
-    `[sitemap] humanReviewed: true = ${articles.length} 件 / ` +
-    `false = ${excluded.length} 件${excluded.length ? ` (${excluded.join(', ')})` : ''}`
+    `[sitemap] indexable = ${articles.length} 件 / ` +
+    `除外 = ${excluded.length} 件${excluded.length ? ` (${excluded.join(', ')})` : ''}`
   );
 
   // 公開日の新しい順
