@@ -95,14 +95,25 @@ const SECTIONS = [
       { name: 'アルロース専門店（低GI甘味料）', href: 'https://px.a8.net/svt/ejp?a8mat=4B1THV+3258GQ+1CFC+1THW9E', desc: '砂糖の代わりに使える低GI甘味料。血糖値スパイクを緩やかにしながら甘さを楽しめる。糖質制限・コレステロール管理中の料理・スイーツ作りに。', badge: '低GI', cta: '公式サイトへ →' },
     ],
   },
+  {
+    id: 'fish',
+    label: '魚料理',
+    emoji: '🐟',
+    alt: true,
+    desc: 'スーパーの魚を自分で捌いて食べる。魚料理が苦手な人向けの入門テーマの本です。',
+    articles: [],
+    books: [
+      { num: 'book246', asin: 'B0HF6YTTZ2', title: '魚を捌いたことがない人の魚料理入門', desc: 'スーパーの魚から始める三枚おろし入門。ゼイゴ取り・血合い洗い・皮引きのコツを、義母から学んだ感覚とともに丁寧に解説する。', badge: '魚料理入門' },
+    ],
+  },
 ];
 
 const allBooks = SECTIONS.flatMap(s => s.books);
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "時短×健康 Kindle本ガイド — 宮本ユウカの全著作一覧",
-  "description": "時短料理・宅食・健康管理をテーマにした全22冊のKindle本を一覧で紹介。忙しい30代・40代の食生活を楽にする本を、テーマ別に分類しています。",
+  "name": "時短×健康 Kindle本ガイド — 全著作一覧",
+  "description": `時短料理・宅食・健康管理・魚料理をテーマにした全${allBooks.length}冊のKindle本を一覧で紹介。忙しい30代・40代の食生活を楽にする本を、テーマ別に分類しています。`,
   "url": "https://jitan-kenko.blog/kindle-guide/",
   "hasPart": allBooks.map(b => ({
     "@type": "Book",
@@ -126,8 +137,8 @@ const jsonLd = JSON.stringify({
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9842738692752047"
          crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kindle本ガイド — 時短×健康の全著作22冊 | 時短 × 健康</title>
-    <meta name="description" content="時短料理・宅食・健康管理をテーマにした全22冊のKindle本一覧。忙しい30代・40代の食生活を楽にする本を、テーマ別にまとめました。著者：宮本ユウカ。" />
+    <title>Kindle本ガイド — 時短×健康の全著作{allBooks.length}冊 | 時短 × 健康</title>
+    <meta name="description" content={`時短料理・宅食・健康管理・魚料理をテーマにした全${allBooks.length}冊のKindle本一覧。忙しい30代・40代の食生活を楽にする本を、テーマ別にまとめました。`} />
     <link rel="canonical" href="https://jitan-kenko.blog/kindle-guide/" />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
@@ -156,7 +167,7 @@ const jsonLd = JSON.stringify({
         <div class="container">
           <p class="page-breadcrumb"><a href="/">ホーム</a> › Kindle本ガイド</p>
           <h1 class="page-title">📚 Kindle本ガイド</h1>
-          <p class="page-lead">時短 × 健康ブログの著者・宮本ユウカが書いた全22冊をテーマ別に一覧にしています。<br>
+          <p class="page-lead">時短 × 健康ブログが紹介する全{allBooks.length}冊をテーマ別に一覧にしています。<br>
           各テーマの詳しい解説記事もあわせて読むと、本の内容がより深く理解できます。</p>
           <div class="ku-note">
             <span class="ku-badge">KU</span>
