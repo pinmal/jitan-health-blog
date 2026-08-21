@@ -289,6 +289,24 @@ const jsonLd = JSON.stringify({
 
     <script>
     (function () {
+      // Kindle読者がこのページに到達したかを計測（UTMなし直接流入も検知）
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'kindle_guide_visit', {
+          referrer: document.referrer || '(direct)',
+        });
+      }
+
+      // 記事クリック計測
+      document.querySelectorAll('.article-link').forEach(function (el) {
+        el.addEventListener('click', function () {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'kindle_article_click', {
+              article_url: el.pathname,
+            });
+          }
+        });
+      });
+
       // このページはAffiliateCard.astroを使わず独自<html>構造のため、
       // Kindleリンク(book-card)のaffiliate_clickを個別に計測する
       document.querySelectorAll('.affiliate-link-btn').forEach(function (el) {
