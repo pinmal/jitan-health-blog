@@ -102,7 +102,48 @@ const situationCards = situationDefs
             <p>「献立を考える」「材料を買いに行く」「段取りを組んで調理する」——これだけで、仕事終わりのエネルギーをごっそり持っていかれます。</p>
             <p>「楽をしている」のではなく、<strong>今の状態に合った方法を選んでいる</strong>。宅配食・ミールキット・冷凍弁当・献立の仕組み化は、そういう選択肢です。</p>
           </div>
+          <p class="hero-disclosure">
+            ※ 案内役として登場する「ユウカ・ナオコ・ケンジ」は架空のキャラクターです。紹介するサービス・商品の情報は実在のものです（<a href="/about/">運営方針・詳しくはこちら</a>）
+          </p>
           <KondateGachaCTA context="weekly-plan" />
+        </div>
+      </section>
+
+      <!-- キャラクター紹介 -->
+      <section class="intro-section">
+        <div class="container">
+          <div class="intro-card">
+            <div class="intro-emoji">🍱💼📦</div>
+            <h2 class="intro-title">このブログの3人を紹介します</h2>
+            <p class="intro-lead">
+              宅食・ミールキット・冷凍弁当の体験談は、案内役の架空キャラクター3人が届けています。
+              紹介するサービスのスペック・価格・成分はすべて実在の情報です。
+            </p>
+            <div class="intro-chars">
+              <div class="intro-char">
+                <span class="intro-char-avatar intro-char-avatar--yuka">ユ</span>
+                <div>
+                  <p class="intro-char-name">宮本ユウカ</p>
+                  <p class="intro-char-desc">34歳・IT企業・一人暮らし。毎日の夕食に消耗している読者の分身。</p>
+                </div>
+              </div>
+              <div class="intro-char">
+                <span class="intro-char-avatar intro-char-avatar--naoko">ナ</span>
+                <div>
+                  <p class="intro-char-name">田中ナオコ</p>
+                  <p class="intro-char-desc">38歳・コンサル・一人暮らし。情報収集してから決める健康意識高め派。</p>
+                </div>
+              </div>
+              <div class="intro-char">
+                <span class="intro-char-avatar intro-char-avatar--kenji">ケ</span>
+                <div>
+                  <p class="intro-char-name">井上ケンジ</p>
+                  <p class="intro-char-desc">41歳・部長・共働き4人家族。コスパと続けられる仕組みを最優先する。</p>
+                </div>
+              </div>
+            </div>
+            <a href="/about/" class="intro-btn">サイトの運営方針を見る →</a>
+          </div>
         </div>
       </section>
 
@@ -306,7 +347,7 @@ const situationCards = situationDefs
       {featured && (
         <section class="section-featured">
           <div class="container">
-            <h2 class="section-heading"><span>📌 監修医がすすめる入門記事</span></h2>
+            <h2 class="section-heading"><span>📌 入門としておすすめの記事</span></h2>
             <a href={`/articles/${featured.slug}/`} class="featured-card">
               <div class="featured-body">
                 <p class="featured-eyebrow">はじめて読むなら</p>
@@ -637,6 +678,62 @@ a { color: inherit; text-decoration: none; }
 .hero-body p { margin-bottom: 0.85rem; }
 .hero-body p:last-child { margin-bottom: 0; }
 .hero-body strong { color: var(--c-text); }
+
+/* ── Hero Disclosure ──────────────── */
+.hero-disclosure {
+  font-size: 0.74rem;
+  color: #93c5fd;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.65;
+}
+.hero-disclosure a { color: #93c5fd; text-decoration: underline; }
+
+/* ── Intro Section ─────────────────── */
+.intro-section {
+  background: var(--c-bg-white);
+  border-bottom: 1px solid var(--c-border);
+  padding: 2rem 0 2.25rem;
+}
+.intro-card {
+  background: linear-gradient(135deg, #fff, #fdf0e6);
+  border: 2px solid #f5d8b8;
+  border-radius: 14px;
+  padding: 1.75rem 1.5rem 1.65rem;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(196,112,59,.08);
+}
+.intro-emoji { font-size: 2rem; letter-spacing: 0.18em; margin-bottom: 0.6rem; }
+.intro-title { font-size: 1.1rem; font-weight: 800; color: var(--c-primary-dk); margin: 0 0 0.75rem; }
+.intro-lead { font-size: 0.88rem; color: var(--c-text-md); line-height: 1.85; margin: 0 auto 1.5rem; max-width: 540px; }
+.intro-chars {
+  display: flex; flex-direction: column; gap: 0.7rem;
+  max-width: 480px; margin: 0 auto 1.5rem; text-align: left;
+}
+.intro-char {
+  display: flex; align-items: center; gap: 0.85rem;
+  background: #fff; padding: 0.65rem 0.95rem;
+  border-radius: 8px; border: 1px solid #f5d8b8;
+}
+.intro-char-avatar {
+  width: 2.2rem; height: 2.2rem; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.intro-char-avatar--yuka  { background: #c4703b; }
+.intro-char-avatar--naoko { background: #2d8b72; }
+.intro-char-avatar--kenji { background: #3b5f8b; }
+.intro-char-name { font-size: 0.88rem; font-weight: 700; color: var(--c-text); margin: 0 0 0.15rem; }
+.intro-char-desc { font-size: 0.76rem; color: var(--c-text-md); margin: 0; line-height: 1.55; }
+.intro-btn {
+  display: inline-block; background: var(--c-primary); color: #fff;
+  padding: 0.65rem 1.6rem; border-radius: 999px; font-size: 0.84rem; font-weight: 700;
+  text-decoration: none; transition: background .15s, transform .1s;
+}
+.intro-btn:hover { background: var(--c-primary-dk); transform: translateY(-1px); }
+@media (max-width: 680px) {
+  .intro-chars { gap: 0.55rem; }
+}
 
 /* ── おすすめ記事Top3 ────────────── */
 .top3-section {

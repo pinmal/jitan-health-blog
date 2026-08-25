@@ -1,43 +1,15 @@
-// JSON-LD 構造化データ生成（Google E-E-A-T / MedicalWebPage 対応）
+// JSON-LD 構造化データ生成
 //
-// 設計（2026-06-13 統合）:
-//   記事ページは単一の <script> / 単一の @graph に
-//   MedicalWebPage + BreadcrumbList + FAQPage + WebSite + Organization + Person
-//   を収め、@id 相互参照でエンティティを1つに解決させる。
-//   - 媒体（発行元）= Organization #organization
-//   - 著者/監修    = Person #nagatomo
-//   - サイト        = WebSite #website
-//   これにより「誰が発行する媒体か」「誰が書いたか」が割れずに統合される。
+// 設計（2026-08-23 匿名運営対応・I-286修正）:
+//   MedicalWebPage + 実在医師Person エンティティを廃止し、
+//   BlogPosting + Organization のみで構成する。
+//   実在人物の個人情報（氏名・クリニック・大学・住所）は一切含めない。
+//   サイトは架空キャラクターによる匿名運営。
 
 const SITE_URL = 'https://jitan-kenko.blog';
-const AUTHOR_ID = `${SITE_URL}/#nagatomo`;
 const ORG_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const DEFAULT_IMAGE = `${SITE_URL}/og-default.png`;
-
-const AUTHOR = {
-  '@type': 'Person',
-  '@id': AUTHOR_ID,
-  'name': '長友恭平',
-  'honorificPrefix': 'Dr.',
-  'jobTitle': '精神保健指定医 / 産業医',
-  'description': '宮崎県よつば加納クリニック院長。心療内科・精神科専門。EBM重視。',
-  'alumniOf': {
-    '@type': 'CollegeOrUniversity',
-    'name': '宮崎大学医学部',
-  },
-  'worksFor': {
-    '@type': 'MedicalOrganization',
-    'name': 'よつば加納クリニック',
-    'address': {
-      '@type': 'PostalAddress',
-      'addressLocality': '宮崎市清武町加納',
-      'addressRegion': '宮崎県',
-      'addressCountry': 'JP',
-    },
-  },
-  'knowsAbout': ['心療内科', '精神科', '産業医学', '公衆衛生', '労働衛生', '食と健康'],
-};
 
 const ORGANIZATION = {
   '@type': 'Organization',
@@ -48,15 +20,14 @@ const ORGANIZATION = {
     '@type': 'ImageObject',
     'url': DEFAULT_IMAGE,
   },
-  'founder': { '@id': AUTHOR_ID },
 };
 
 const WEBSITE = {
   '@type': 'WebSite',
   '@id': WEBSITE_ID,
   'url': SITE_URL,
-  'name': '時短×健康ブログ — 状態に合った自己管理としての食事',
-  'description': '精神保健指定医・長友恭平が監修。体や心の調子が落ちているときでも食事を安定させるための、宅配食・栄養補助食品・献立の仕組み化について解説します。',
+  'name': '時短×健康ブログ — 忙しい大人のための合理的食生活',
+  'description': '宅食・ミールキット・冷凍弁当・献立の仕組み化について、3人の架空キャラクターが体験談と比較で紹介する食事ブログ。',
   'inLanguage': 'ja',
   'publisher': { '@id': ORG_ID },
 };
@@ -84,10 +55,11 @@ export function generateArticleSchema(props: ArticleSchemaInput): string {
 
   const graph: object[] = [
     {
-      '@type': 'MedicalWebPage',
+      '@type': 'BlogPosting',
       '@id': props.url,
       'url': props.url,
       'name': props.title,
+      'headline': props.title,
       'description': props.description,
       'inLanguage': 'ja',
       'datePublished': published,
@@ -95,11 +67,8 @@ export function generateArticleSchema(props: ArticleSchemaInput): string {
       'image': props.image || DEFAULT_IMAGE,
       'isPartOf': { '@id': WEBSITE_ID },
       'mainEntityOfPage': props.url,
-      'author': { '@id': AUTHOR_ID },
-      'reviewedBy': { '@id': AUTHOR_ID },
+      'author': { '@id': ORG_ID },
       'publisher': { '@id': ORG_ID },
-      'medicalAudience': 'Patient',
-      'lastReviewed': modified,
     },
     {
       '@type': 'BreadcrumbList',
@@ -126,8 +95,8 @@ export function generateArticleSchema(props: ArticleSchemaInput): string {
     });
   }
 
-  // サイト・発行元・著者エンティティを同一グラフに収め @id で解決させる
-  graph.push(WEBSITE, ORGANIZATION, AUTHOR);
+  // サイト・発行元エンティティを同一グラフに収め @id で解決させる
+  graph.push(WEBSITE, ORGANIZATION);
 
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
 }
@@ -135,6 +104,6 @@ export function generateArticleSchema(props: ArticleSchemaInput): string {
 export function generateSiteSchema(): string {
   return JSON.stringify({
     '@context': 'https://schema.org',
-    '@graph': [WEBSITE, ORGANIZATION, AUTHOR],
+    '@graph': [WEBSITE, ORGANIZATION],
   });
 }
