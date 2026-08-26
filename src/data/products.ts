@@ -1,6 +1,4 @@
 // 商品データベース（TypeScript版）
-// A8ネット審査通過後: affiliate.url に取得したリンクURLを入力する
-// 例: "https://px.a8.net/svt/ejp?a8mat=XXXXX&a8ejpredirect=https%3A%2F%2Fnosh.jp%2F"
 
 export interface Product {
   id: string;
@@ -18,8 +16,8 @@ export interface Product {
   features: string[];
   officialUrl: string;
   affiliate: {
-    platform: 'a8' | 'amazon' | 'rakuten';
-    url: string;        // A8承認後に入力
+    platform: 'amazon' | 'rakuten';
+    url: string;
     trialPrice: string | null;
   };
 }
@@ -42,8 +40,8 @@ export const products: Product[] = [
     features: ['糖質30g以下', '塩分2.5g以下', '60品以上のメニュー'],
     officialUrl: 'https://nosh.jp/',
     affiliate: {
-      platform: 'a8',
-      url: '',  // ← A8審査通過後に入力
+      platform: 'amazon',
+      url: '',
       trialPrice: '初回300円OFF',
     },
   },
@@ -63,7 +61,7 @@ export const products: Product[] = [
     features: ['管理栄養士監修', '低糖質・高タンパク', '定期便あり'],
     officialUrl: 'https://mitsuboshi-farm.com/',
     affiliate: {
-      platform: 'a8',
+      platform: 'amazon',
       url: '',
       trialPrice: null,
     },
@@ -84,8 +82,8 @@ export const products: Product[] = [
     features: ['高タンパク質特化', '管理栄養士×シェフ監修', '体型別カスタム'],
     officialUrl: 'https://muscle-deli.com/',
     affiliate: {
-      platform: 'a8',
-      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8L00II+4CPY+5YRHE',  // 提携済み
+      platform: 'amazon',
+      url: 'https://www.amazon.co.jp/s?k=マッスルデリ+冷凍弁当&tag=jitankenko-22',
       trialPrice: null,
     },
   },
@@ -106,8 +104,8 @@ export const products: Product[] = [
     features: ['食材カット済み', '有機・特別栽培', '週1ボックス'],
     officialUrl: 'https://www.oisix.com/',
     affiliate: {
-      platform: 'a8',
-      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8GTYIA+3RK+4MQ88X',  // 提携済み (Kit Oisix)
+      platform: 'amazon',
+      url: 'https://www.amazon.co.jp/s?k=オイシックス+ミールキット&tag=jitankenko-22',
       trialPrice: 'お試し50%OFF',
     },
   },
@@ -127,8 +125,8 @@ export const products: Product[] = [
     features: ['毎日配達', '食材廃棄ゼロ', '初回半額キャンペーン'],
     officialUrl: 'https://yoshikei-dvlp.co.jp/',
     affiliate: {
-      platform: 'a8',
-      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8MSAK2+1QM6+I7FOH',  // 提携済み
+      platform: 'amazon',
+      url: 'https://www.amazon.co.jp/s?k=ヨシケイ+ミールキット&tag=jitankenko-22',
       trialPrice: '初回半額',
     },
   },
@@ -149,8 +147,8 @@ export const products: Product[] = [
     features: ['50種類以上フレーバー', '1kgあたり最安水準'],
     officialUrl: 'https://www.myprotein.com/jp/',
     affiliate: {
-      platform: 'a8',
-      url: 'https://px.a8.net/svt/ejp?a8mat=4B1RXQ+8NDQ5U+45DI+60H7M',  // 提携済み
+      platform: 'amazon',
+      url: 'https://www.amazon.co.jp/s?k=マイプロテイン+ホエイプロテイン&tag=jitankenko-22',
       trialPrice: '初回コードでOFF',
     },
   },

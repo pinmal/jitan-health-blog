@@ -1,6 +1,6 @@
 # 商品データベース
-# affiliate.url: A8ネット審査承認後に各サービスのテキストリンクURLを貼り付ける
-# 形式: https://px.a8.net/svt/ejp?a8mat=XXXXX&a8ejpredirect=https://nosh.jp/
+# affiliate.url: AmazonアソシエイトURLを入力する（tag=jitankenko-22）
+# 形式: https://www.amazon.co.jp/s?k=キーワード&tag=jitankenko-22
 # humanReviewed: false の商品は記事に表示されるが、必ず長友先生が確認してから true にする
 
 products:
