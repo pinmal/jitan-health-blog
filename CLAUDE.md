@@ -11,7 +11,7 @@
 ## プロジェクト概要
 - 形式: 架空キャラ（ユウカ・ナオコ・ケンジ）の掛け合いドラマ（D-056）— 匿名運営・医師監修なし
 - 収益: A8（高単価優先）/ Amazon / 楽天 / もしも
-- スタック: Astro 4.x + Cloudflare Pages
+- スタック: Astro 7.x + Cloudflare Pages（2026-09-01 Astro 4.15→7.2.10へメジャー更新。Content Collectionsは`src/content.config.ts`のloader API方式）
 - ジャンル: 宅食・時短・健康（YMYL寄り・断定NG）
 
 ## 必須参照（マーケ判断時）
