@@ -73,7 +73,7 @@ const articles = (await getCollection('articles'))
           <h2 class="section-h2">最近の記事</h2>
           <ul class="list">
             {articles.map(a => (
-              <li><a class="link" href={`/articles/${a.slug}/`}>{a.data.title}</a></li>
+              <li><a class="link" href={`/articles/${a.id}/`}>{a.data.title}</a></li>
             ))}
           </ul>
         </section>

@@ -109,13 +109,13 @@ const description = `${meta.fullName}（${meta.tagline}）が体験したサー�
               <span>📖</span>
               <span>第1話から順番に読むと、{meta.fullName}の変化がよくわかります</span>
               {articles.length >= 2 && (
-                <a href={`/articles/${articles[0].slug}/`} class="story-start-btn" style={`background:${meta.color}`}>第1話から読む →</a>
+                <a href={`/articles/${articles[0].id}/`} class="story-start-btn" style={`background:${meta.color}`}>第1話から読む →</a>
               )}
             </div>
             <ul class="char-list">
               {articles.map((a, idx) => (
                 <li>
-                  <a href={`/articles/${a.slug}/`} class="char-card" style={`border-left-color:${meta.color}`}>
+                  <a href={`/articles/${a.id}/`} class="char-card" style={`border-left-color:${meta.color}`}>
                     <div class="char-card-top">
                       <span class="char-ep-badge" style={`background:${meta.color}`}>第{idx + 1}話</span>
                       <span class="char-card-title">{a.data.title}</span>

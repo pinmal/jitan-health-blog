@@ -22,7 +22,7 @@ const top3Slugs = [
   'noshi-vs-mitsuboshi-vs-muscledeli',
 ];
 const top3 = top3Slugs
-  .map(s => allArticles.find(a => a.slug === s))
+  .map(s => allArticles.find(a => a.id === s))
   .filter(Boolean);
 const top3Badge = (cat) => {
   if (cat === 'comparison') return { cls: 'compare', label: '比較' };
@@ -48,7 +48,7 @@ const situationDefs = [
   { slug: 'batch-cooking-weekend-solo-yuka-drama',   icon: '🥘', worry: '自炊時間を週一にまとめたい', short: 'バッチ調理で平日の料理ゼロを実現する' },
 ];
 const situationCards = situationDefs
-  .map(d => ({ ...d, article: allArticles.find(a => a.slug === d.slug) }))
+  .map(d => ({ ...d, article: allArticles.find(a => a.id === d.slug) }))
   .filter(c => c.article);
 ---
 
@@ -159,7 +159,7 @@ const situationCards = situationDefs
             {top3.map((article, i) => {
               const badge = top3Badge(article.data.category);
               return (
-                <a href={`/articles/${article.slug}/`} class="top3-card">
+                <a href={`/articles/${article.id}/`} class="top3-card">
                   <div class="top3-rank">{String(i + 1).padStart(2, '0')}</div>
                   <div class="top3-body">
                     <span class={`top3-badge top3-badge--${badge.cls}`}>{badge.label}</span>
@@ -240,7 +240,7 @@ const situationCards = situationDefs
               <div class="article-grid" id="grid-yuka">
                 {yukaArticles.map((article, i) => (
                   <a
-                    href={`/articles/${article.slug}/`}
+                    href={`/articles/${article.id}/`}
                     class={`article-card article-card--yuka${i >= 6 ? ' card-extra' : ''}`}
                     data-tags={(article.data.tags ?? []).join(',')}
                     data-category={article.data.category}
@@ -278,7 +278,7 @@ const situationCards = situationDefs
               <div class="article-grid" id="grid-naoko">
                 {naokoArticles.map((article, i) => (
                   <a
-                    href={`/articles/${article.slug}/`}
+                    href={`/articles/${article.id}/`}
                     class={`article-card article-card--naoko${i >= 6 ? ' card-extra' : ''}`}
                     data-tags={(article.data.tags ?? []).join(',')}
                     data-category={article.data.category}
@@ -316,7 +316,7 @@ const situationCards = situationDefs
               <div class="article-grid" id="grid-kenji">
                 {kenjiArticles.map((article, i) => (
                   <a
-                    href={`/articles/${article.slug}/`}
+                    href={`/articles/${article.id}/`}
                     class={`article-card article-card--kenji${i >= 6 ? ' card-extra' : ''}`}
                     data-tags={(article.data.tags ?? []).join(',')}
                     data-category={article.data.category}
@@ -348,7 +348,7 @@ const situationCards = situationDefs
         <section class="section-featured">
           <div class="container">
             <h2 class="section-heading"><span>📌 入門としておすすめの記事</span></h2>
-            <a href={`/articles/${featured.slug}/`} class="featured-card">
+            <a href={`/articles/${featured.id}/`} class="featured-card">
               <div class="featured-body">
                 <p class="featured-eyebrow">はじめて読むなら</p>
                 <h3 class="featured-title">{featured.data.title}</h3>

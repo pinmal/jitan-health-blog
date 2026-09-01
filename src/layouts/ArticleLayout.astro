@@ -45,12 +45,12 @@ const articleSchema = generateArticleSchema({ title, description, url, published
 const allArticles = await getCollection('articles');
 const validArticles = allArticles.filter(a =>
   a.data.humanReviewed === true &&
-  a.slug !== slug &&
+  a.id !== slug &&
   !a.id.startsWith('_')
 );
 
 // 現在の記事のキャラ・タグを取得
-const currentArticle = allArticles.find(a => a.slug === slug);
+const currentArticle = allArticles.find(a => a.id === slug);
 const currentChar = currentArticle?.data.character;
 const currentTags = currentArticle?.data.tags ?? [];
 
@@ -69,7 +69,7 @@ const tagRelevantArticles = currentTags.length > 0
       )
       .slice(0, 3)
       .map(({ article }) => ({
-        href: `/articles/${article.slug}/`,
+        href: `/articles/${article.id}/`,
         title: article.data.title,
         label: '関連記事',
       }))
@@ -83,7 +83,7 @@ const comparisonPromoArticles = category !== 'comparison'
   ? validArticles
       .filter(a =>
         a.data.category === 'comparison' &&
-        !tagRelevantIds.has(`/articles/${a.slug}/`)
+        !tagRelevantIds.has(`/articles/${a.id}/`)
       )
       .sort((a, b) => {
         // タグ重複があれば優先
@@ -94,7 +94,7 @@ const comparisonPromoArticles = category !== 'comparison'
       })
       .slice(0, 3)
       .map(a => ({
-        href: `/articles/${a.slug}/`,
+        href: `/articles/${a.id}/`,
         title: a.data.title,
         label: '比較',
       }))
@@ -110,12 +110,12 @@ const sameCharArticles = currentChar
   ? validArticles
       .filter(a =>
         a.data.character === currentChar &&
-        !allUsedIds.has(`/articles/${a.slug}/`)
+        !allUsedIds.has(`/articles/${a.id}/`)
       )
       .sort((a, b) => new Date(b.data.publishedAt).valueOf() - new Date(a.data.publishedAt).valueOf())
       .slice(0, 3)
       .map(a => ({
-        href: `/articles/${a.slug}/`,
+        href: `/articles/${a.id}/`,
         title: a.data.title,
         label: '同じキャラ',
       }))
@@ -153,16 +153,16 @@ if (currentChar) {
     )
     .sort((a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf());
 
-  const currentIdx = charArticlesAll.findIndex(a => a.slug === slug);
+  const currentIdx = charArticlesAll.findIndex(a => a.id === slug);
   if (currentIdx !== -1) {
     const prev = currentIdx > 0 ? charArticlesAll[currentIdx - 1] : null;
     const next = currentIdx < charArticlesAll.length - 1 ? charArticlesAll[currentIdx + 1] : null;
     storyNav = {
       episodeNum: currentIdx + 1,
       totalEpisodes: charArticlesAll.length,
-      prevSlug: prev ? `/articles/${prev.slug}/` : null,
+      prevSlug: prev ? `/articles/${prev.id}/` : null,
       prevTitle: prev ? prev.data.title : null,
-      nextSlug: next ? `/articles/${next.slug}/` : null,
+      nextSlug: next ? `/articles/${next.id}/` : null,
       nextTitle: next ? next.data.title : null,
     };
   }

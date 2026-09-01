@@ -95,7 +95,7 @@ const description = '時短×健康ブログの全記事一覧。比較・レビ
               <ul class="cat-section-list">
                 {list.map(a => (
                   <li>
-                    <a href={`/articles/${a.slug}/`} class="cat-section-card">
+                    <a href={`/articles/${a.id}/`} class="cat-section-card">
                       <span class="arrow">→</span>
                       <span>{a.data.title}</span>
                     </a>

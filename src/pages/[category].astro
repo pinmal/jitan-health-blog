@@ -83,7 +83,7 @@ const title = `${meta.label}一覧 | 時短 × 健康`;
           <ul class="cat-list">
             {articles.map(a => (
               <li>
-                <a href={`/articles/${a.slug}/`} class="cat-card">
+                <a href={`/articles/${a.id}/`} class="cat-card">
                   <span class="cat-card-arrow">→</span>
                   <span class="cat-card-body">
                     <span class="cat-card-title">{a.data.title}</span>
