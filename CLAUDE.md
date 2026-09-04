@@ -10,7 +10,7 @@
 
 ## プロジェクト概要
 - 形式: 架空キャラ（ユウカ・ナオコ・ケンジ）の掛け合いドラマ（D-056）— 匿名運営・医師監修なし
-- 収益: A8（高単価優先）/ Amazon / 楽天 / もしも
+- 収益: Amazon / 楽天（A8・もしもは2026-09-04撤去済み）
 - スタック: Astro 7.x + Cloudflare Pages（2026-09-01 Astro 4.15→7.2.10へメジャー更新。Content Collectionsは`src/content.config.ts`のloader API方式）
 - ジャンル: 宅食・時短・健康（YMYL寄り・断定NG）
 
@@ -126,7 +126,7 @@ git push --no-verify
 1. `publishedAt` が当日以降の記事がないか確認
 2. shopCommentなしAffiliateCardの検出
 3. 薬機法断定表現の検出（`validate-yakkiho.js` 実行）
-4. A8/もしもリンクの断絶確認
+4. アフィリリンクの断絶確認（Amazon・楽天のみ）
 
 ---
 

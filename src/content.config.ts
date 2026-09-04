@@ -12,7 +12,7 @@ const articles = defineCollection({
     updatedAt: z.date().optional(),
     evidenceLevel: z.enum(['high', 'medium', 'low', 'opinion', 'clinical-opinion']).default('medium'),
     affiliateLinks: z.array(z.object({
-      platform: z.enum(['a8', 'amazon', 'rakuten']),
+      platform: z.enum(['amazon', 'rakuten']),
       url: z.string(),
       productName: z.string(),
       anchor: z.string(),
